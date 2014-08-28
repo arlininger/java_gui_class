@@ -5,7 +5,7 @@
 import javax.swing.JApplet;
 import java.awt.Graphics;
 
-public class AppletDemo extends JApplet
+public class Lab01 extends JApplet
 {
 	public void paint(Graphics g)
 	{
