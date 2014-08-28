@@ -7,7 +7,7 @@ import java.awt.Graphics;
 
 public class AppletDemo extends JApplet
 {
-	public void pain(Graphics g)
+	public void paint(Graphics g)
 	{
 		g.drawString("Adam Lininger",125,125);
 	}
