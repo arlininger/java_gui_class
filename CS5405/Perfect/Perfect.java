@@ -68,6 +68,7 @@ public class Perfect extends JApplet implements ActionListener
 
 	public void paint(Graphics g)
 	{
+        String factorstring;
 		super.paint(g);
 		g.setFont(new Font("Helvatica", Font.BOLD,12));
         int counter = 0;
@@ -75,7 +76,16 @@ public class Perfect extends JApplet implements ActionListener
         {
             if (isPerfect(i))
             {
-                g.drawString("" + i, 50, 50 + 14*counter);
+                factorstring = "Factors are: ";
+                for (int j = 1; j < i; j++)
+                {
+                    if ((i % j) == 0)
+                    {
+                        factorstring += (j + " ");
+                    }
+                }
+                g.drawString("" + i + " is perfect.", 50, 50 + 14*2*counter);
+                g.drawString(factorstring,65, 50 + 14 + 14*2*counter);
                 counter++;
             }
         }
