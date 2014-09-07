@@ -6,7 +6,20 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Perfect extends JFrame extends JApplet implements ActionListener
+class MainFrame extends JFrame
+{
+    public MainFrame(JApplet demo)
+    {
+        super ("MainFrame");
+        setSize(400,400);
+        setVisible(true);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        getContentPane().add(demo);
+        demo.init();
+    }
+}
+
+public class Perfect extends JApplet implements ActionListener
 //public class Perfect
 {
 	private JTextField field1;
@@ -14,9 +27,9 @@ public class Perfect extends JFrame extends JApplet implements ActionListener
 	private String str;
     int lastval;
 
-	public Perfect( String title )
+	public Perfect()
 	{
-		super(title);
+//		super(title);
 	//	JFrame application = new JFrame();
 	//	self.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //		setSize(400,400);
@@ -30,7 +43,7 @@ public class Perfect extends JFrame extends JApplet implements ActionListener
 		getContentPane().add( field1 );
 		field1.addActionListener( this );
 
-        pack();
+ //       pack();
         setSize(400,400);
         setVisible(true);
 	}
@@ -42,8 +55,9 @@ public class Perfect extends JFrame extends JApplet implements ActionListener
 
 	public static void main(String[] args)
 	{
-		Perfect application = new Perfect("Title");
-        application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        new MainFrame(new Perfect());
+//		Perfect application = new Perfect("Title");
+//        application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 //        JLabel label = new JLabel("Hi");
 //        application.getContentPane().add(label);
@@ -92,4 +106,5 @@ public class Perfect extends JFrame extends JApplet implements ActionListener
         repaint();
 	}
 }
+
 
