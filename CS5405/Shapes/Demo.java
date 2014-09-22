@@ -22,6 +22,13 @@ class MainFrame extends JFrame
 public class Demo extends JApplet implements ActionListener
 {
 	Shape[] myShapes = new Shape[6];
+	JButton circleButton;
+	JButton squareButton;
+	JButton triangleButton;
+	JButton sphereButton;
+	JButton cubeButton;
+	JButton tetrahedronButton;
+  Integer lastShapeIndex = -1;
 
 	public Demo()
 	{
@@ -38,6 +45,27 @@ public class Demo extends JApplet implements ActionListener
 		myShapes[4] = new Cube(30);
 		myShapes[5] = new Tetrahedron(trianglePoint1,trianglePoint2,trianglePoint3,tetrahedronPoint4);
 
+		circleButton = new JButton("Circle");
+		squareButton = new JButton("Square");
+		triangleButton = new JButton("Triangle");
+		sphereButton = new JButton("Sphere");
+		cubeButton = new JButton("Cube");
+		tetrahedronButton = new JButton("Tetrahedron");
+
+		getContentPane().add(circleButton);
+		getContentPane().add(squareButton);
+		getContentPane().add(triangleButton);
+		getContentPane().add(sphereButton);
+		getContentPane().add(cubeButton);
+		getContentPane().add(tetrahedronButton);
+
+		circleButton.addActionListener(this);
+		squareButton.addActionListener(this);
+		triangleButton.addActionListener(this);
+		sphereButton.addActionListener(this);
+		cubeButton.addActionListener(this);
+		tetrahedronButton.addActionListener(this);
+
 		setSize(400,400);
 		setVisible(true);
 	}
@@ -52,31 +80,44 @@ public class Demo extends JApplet implements ActionListener
 	{
 		super.paint(g);
 		g.setFont(new Font("Helvatica", Font.BOLD,12));
-		Point base = new Point(5,5,0);
-		for (int i = 0; i < 6; i++)
+		Point base = new Point(5,105,0);
+		if (lastShapeIndex >= 0 && lastShapeIndex <= 5)
 		{
-			myShapes[i].draw(g,base);
-			if (myShapes[i].is3D() == false)
+			myShapes[lastShapeIndex].draw(g,base);
+			if (myShapes[lastShapeIndex].is3D() == false)
 			{			
 				g.drawString("Shape " +
-				             myShapes[i].name() +
+				             myShapes[lastShapeIndex].name() +
 				             " has area: " +
-				             myShapes[i].getArea(), 50, base.y + 30);
+				             myShapes[lastShapeIndex].getArea(), 50, base.y + 30);
 			}
 			else
 			{
-				g.drawString("Shape " + myShapes[i].name() +
-				             " has area: " + myShapes[i].getArea() +
+				g.drawString("Shape " + myShapes[lastShapeIndex].name() +
+				             " has area: " + myShapes[lastShapeIndex].getArea() +
 				             " and volume: " +
-				             ((ThreeDimensionalShape)myShapes[i]).getVolume(), 
+				             ((ThreeDimensionalShape)myShapes[lastShapeIndex]).getVolume(), 
 				            50, base.y + 30);
 			}
-			base.y += 36;
 		}
 	} 
 
 	public void actionPerformed( ActionEvent e)
 	{
+		if (e.getSource() == circleButton)
+		{
+			lastShapeIndex = 0;
+		} else if (e.getSource() == squareButton){
+			lastShapeIndex = 1;
+		} else if (e.getSource() == triangleButton){
+			lastShapeIndex = 2;
+		} else if (e.getSource() == sphereButton){
+			lastShapeIndex = 3;
+		} else if (e.getSource() == cubeButton){
+			lastShapeIndex = 4;
+		} else if (e.getSource() == tetrahedronButton){
+			lastShapeIndex = 5;
+		}
 		repaint();
 	}		
 }
