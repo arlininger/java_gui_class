@@ -3,6 +3,7 @@
  */
 
 import javax.swing.*;
+import javax.swing.border.*;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -19,7 +20,7 @@ class MainFrame extends JFrame
 	}
 }
 
-public class Demo extends JApplet implements ActionListener
+public class Demo extends JApplet
 {
 	Shape[] myShapes = new Shape[6];
 	JButton circleButton;
@@ -35,9 +36,12 @@ public class Demo extends JApplet implements ActionListener
 		getContentPane().setLayout(new FlowLayout());
 
 		Assignment thirdPanel = new Assignment();
+		TitledBorder panelBorder = new TitledBorder("Assignment 4");
+		thirdPanel.setBorder(panelBorder);
+		getContentPane().add(thirdPanel);
 		thirdPanel.setVisible(true);
 		
-		setSize(400,400);
+		setSize(600,600);
 		setVisible(true);
 	}
 
@@ -55,7 +59,7 @@ public class Demo extends JApplet implements ActionListener
 }
 
 
-public class Assignment extends JPanel implements ActionListener
+class Assignment extends JPanel implements ActionListener
 {
 	Shape[] myShapes = new Shape[6];
 	JButton circleButton;
@@ -102,14 +106,9 @@ public class Assignment extends JPanel implements ActionListener
 		cubeButton.addActionListener(this);
 		tetrahedronButton.addActionListener(this);
 
-		setSize(400,400);
+		Dimension size = new Dimension(600,600);
+		setPreferredSize(size);
 		setVisible(true);
-	}
-
-	public static void main(String[] args)
-	{
-		new MainFrame(new Demo());
-		System.out.println("\n\n\nFrame Demo Application");
 	}
 
 	public void paint(Graphics g)
@@ -119,6 +118,7 @@ public class Assignment extends JPanel implements ActionListener
 		Point base = new Point(5,105,0);
 		if (lastShapeIndex >= 0 && lastShapeIndex <= 5)
 		{
+			System.out.format("Drawing shape index: %d\n",lastShapeIndex);
 			myShapes[lastShapeIndex].draw(g,base);
 			if (myShapes[lastShapeIndex].is3D() == false)
 			{			
@@ -154,6 +154,7 @@ public class Assignment extends JPanel implements ActionListener
 		} else if (e.getSource() == tetrahedronButton){
 			lastShapeIndex = 5;
 		}
+		//		System.out.format("Setting index: %d\n", lastShapeIndex);
 		repaint();
 	}		
 }
