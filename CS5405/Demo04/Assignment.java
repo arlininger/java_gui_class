@@ -1,4 +1,4 @@
-/*
+/**
  * Adam Lininger
  */
 
@@ -7,20 +7,69 @@ import javax.swing.border.*;
 import java.awt.*;
 import java.awt.event.*;
 
-
+/**
+ * Provides the primary implementation for the Fourth Homework Assignment
+ * This class displays a set of button controls for the display of various
+ * shapes, categorized by two dimensions vs three dimensions.
+ */
 public class Assignment extends JPanel implements ActionListener
 {
+	/**
+	 * The various shapes in this class are stored here.
+	 */
 	Shape[] myShapes = new Shape[6];
+
+	/**
+	 * A button for displaying the Circle.
+	 */
 	JButton circleButton;
+
+	/**
+	 * A button for displaying the Square.
+	 */
 	JButton squareButton;
+
+	/**
+	 * A button for displaying the Triangle.
+	 */
 	JButton triangleButton;
+
+	/**
+	 * A button for displaying the Sphere.
+	 */
 	JButton sphereButton;
+
+	/**
+	 * A button for displaying the Cube.
+	 */
 	JButton cubeButton;
+
+	/**
+	 * A button for displaying the Tetrahedron.
+	 */
 	JButton tetrahedronButton;
+
+	/**
+	 * A button for selecting the Two Dimensional shapes.
+	 */
 	JButton twoDButton;
+
+	/**
+	 * A button for selecting the Three Dimensional shapes.
+	 */
 	JButton threeDButton;
+
+	/**
+	 * This stores the most recently selected shape.
+	 * Valid indices are those that are in range of {@link myShapes}.
+	 * A value of -1 indicates that no shape is selected.
+	 */
 	Integer lastShapeIndex = -1;
 
+	/**
+	 * Handles creating the assignment panel. All object creation and positioning
+	 * is done here.
+	 */
 	public Assignment()
 	{
 		//getContentPane().setLayout(new FlowLayout());
@@ -77,6 +126,10 @@ public class Assignment extends JPanel implements ActionListener
 		setVisible(true);
 	}
 
+	/**
+	 * Draws the selected object. The object itself is drawn as well as
+	 * a descriptive text.
+	 */
 	public void paint(Graphics g)
 	{
 		super.paint(g);
@@ -104,6 +157,10 @@ public class Assignment extends JPanel implements ActionListener
 		}
 	} 
 
+	/**
+	 * Handles all actions for all buttons in this class. All object selection logic
+	 * should be placed here.
+	 */
 	public void actionPerformed( ActionEvent e)
 	{
 		if (e.getSource() == circleButton)
@@ -126,6 +183,7 @@ public class Assignment extends JPanel implements ActionListener
 			sphereButton.setVisible(false);
 			cubeButton.setVisible(false);
 			tetrahedronButton.setVisible(false);
+			lastShapeIndex = -1;
 		} else if (e.getSource() == threeDButton){
 			circleButton.setVisible(false);
 			squareButton.setVisible(false);
@@ -133,19 +191,26 @@ public class Assignment extends JPanel implements ActionListener
 			sphereButton.setVisible(true);
 			cubeButton.setVisible(true);
 			tetrahedronButton.setVisible(true);
+			lastShapeIndex = -1;
 		}
 		//		System.out.format("Setting index: %d\n", lastShapeIndex);
 		repaint();
 	}		
 }
 
-
+/**
+ * A Point describes a single location in 3 dimensional space. Helper functions for
+ * commonly needed math operations are provided.
+ */
 class Point //This point will be used as relative or absolute positions in shapes below
 {
 	public int x;
 	public int y;
 	public int z;
 
+	/**
+	 * Constructs a new Point. 
+	 */
 	public Point(int x, int y, int z)
 	{
 		this.x = x;
@@ -153,6 +218,11 @@ class Point //This point will be used as relative or absolute positions in shape
 		this.z = z;
 	}
 
+	/**
+	 * Returns a new Point containing the cross product of a and b.
+	 * @param a The left multiplicand.
+	 * @param b The right multiplicand.
+	 */
 	static Point crossProduct (Point a, Point b)
 	{
 		int x = (a.y*b.z - a.z*b.y);
@@ -161,25 +231,60 @@ class Point //This point will be used as relative or absolute positions in shape
 		return new Point(x,y,z);
 	}
 
+	/**
+	 * Returns a new Point containing the dot product of a and b.
+	 * @param a The left multiplicand.
+	 * @param b The right multiplicand.
+	 */
 	static int dotProduct (Point a, Point b)
 	{
 		return (a.x*b.x + a.y*b.y + a.z*b.z);
 	}
 
+	/**
+	 * Returns a new Point containing the difference between a and b.
+	 * @param a The minuend.
+	 * @param b The subtrahend.
+	 */
 	static Point minus(Point a, Point b)
 	{
 		return new Point(a.x-b.x, a.y-b.y, a.z-b.z);
 	}
 }
 
+/**
+ * A Shape object is a logical description of a geometric shape. Shapes can be of
+ * two types: {@link TwoDimensionalShape} and {@link ThreeDimensionalShape}. 
+ */
 abstract class Shape 
 {
+	/**
+	 * Returns an integer containing the surface area of the shape.
+	 */
 	public abstract int getArea();
+
+	/**
+	 * Displays the shape at the provided position.
+	 * @param g The {@link Graphics} object to be used in displaying the shape.
+	 * @param position The {@link Point} at the upper-left corner of the shape location.
+	 */
 	public abstract void draw(Graphics g, Point position); //Provide a base point
+
+	/**
+	 * Returns a string containing the name of the shape.
+	 */
 	public abstract String name();
+
+	/**
+	 * Gets whether or not the shape is a {@link ThreeDimensionalShape}.
+	 */
 	public abstract boolean is3D();
 }
 
+/**
+ * A TwoDimensionalShape object is a logical description of a two dimensional 
+ * geometric shape. 
+ */
 abstract class TwoDimensionalShape extends Shape
 {
 	public boolean is3D()
@@ -188,6 +293,10 @@ abstract class TwoDimensionalShape extends Shape
 	}
 }
 
+/**
+ * A ThreeDimensionalShape object is a logical description of a three dimensional 
+ * geometric shape. 
+ */
 abstract class ThreeDimensionalShape extends Shape
 {
 	public abstract int getVolume();
@@ -198,11 +307,22 @@ abstract class ThreeDimensionalShape extends Shape
 	}
 }
 
+/**
+ * A logical description of a circle.
+ */
 class Circle extends TwoDimensionalShape
 {
 	public String name() { return "Circle"; }
+
+	/**
+	 * Holds the radius of this circle.
+	 */
 	private int radius;
 	
+	/**
+	 * Creates a circle object.
+	 * @param radius The radius of the circle.
+	 */
 	public Circle( int radius )
 	{
 		this.radius = radius;
@@ -223,8 +343,16 @@ class Circle extends TwoDimensionalShape
 class Square extends TwoDimensionalShape
 {
 	public String name() { return "Square"; }
+
+	/**
+	 * Holds the edge length of the square.
+	 */
 	private int size;
 
+	/**
+	 * Creates a Square object.
+	 * @param size The length of one edge of the square.
+	 */
 	public Square (int size)
 	{
 		this.size = size;
@@ -244,10 +372,26 @@ class Square extends TwoDimensionalShape
 class Triangle extends TwoDimensionalShape
 {
 	public String name() { return "Triangle"; }
+
+	/**
+	 * Holds one vertex of the Triangle.
+	 */
 	private Point point1;
+	/**
+	 * Holds one vertex of the Triangle.
+	 */
 	private Point point2;
+	/**
+	 * Holds one vertex of the Triangle.
+	 */
 	private Point point3;
 
+	/**
+	 * Creates a Triangle object.
+	 * @param point1 The location of one vertex of the triangle.
+	 * @param point2 The location of one vertex of the triangle.
+	 * @param point3 The location of one vertex of the triangle.
+	 */
 	public Triangle (Point point1, Point point2, Point point3)
 	{
 		this.point1 = point1;
@@ -279,8 +423,15 @@ class Triangle extends TwoDimensionalShape
 class Sphere extends ThreeDimensionalShape
 {
 	public String name() { return "Sphere"; }
+	/**
+	 * Holds the radius of the sphere.
+	 */
 	private int radius;
 
+	/**
+	 * Creates a Sphere object.
+	 * @param radius The radius of the sphere.
+	 */
 	public Sphere (int radius)
 	{
 		this.radius = radius;
@@ -308,8 +459,15 @@ class Sphere extends ThreeDimensionalShape
 class Cube extends ThreeDimensionalShape
 {
 	public String name() { return "Cube"; }
+	/**
+	 * Holds the length of one edge of the Cube.
+	 */
 	private int size;
 
+	/**
+	 * Creates a Cube object.
+	 * @param size The length of one edge of the Cube.
+	 */
 	public Cube (int size)
 	{
 		this.size = size;
@@ -333,11 +491,30 @@ class Cube extends ThreeDimensionalShape
 class Tetrahedron extends ThreeDimensionalShape
 {
 	public String name() { return "Tetrahedron"; }
+	/**
+	 * Holds one vertex of the Tetrahedron.
+	 */
 	private Point a;
+	/**
+	 * Holds one vertex of the Tetrahedron.
+	 */
 	private Point b;
+	/**
+	 * Holds one vertex of the Tetrahedron.
+	 */
 	private Point c;
+	/**
+	 * Holds one vertex of the Tetrahedron.
+	 */
 	private Point d;
 
+	/**
+	 * Creates a Tetrahedron object.
+	 * @param a The location of one vertex of the tetrahedron.
+	 * @param b The location of one vertex of the tetrahedron.
+	 * @param c The location of one vertex of the tetrahedron.
+	 * @param d The location of one vertex of the tetrahedron.
+	 */
 	public Tetrahedron (Point a, Point b, Point c, Point d)
 	{
 		this.a = a;

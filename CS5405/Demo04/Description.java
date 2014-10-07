@@ -7,10 +7,18 @@ import javax.swing.border.*;
 import java.awt.*;
 import java.awt.event.*;
 
-
+/**
+ * The Description class contains a description of the Homework assignment.
+ * The express purpose of this class is to display the text of the homework
+ * assignment in a JTextArea object.
+ */
 public class Description extends JPanel
 {
 
+	/**
+	 * Creates a Description object. As the Description object is display only,
+	 * all logic is handled here.
+	 */
 	public Description()
 	{
 		TitledBorder panelBorder = new TitledBorder("Description Output");
@@ -58,11 +66,13 @@ public class Description extends JPanel
 			.append("All code should be your original code not copy of some else’s. You can be called to the office to explain your\n")
 			.append("demo04 program if necessary to get additional information from you.\n")
 			.toString();
-		JTextArea mainArea = new JTextArea(description,8,25);
-		this.add(mainArea);
+		JTextArea mainArea = new JTextArea(description,30,50);
+		mainArea.setTabSize(3);
+		mainArea.setWrapStyleWord(true);
+		JScrollPane scrollwindow = new JScrollPane(mainArea);
+		this.add(scrollwindow);
 
-		Dimension size = new Dimension(600,530);
-		setPreferredSize(size);
+		setPreferredSize(new Dimension(600,530));
 		setVisible(true);
 	}
 

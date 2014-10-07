@@ -7,9 +7,14 @@ import javax.swing.border.*;
 import java.awt.*;
 import java.awt.event.*;
 
-
+/**
+ * The Author class displays the author and assignment number.
+ */
 public class Author extends JPanel
 {
+	/**
+	 * Creates the Author class.
+	 */
 	public Author()
 	{
 		TitledBorder panelBorder = new TitledBorder("Author");
@@ -20,6 +25,9 @@ public class Author extends JPanel
 		setVisible(true);
 	}
 
+	/**
+	 * Handles displaying the author and homework number.
+	 */
 	public void paint(Graphics g)
 	{
 		super.paint(g);
