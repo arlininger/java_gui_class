@@ -32,7 +32,7 @@ class MainFrame extends JFrame
  * Demo is the driver for the entire program. It displays the top-level window and
  * contains the top-level logic for panel selection.
  */
-public class Demo extends JApplet implements ActionListener
+public class Demo04 extends JApplet implements ActionListener
 {
 	/**
 	 * Button for selecting the assignment window.
@@ -64,7 +64,7 @@ public class Demo extends JApplet implements ActionListener
 	 * Creates the top-level applet.
 	 * The layout of the top-level window is handled here.
 	 */
-	public Demo()
+	public Demo04()
 	{
 		getContentPane().setLayout(new FlowLayout());
 		assignmentButton = new JButton("Assignment");
@@ -104,7 +104,7 @@ public class Demo extends JApplet implements ActionListener
 	 */
 	public static void main(String[] args)
 	{
-		new MainFrame(new Demo());
+		new MainFrame(new Demo04());
 	}
 
 	/**
