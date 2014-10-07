@@ -24,6 +24,7 @@ public class Author extends JPanel
 	{
 		super.paint(g);
 		g.drawString("Adam Lininger\n",30,40);
+		g.drawString("Homework 4\n",30,56);
 	} 
 }
 

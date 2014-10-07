@@ -17,6 +17,8 @@ public class Assignment extends JPanel implements ActionListener
 	JButton sphereButton;
 	JButton cubeButton;
 	JButton tetrahedronButton;
+	JButton twoDButton;
+	JButton threeDButton;
 	Integer lastShapeIndex = -1;
 
 	public Assignment()
@@ -42,7 +44,11 @@ public class Assignment extends JPanel implements ActionListener
 		sphereButton = new JButton("Sphere");
 		cubeButton = new JButton("Cube");
 		tetrahedronButton = new JButton("Tetrahedron");
+		twoDButton = new JButton("2D");
+		threeDButton = new JButton("3D");
 
+		this.add(twoDButton);
+		this.add(threeDButton);
 		this.add(circleButton);
 		this.add(squareButton);
 		this.add(triangleButton);
@@ -50,6 +56,8 @@ public class Assignment extends JPanel implements ActionListener
 		this.add(cubeButton);
 		this.add(tetrahedronButton);
 
+		twoDButton.addActionListener(this);
+		threeDButton.addActionListener(this);
 		circleButton.addActionListener(this);
 		squareButton.addActionListener(this);
 		triangleButton.addActionListener(this);
@@ -57,6 +65,13 @@ public class Assignment extends JPanel implements ActionListener
 		cubeButton.addActionListener(this);
 		tetrahedronButton.addActionListener(this);
 
+		circleButton.setVisible(false);
+		squareButton.setVisible(false);
+		triangleButton.setVisible(false);
+		sphereButton.setVisible(false);
+		cubeButton.setVisible(false);
+		tetrahedronButton.setVisible(false);
+		
 		Dimension size = new Dimension(600,530);
 		setPreferredSize(size);
 		setVisible(true);
@@ -104,6 +119,20 @@ public class Assignment extends JPanel implements ActionListener
 			lastShapeIndex = 4;
 		} else if (e.getSource() == tetrahedronButton){
 			lastShapeIndex = 5;
+		} else if (e.getSource() == twoDButton){
+			circleButton.setVisible(true);
+			squareButton.setVisible(true);
+			triangleButton.setVisible(true);
+			sphereButton.setVisible(false);
+			cubeButton.setVisible(false);
+			tetrahedronButton.setVisible(false);
+		} else if (e.getSource() == threeDButton){
+			circleButton.setVisible(false);
+			squareButton.setVisible(false);
+			triangleButton.setVisible(false);
+			sphereButton.setVisible(true);
+			cubeButton.setVisible(true);
+			tetrahedronButton.setVisible(true);
 		}
 		//		System.out.format("Setting index: %d\n", lastShapeIndex);
 		repaint();
