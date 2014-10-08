@@ -61,7 +61,7 @@ public class Assignment extends JPanel implements ActionListener
 
 	/**
 	 * This stores the most recently selected shape.
-	 * Valid indices are those that are in range of {@link myShapes}.
+	 * Valid indices are those that are in range of the array myShapes.
 	 * A value of -1 indicates that no shape is selected.
 	 */
 	Integer lastShapeIndex = -1;
@@ -299,6 +299,9 @@ abstract class TwoDimensionalShape extends Shape
  */
 abstract class ThreeDimensionalShape extends Shape
 {
+	/**
+	 * Returns the calculated volume of the shape.
+	 */
 	public abstract int getVolume();
 	
 	public boolean is3D()
@@ -452,6 +455,7 @@ class Sphere extends ThreeDimensionalShape
 	}
 	public void draw(Graphics g, Point base)
 	{
+		g.drawOval(base.x,base.y,radius*2,radius*2); //3rd and 4th parameters are width and height
 	}
 
 }
@@ -484,6 +488,14 @@ class Cube extends ThreeDimensionalShape
 	}
 	public void draw(Graphics g, Point base)
 	{
+		int offset = size/3;
+		g.drawRect((int)base.x,(int)base.y,(int)size,(int)size);
+		g.drawRect((int)base.x+offset,(int)base.y+offset,(int)size,(int)size);
+
+		g.drawLine((int)base.x,          (int)base.y,          (int)base.x+offset,          (int)base.y+offset);
+		g.drawLine((int)base.x+(int)size,(int)base.y,          (int)base.x+offset+(int)size,(int)base.y+offset);
+		g.drawLine((int)base.x,          (int)base.y+(int)size,(int)base.x+offset,          (int)base.y+offset+(int)size);
+		g.drawLine((int)base.x+(int)size,(int)base.y+(int)size,(int)base.x+offset+(int)size,(int)base.y+offset+(int)size);
 	}
 
 }
@@ -562,6 +574,28 @@ class Tetrahedron extends ThreeDimensionalShape
 	
 	public void draw(Graphics g, Point base)
 	{
+		int[] xPoints = new int[3];
+		int[] yPoints = new int[3];
+		xPoints[0] = base.x + a.x; yPoints[0] = base.y + a.y;
+		xPoints[1] = base.x + b.x; yPoints[1] = base.y + b.y;
+		xPoints[2] = base.x + c.x; yPoints[2] = base.y + c.y;
+		g.drawPolygon(xPoints,yPoints,3);
+
+		xPoints[0] = base.x + a.x; yPoints[0] = base.y + a.y;
+		xPoints[1] = base.x + b.x; yPoints[1] = base.y + b.y;
+		xPoints[2] = base.x + d.x; yPoints[2] = base.y + d.y;
+		g.drawPolygon(xPoints,yPoints,3);
+
+		xPoints[0] = base.x + a.x; yPoints[0] = base.y + a.y;
+		xPoints[1] = base.x + d.x; yPoints[1] = base.y + d.y;
+		xPoints[2] = base.x + c.x; yPoints[2] = base.y + c.y;
+		g.drawPolygon(xPoints,yPoints,3);
+
+		xPoints[0] = base.x + d.x; yPoints[0] = base.y + d.y;
+		xPoints[1] = base.x + b.x; yPoints[1] = base.y + b.y;
+		xPoints[2] = base.x + c.x; yPoints[2] = base.y + c.y;
+		g.drawPolygon(xPoints,yPoints,3);
+
 	}
 
 }
