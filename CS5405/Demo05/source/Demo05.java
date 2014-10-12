@@ -2,6 +2,7 @@
  * Adam Lininger
  */
 
+package code;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -64,7 +65,7 @@ public class Demo05 extends JApplet implements ActionListener
 	 * Creates the top-level applet.
 	 * The layout of the top-level window is handled here.
 	 */
-	public Demo04()
+	public Demo05()
 	{
 		getContentPane().setLayout(new FlowLayout());
 		assignmentButton = new JButton("Assignment");
@@ -104,7 +105,7 @@ public class Demo05 extends JApplet implements ActionListener
 	 */
 	public static void main(String[] args)
 	{
-		new MainFrame(new Demo04());
+		new MainFrame(new Demo05());
 	}
 
 	/**
