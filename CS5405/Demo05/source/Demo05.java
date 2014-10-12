@@ -32,7 +32,7 @@ class MainFrame extends JFrame
  * Demo is the driver for the entire program. It displays the top-level window and
  * contains the top-level logic for panel selection.
  */
-public class Demo04 extends JApplet implements ActionListener
+public class Demo05 extends JApplet implements ActionListener
 {
 	/**
 	 * Button for selecting the assignment window.
