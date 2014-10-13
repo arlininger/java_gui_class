@@ -3,9 +3,9 @@
  */
 
 package code;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.*;
 
 /**
  * The MainFrame class is the outermost object when run as an application. It only
@@ -21,7 +21,7 @@ class MainFrame extends JFrame
 	public MainFrame(JApplet demo)
 	{
 		super ("MainFrame");
-		setSize(600,600);
+		setSize(600, 600);
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		getContentPane().add(demo);
@@ -36,30 +36,46 @@ class MainFrame extends JFrame
 public class Demo05 extends JApplet implements ActionListener
 {
 	/**
-	 * Button for selecting the assignment window.
+	 * The menu for assignment related items. 
 	 */
-	JButton assignmentButton;
+	JMenu assignmentMenu;
 	/**
-	 * Button for selecting the author window.
+	 * The menu for author related items. 
 	 */
-	JButton authorButton;
+	JMenu authorMenu;
 	/**
-	 * Button for selecting the description window.
+	 * The menu for description related items. 
 	 */
-	JButton descriptionButton;
+	JMenu descriptionMenu;
+	/**
+	 * The desktop object in which all IFrames are displayed. 
+	 */
+	JDesktopPane desktopPane;
+	/**
+	 * Menu Item for selecting the assignment window.
+	 */
+	JMenuItem assignmentMenuItem;
+	/**
+	 * Menu Item for selecting the author window.
+	 */
+	JMenuItem authorMenuItem;
+	/**
+	 * Menu Item for selecting the description window.
+	 */
+	JMenuItem descriptionMenuItem;
 
 	/**
-	 * Assignment window
+	 * Window for the assignment.
 	 */
-	Assignment assignmentPanel;
+	Assignment assignment;
 	/**
-	 * Description window
+	 * Description window.
 	 */
-	Description descriptionPanel;
+	Description description;
 	/**
-	 * Author window
+	 * Author window.
 	 */
-	Author authorPanel;
+	Author author;
 
 	/**
 	 * Creates the top-level applet.
@@ -67,33 +83,48 @@ public class Demo05 extends JApplet implements ActionListener
 	 */
 	public Demo05()
 	{
-		getContentPane().setLayout(new FlowLayout());
-		assignmentButton = new JButton("Assignment");
-		authorButton = new JButton("Author");
-		descriptionButton = new JButton("Description");
+		desktopPane = new JDesktopPane();
+		desktopPane.setVisible(true);
+		getContentPane().add(desktopPane);
 
-		assignmentButton.addActionListener(this);
-		authorButton.addActionListener(this);
-		descriptionButton.addActionListener(this);
+		assignment = null;
+		author = null;
+		description = null;
 
-		getContentPane().add(authorButton);
-		getContentPane().add(descriptionButton);
-		getContentPane().add(assignmentButton);
-
-		assignmentPanel = new Assignment();
-		descriptionPanel = new Description();
-		authorPanel = new Author();
-
-		getContentPane().add(assignmentPanel);
-		getContentPane().add(descriptionPanel);
-		getContentPane().add(authorPanel);
-
-		assignmentPanel.setVisible(false);
-		descriptionPanel.setVisible(false);
-		authorPanel.setVisible(false);
-		
-		setSize(600,600);
+		setSize(600, 600);
 		setVisible(true);
+		setupMenus();
+	}
+
+	/**
+	 * Handles creating the menus. Called by the constructior. Should
+	 * not be called again.
+	 */
+	private void setupMenus()
+	{
+		JMenuBar menuBar = new JMenuBar();
+		assignmentMenu = new JMenu("Assignment");
+		authorMenu = new JMenu("Author");
+		descriptionMenu = new JMenu("Description");
+		
+		assignmentMenuItem = new JMenuItem("Show Assignment");
+		authorMenuItem = new JMenuItem("Show Author");
+		descriptionMenuItem = new JMenuItem("Show Description");
+
+		menuBar.add(assignmentMenu);
+		menuBar.add(authorMenu);
+		menuBar.add(descriptionMenu);
+
+		assignmentMenu.add(assignmentMenuItem);
+		authorMenu.add(authorMenuItem);
+		descriptionMenu.add(descriptionMenuItem);
+
+		assignmentMenuItem.addActionListener(this);
+		authorMenuItem.addActionListener(this);
+		descriptionMenuItem.addActionListener(this);
+
+		menuBar.setVisible(true);
+		setJMenuBar(menuBar);
 	}
 
 	/**
@@ -102,6 +133,7 @@ public class Demo05 extends JApplet implements ActionListener
 	 * instance of the MainFrame object. This allows all logic to be
 	 * contained in the applet and remain common to both Applet and
 	 * Application.
+	 * @param args Unused.
 	 */
 	public static void main(String[] args)
 	{
@@ -109,37 +141,56 @@ public class Demo05 extends JApplet implements ActionListener
 	}
 
 	/**
-	 * Displays the 
-	 */
-	//public void paint(Graphics g)
-	//{
-	//	super.paint(g);
-	//} 
-
-	/**
 	 * Handle actions for the buttons in the top-level window.
 	 * @param e The action to be handled.
 	 */
 	public void actionPerformed( ActionEvent e)
 	{
-		if (e.getSource() == assignmentButton)
+		if (e.getSource() == assignmentMenuItem)
 		{
-			assignmentPanel.setVisible(true);
-			authorPanel.setVisible(false);
-			descriptionPanel.setVisible(false);
-		} else if (e.getSource() == authorButton)
+			if (assignment == null)
+			{
+				assignment = new Assignment();
+				desktopPane.add(assignment);
+				assignmentMenu.add(assignment.getMenu());
+			}
+			if (assignment.isClosed())
+			{
+				desktopPane.add(assignment);
+			}
+			assignment.toFront();
+			assignment.setVisible(true);
+		} else if (e.getSource() == authorMenuItem)
 		{
-			assignmentPanel.setVisible(false);
-			authorPanel.setVisible(true);
-			descriptionPanel.setVisible(false);
-		} else if (e.getSource() == descriptionButton)
+			if (author == null)
+			{
+				author = new Author();
+				desktopPane.add(author);
+			}
+			if (author.isClosed())
+			{
+				desktopPane.add(author);
+			}
+			author.toFront();
+			author.setVisible(true);
+		} else if (e.getSource() == descriptionMenuItem)
 		{
-			assignmentPanel.setVisible(false);
-			authorPanel.setVisible(false);
-			descriptionPanel.setVisible(true);
+			if (description == null)
+			{
+				description = new Description();
+				desktopPane.add(description);
+			}
+			if (description.isClosed())
+			{
+				desktopPane.add(description);
+			}
+			description.toFront();
+			description.setVisible(true);
 		}
 		repaint();
 	}		
 
 }
+
+
 

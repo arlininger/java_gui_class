@@ -3,17 +3,17 @@
  */
 
 package code;
-import javax.swing.*;
-import javax.swing.border.*;
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.border.*;
 
 /**
  * Provides the primary implementation for the Fourth Homework Assignment
  * This class displays a set of button controls for the display of various
  * shapes, categorized by two dimensions vs three dimensions.
  */
-public class Assignment extends JPanel implements ActionListener
+public class Assignment extends JInternalFrame implements ActionListener
 {
 	/**
 	 * The various shapes in this class are stored here.
@@ -21,44 +21,34 @@ public class Assignment extends JPanel implements ActionListener
 	Shape[] myShapes = new Shape[6];
 
 	/**
-	 * A button for displaying the Circle.
+	 * A menu item for displaying the Circle.
 	 */
-	JButton circleButton;
+	JMenuItem circleMenuItem;
 
 	/**
-	 * A button for displaying the Square.
+	 * A menu item for displaying the Square.
 	 */
-	JButton squareButton;
+	JMenuItem squareMenuItem;
 
 	/**
-	 * A button for displaying the Triangle.
+	 * A menu item for displaying the Triangle.
 	 */
-	JButton triangleButton;
+	JMenuItem triangleMenuItem;
 
 	/**
-	 * A button for displaying the Sphere.
+	 * A menu item for displaying the Sphere.
 	 */
-	JButton sphereButton;
+	JMenuItem sphereMenuItem;
 
 	/**
 	 * A button for displaying the Cube.
 	 */
-	JButton cubeButton;
+	JMenuItem cubeMenuItem;
 
 	/**
-	 * A button for displaying the Tetrahedron.
+	 * A menu item for displaying the Tetrahedron.
 	 */
-	JButton tetrahedronButton;
-
-	/**
-	 * A button for selecting the Two Dimensional shapes.
-	 */
-	JButton twoDButton;
-
-	/**
-	 * A button for selecting the Three Dimensional shapes.
-	 */
-	JButton threeDButton;
+	JMenuItem tetrahedronMenuItem;
 
 	/**
 	 * This stores the most recently selected shape.
@@ -73,72 +63,54 @@ public class Assignment extends JPanel implements ActionListener
 	 */
 	public Assignment()
 	{
-		//getContentPane().setLayout(new FlowLayout());
-		TitledBorder panelBorder = new TitledBorder("Assignment Output");
-		setBorder(panelBorder);
+		super("Assignment", true, true, true, true);
 
-		Point trianglePoint1 = new Point(0,0,0);
-		Point trianglePoint2 = new Point(30,0,0);
-		Point trianglePoint3 = new Point(0,30,0);
-		Point tetrahedronPoint4 = new Point(0,0,30);
+		//getContentPane().setLayout(new FlowLayout());
+		//TitledBorder panelBorder = new TitledBorder("Assignment Output");
+		//setBorder(panelBorder);
+
+		Point trianglePoint1 = new Point(0, 0, 0);
+		Point trianglePoint2 = new Point(30, 0, 0);
+		Point trianglePoint3 = new Point(0, 30, 0);
+		Point tetrahedronPoint4 = new Point(0, 0, 30);
 		myShapes[0] = new Circle(15);
 		myShapes[1] = new Square(30);
-		myShapes[2] = new Triangle(trianglePoint1,trianglePoint2,trianglePoint3);
+		myShapes[2] = new Triangle(trianglePoint1, trianglePoint2, trianglePoint3);
 		myShapes[3] = new Sphere(15);
 		myShapes[4] = new Cube(30);
-		myShapes[5] = new Tetrahedron(trianglePoint1,trianglePoint2,trianglePoint3,tetrahedronPoint4);
+		myShapes[5] = new Tetrahedron(trianglePoint1, trianglePoint2, trianglePoint3, tetrahedronPoint4);
 
-		circleButton = new JButton("Circle");
-		squareButton = new JButton("Square");
-		triangleButton = new JButton("Triangle");
-		sphereButton = new JButton("Sphere");
-		cubeButton = new JButton("Cube");
-		tetrahedronButton = new JButton("Tetrahedron");
-		twoDButton = new JButton("2D");
-		threeDButton = new JButton("3D");
+		circleMenuItem = new JMenuItem("Circle");
+		squareMenuItem = new JMenuItem("Square");
+		triangleMenuItem = new JMenuItem("Triangle");
+		sphereMenuItem = new JMenuItem("Sphere");
+		cubeMenuItem = new JMenuItem("Cube");
+		tetrahedronMenuItem = new JMenuItem("Tetrahedron");
 
-		this.add(twoDButton);
-		this.add(threeDButton);
-		this.add(circleButton);
-		this.add(squareButton);
-		this.add(triangleButton);
-		this.add(sphereButton);
-		this.add(cubeButton);
-		this.add(tetrahedronButton);
-
-		twoDButton.addActionListener(this);
-		threeDButton.addActionListener(this);
-		circleButton.addActionListener(this);
-		squareButton.addActionListener(this);
-		triangleButton.addActionListener(this);
-		sphereButton.addActionListener(this);
-		cubeButton.addActionListener(this);
-		tetrahedronButton.addActionListener(this);
-
-		circleButton.setVisible(false);
-		squareButton.setVisible(false);
-		triangleButton.setVisible(false);
-		sphereButton.setVisible(false);
-		cubeButton.setVisible(false);
-		tetrahedronButton.setVisible(false);
+		circleMenuItem.addActionListener(this);
+		squareMenuItem.addActionListener(this);
+		triangleMenuItem.addActionListener(this);
+		sphereMenuItem.addActionListener(this);
+		cubeMenuItem.addActionListener(this);
+		tetrahedronMenuItem.addActionListener(this);
 		
-		Dimension size = new Dimension(600,530);
-		setPreferredSize(size);
+		setSize(600, 530);
 		setVisible(true);
 	}
 
 	/**
 	 * Draws the selected object. The object itself is drawn as well as
 	 * a descriptive text.
+	 * @param g The graphs object on which stuff is drawn.
 	 */
 	public void paint(Graphics g)
 	{
 		super.paint(g);
-		g.setFont(new Font("Helvatica", Font.BOLD,12));
-		Point base = new Point(5,105,0);
+		g.setFont(new Font("Helvatica", Font.BOLD, 12));
+		Point base = new Point(5, 105, 0);
 		if (lastShapeIndex >= 0 && lastShapeIndex <= 5)
 		{
-			System.out.format("Drawing shape index: %d\n",lastShapeIndex);
+			System.out.format("Drawing shape index: %d\n", lastShapeIndex);
 			myShapes[lastShapeIndex].draw(g,base);
 			if (myShapes[lastShapeIndex].is3D() == false)
 			{			
@@ -146,9 +118,7 @@ public class Assignment extends JPanel implements ActionListener
 				             myShapes[lastShapeIndex].name() +
 				             " has area: " +
 				             myShapes[lastShapeIndex].getArea(), 50, base.y + 30);
-			}
-			else
-			{
+			} else {
 				g.drawString("Shape " + myShapes[lastShapeIndex].name() +
 				             " has area: " + myShapes[lastShapeIndex].getArea() +
 				             " and volume: " +
@@ -159,40 +129,46 @@ public class Assignment extends JPanel implements ActionListener
 	} 
 
 	/**
+	 * Returns a menu object containing items relevant to this object.
+	 */
+	public JMenu getMenu()
+	{
+		JMenu assignmentMenu = new JMenu("Assignment options");
+		JMenu twoDMenu = new JMenu("2D");
+		JMenu threeDMenu = new JMenu("3D");
+		assignmentMenu.add(twoDMenu);
+		assignmentMenu.add(threeDMenu);
+
+		twoDMenu.add(circleMenuItem);
+		twoDMenu.add(triangleMenuItem);
+		twoDMenu.add(squareMenuItem);
+		threeDMenu.add(sphereMenuItem);
+		threeDMenu.add(cubeMenuItem);
+		threeDMenu.add(tetrahedronMenuItem);
+		
+		return assignmentMenu;
+	}
+
+	/**
 	 * Handles all actions for all buttons in this class. All object selection logic
 	 * should be placed here.
+	 * @param e The event that occurred.
 	 */
 	public void actionPerformed( ActionEvent e)
 	{
-		if (e.getSource() == circleButton)
+		if (e.getSource() == circleMenuItem)
 		{
 			lastShapeIndex = 0;
-		} else if (e.getSource() == squareButton){
+		} else if (e.getSource() == squareMenuItem){
 			lastShapeIndex = 1;
-		} else if (e.getSource() == triangleButton){
+		} else if (e.getSource() == triangleMenuItem){
 			lastShapeIndex = 2;
-		} else if (e.getSource() == sphereButton){
+		} else if (e.getSource() == sphereMenuItem){
 			lastShapeIndex = 3;
-		} else if (e.getSource() == cubeButton){
+		} else if (e.getSource() == cubeMenuItem){
 			lastShapeIndex = 4;
-		} else if (e.getSource() == tetrahedronButton){
+		} else if (e.getSource() == tetrahedronMenuItem){
 			lastShapeIndex = 5;
-		} else if (e.getSource() == twoDButton){
-			circleButton.setVisible(true);
-			squareButton.setVisible(true);
-			triangleButton.setVisible(true);
-			sphereButton.setVisible(false);
-			cubeButton.setVisible(false);
-			tetrahedronButton.setVisible(false);
-			lastShapeIndex = -1;
-		} else if (e.getSource() == threeDButton){
-			circleButton.setVisible(false);
-			squareButton.setVisible(false);
-			triangleButton.setVisible(false);
-			sphereButton.setVisible(true);
-			cubeButton.setVisible(true);
-			tetrahedronButton.setVisible(true);
-			lastShapeIndex = -1;
 		}
 		//		System.out.format("Setting index: %d\n", lastShapeIndex);
 		repaint();
