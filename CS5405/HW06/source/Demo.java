@@ -137,7 +137,7 @@ public class Demo extends JApplet implements ActionListener
 	 */
 	public static void main(String[] args)
 	{
-		new MainFrame(new Demo05());
+		new MainFrame(new Demo());
 	}
 
 	/**
