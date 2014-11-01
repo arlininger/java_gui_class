@@ -22,7 +22,7 @@ page at http://checkstyle.sourceforge.net/config.html -->
       </pre>
     -->
     <property name="format"
-        value="^(//| \*) Adam Lininger$" />
+        value="^(//| \*) @author Adam Lininger$" />
     <property name="minimum" value="1" />
     <property name="maximum" value="10" />
     <property name="message" value="Author Line is missing or malformed." />

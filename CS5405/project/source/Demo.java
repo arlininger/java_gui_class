@@ -1,10 +1,12 @@
-/*
- * Adam Lininger
+/**
+ * @author Adam Lininger
  */
 
-import javax.swing.*;
+package code;
+
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.*;
 
 /**
  * The MainFrame class is the outermost object when run as an application. It only
@@ -32,65 +34,16 @@ class MainFrame extends JFrame
  * Demo is the driver for the entire program. It displays the top-level window and
  * contains the top-level logic for panel selection.
  */
-public class Demo04 extends JApplet implements ActionListener
+public class Demo extends JApplet
 {
-	/**
-	 * Button for selecting the assignment window.
-	 */
-	JButton assignmentButton;
-	/**
-	 * Button for selecting the author window.
-	 */
-	JButton authorButton;
-	/**
-	 * Button for selecting the description window.
-	 */
-	JButton descriptionButton;
-
-	/**
-	 * Assignment window
-	 */
-	Assignment assignmentPanel;
-	/**
-	 * Description window
-	 */
-	Description descriptionPanel;
-	/**
-	 * Author window
-	 */
-	Author authorPanel;
-
 	/**
 	 * Creates the top-level applet.
 	 * The layout of the top-level window is handled here.
 	 */
-	public Demo04()
+	public Demo()
 	{
-		getContentPane().setLayout(new FlowLayout());
-		assignmentButton = new JButton("Assignment");
-		authorButton = new JButton("Author");
-		descriptionButton = new JButton("Description");
-
-		assignmentButton.addActionListener(this);
-		authorButton.addActionListener(this);
-		descriptionButton.addActionListener(this);
-
-		getContentPane().add(authorButton);
-		getContentPane().add(descriptionButton);
-		getContentPane().add(assignmentButton);
-
-		assignmentPanel = new Assignment();
-		descriptionPanel = new Description();
-		authorPanel = new Author();
-
-		getContentPane().add(assignmentPanel);
-		getContentPane().add(descriptionPanel);
-		getContentPane().add(authorPanel);
-
-		assignmentPanel.setVisible(false);
-		descriptionPanel.setVisible(false);
-		authorPanel.setVisible(false);
-		
+		getContentPane().setLayout(new GridLayout(1, 1, 1, 1));
+		getContentPane().add(new Application(this));
 		setSize(600,600);
 		setVisible(true);
 	}
@@ -101,44 +54,12 @@ public class Demo04 extends JApplet implements ActionListener
 	 * instance of the MainFrame object. This allows all logic to be
 	 * contained in the applet and remain common to both Applet and
 	 * Application.
+	 *
+	 * @param args Ignored
 	 */
 	public static void main(String[] args)
 	{
-		new MainFrame(new Demo04());
+		new MainFrame(new Demo());
 	}
-
-	/**
-	 * Displays the 
-	 */
-	//public void paint(Graphics g)
-	//{
-	//	super.paint(g);
-	//} 
-
-	/**
-	 * Handle actions for the buttons in the top-level window.
-	 * @param e The action to be handled.
-	 */
-	public void actionPerformed( ActionEvent e)
-	{
-		if (e.getSource() == assignmentButton)
-		{
-			assignmentPanel.setVisible(true);
-			authorPanel.setVisible(false);
-			descriptionPanel.setVisible(false);
-		} else if (e.getSource() == authorButton)
-		{
-			assignmentPanel.setVisible(false);
-			authorPanel.setVisible(true);
-			descriptionPanel.setVisible(false);
-		} else if (e.getSource() == descriptionButton)
-		{
-			assignmentPanel.setVisible(false);
-			authorPanel.setVisible(false);
-			descriptionPanel.setVisible(true);
-		}
-		repaint();
-	}		
-
 }
 
