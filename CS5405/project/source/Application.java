@@ -13,13 +13,15 @@ import javax.swing.*;
  */
 public class Application extends JDesktopPane implements ActionListener
 {
+	BubbleSort bubble;
 	/**
 	 * Create the Application object.
 	 * @param topLevel Reference to the parent object for adding menus.
 	 */
 	public Application(JApplet topLevel)
 	{
-
+		bubble = new BubbleSort();
+		this.add(bubble);
 	}
 	
 	/**

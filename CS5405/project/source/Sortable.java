@@ -22,8 +22,11 @@ public abstract class Sortable extends JInternalFrame
 		numberGenerator = new Random();
 		this.size = size;
 	}
+
 	public abstract void sort();
+
 	public abstract void stop();
+
 	public void reset()
 	{
 		this.stop();
