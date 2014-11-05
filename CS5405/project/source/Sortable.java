@@ -61,7 +61,12 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 	 * Take one step in the sorting algorithm.
 	 * @return True if more steps are available.
 	 */
-	public abstract boolean sort_step();
+	public abstract boolean sortStep();
+
+	/**
+	 * Get the color of a line based on the algorithm in use.
+	 */
+	public abstract Color getColor(int index);
 
 	public void play()
 	{
@@ -99,6 +104,7 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 
 		for (int i = 0; i < size; i++)
 		{
+			g.setColor(getColor(i));
 			g.drawLine(10+i,180-array[i],10+i,180);
 		}
 	}
@@ -126,7 +132,7 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 			if (running)
 			{
 				System.out.println("running");
-				if (sort_step() == false)
+				if (sortStep() == false)
 				{
 					running = false;
 				}

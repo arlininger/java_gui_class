@@ -4,6 +4,8 @@
 
 package code;
 
+import java.awt.Color;
+
 public class BubbleSort extends Sortable
 {
 	int i;
@@ -16,7 +18,7 @@ public class BubbleSort extends Sortable
 		j = 0;
 	}
 
-	public boolean sort_step()
+	public boolean sortStep()
 	{
 		if (i == size)
 		{
@@ -37,6 +39,19 @@ public class BubbleSort extends Sortable
 			i++;
 		}
 		return true;
+	}
+
+	public Color getColor(int index)
+	{
+		if (index == i)
+		{
+			return Color.BLUE;
+		} else if (index == j)
+		{
+			return Color.RED;
+		} else {
+			return Color.BLACK;
+		}
 	}
 
 }

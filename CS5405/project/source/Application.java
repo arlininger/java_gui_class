@@ -15,6 +15,8 @@ public class Application extends JDesktopPane implements ActionListener
 {
 	JMenuItem bubbleMenuItem;
 	BubbleSort bubble;
+	JMenuItem insertionMenuItem;
+	InsertionSort insertion;
 	JApplet topLevel;
 	/**
 	 * Create the Application object.
@@ -29,13 +31,22 @@ public class Application extends JDesktopPane implements ActionListener
 	
 	private void addMenus()
 	{
-		JMenuBar mb = new JMenuBar();
+		//JMenuBar mb = new JMenuBar();
+		AppMenu mb = new AppMenu();
+
 		JMenu bubbleMenu = new JMenu("Bubble");
 		mb.add(bubbleMenu);
 		this.bubbleMenuItem = new JMenuItem("Bubble");
 		bubbleMenu.add(this.bubbleMenuItem);
+		
+		JMenu insertionMenu = new JMenu("Insertion");
+		mb.add(insertionMenu);
+		this.insertionMenuItem = new JMenuItem("Insertion");
+		insertionMenu.add(this.insertionMenuItem);
+		
 		topLevel.setJMenuBar(mb);
 		bubbleMenuItem.addActionListener(this);
+		insertionMenuItem.addActionListener(this);
 	}
 	/**
 	 * Handle actions performed at the top level of the application.
@@ -56,6 +67,20 @@ public class Application extends JDesktopPane implements ActionListener
 			}
 			bubble.toFront();
 			bubble.setVisible(true);
+		}
+		if (e.getSource() == insertionMenuItem)
+		{
+			if (insertion == null)
+			{
+				insertion = new InsertionSort();
+				this.add(insertion);
+			}
+			if (insertion.isClosed())
+			{
+				this.add(insertion);
+			}
+			insertion.toFront();
+			insertion.setVisible(true);
 		}
 	}
 }
