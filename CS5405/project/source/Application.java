@@ -17,6 +17,14 @@ public class Application extends JDesktopPane implements ActionListener
 	BubbleSort bubble;
 	JMenuItem insertionMenuItem;
 	InsertionSort insertion;
+	JMenuItem selectionMenuItem;
+	SelectionSort selection;
+
+	//About menu items
+	JMenuItem authorMenuItem;
+	JMenuItem problemMenuItem;
+	JMenuItem referencesMenuItem;
+
 	JApplet topLevel;
 	/**
 	 * Create the Application object.
@@ -31,29 +39,50 @@ public class Application extends JDesktopPane implements ActionListener
 	
 	private void addMenus()
 	{
-		//JMenuBar mb = new JMenuBar();
-		AppMenu mb = new AppMenu();
-
-		JMenu bubbleMenu = new JMenu("Bubble");
-		mb.add(bubbleMenu);
-		this.bubbleMenuItem = new JMenuItem("Bubble");
-		bubbleMenu.add(this.bubbleMenuItem);
-		
-		JMenu insertionMenu = new JMenu("Insertion");
-		mb.add(insertionMenu);
-		this.insertionMenuItem = new JMenuItem("Insertion");
-		insertionMenu.add(this.insertionMenuItem);
-		
+		//Setup menubar
+		JMenuBar mb = new JMenuBar();
 		topLevel.setJMenuBar(mb);
-		bubbleMenuItem.addActionListener(this);
-		insertionMenuItem.addActionListener(this);
+
+		//Setup About menu
+		JMenu aboutMenu = new JMenu("About");
+			authorMenuItem = new JMenuItem("Author");
+				authorMenuItem.addActionListener(this);
+			aboutMenu.add(authorMenuItem);
+			problemMenuItem = new JMenuItem("Problem Description");
+				problemMenuItem.addActionListener(this);
+			aboutMenu.add(problemMenuItem);
+			referencesMenuItem = new JMenuItem("References");
+				referencesMenuItem.addActionListener(this);
+			aboutMenu.add(referencesMenuItem);
+		mb.add(aboutMenu);
+
+		JMenu algorithmsMenu = new JMenu("Algorithms");
+			JMenu bubbleMenu = new JMenu("Bubble");
+				this.bubbleMenuItem = new JMenuItem("Bubble");
+					bubbleMenuItem.addActionListener(this);
+				bubbleMenu.add(this.bubbleMenuItem);
+			algorithmsMenu.add(bubbleMenu);
+			JMenu insertionMenu = new JMenu("Insertion");
+				this.insertionMenuItem = new JMenuItem("Insertion");
+					insertionMenuItem.addActionListener(this);
+				insertionMenu.add(this.insertionMenuItem);
+			algorithmsMenu.add(insertionMenu);
+			JMenu selectionMenu = new JMenu("Selection");
+				this.selectionMenuItem = new JMenuItem("Selection");
+					selectionMenuItem.addActionListener(this);
+				selectionMenu.add(this.selectionMenuItem);
+			algorithmsMenu.add(selectionMenu);
+		mb.add(algorithmsMenu);
 	}
+
+
 	/**
 	 * Handle actions performed at the top level of the application.
 	 * @param e Event to be handled.
 	 */
 	public void actionPerformed(ActionEvent e)
 	{
+		//TODO Consider putting this stuff in the Sort class
 		if (e.getSource() == bubbleMenuItem)
 		{
 			if (bubble == null)
@@ -81,6 +110,20 @@ public class Application extends JDesktopPane implements ActionListener
 			}
 			insertion.toFront();
 			insertion.setVisible(true);
+		}
+		if (e.getSource() == selectionMenuItem)
+		{
+			if (selection == null)
+			{
+				selection = new SelectionSort();
+				this.add(selection);
+			}
+			if (selection.isClosed())
+			{
+				this.add(selection);
+			}
+			selection.toFront();
+			selection.setVisible(true);
 		}
 	}
 }
