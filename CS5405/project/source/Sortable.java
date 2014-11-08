@@ -20,15 +20,15 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 	JButton resetButton;
 	JButton pauseButton;
 
-	public Sortable()
+	public Sortable(String name)
 	{
-		super("Bubble Sort",true,true,true,true);
+		super(name,true,true,true,true);
 		this.size = 100;
 		setup();
 	}
-	public Sortable(int size)
+	public Sortable(String name, int size)
 	{
-		super("Bubble Sort",true,true,true,true);
+		super(name,true,true,true,true);
 		this.size = size;
 		setup();
 	}

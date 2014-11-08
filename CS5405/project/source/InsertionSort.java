@@ -22,6 +22,17 @@ public class InsertionSort extends Sortable
 	 * Holds whether there is an element currently being sorted.
 	 */
 	boolean working;
+
+	public InsertionSort()
+	{
+		super("Insertion Sort");
+	}
+
+	public InsertionSort(int size)
+	{
+		super("Insertion Sort",size);
+	}
+	
 	public void reset()
 	{
 		super.reset();

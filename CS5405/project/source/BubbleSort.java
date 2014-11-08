@@ -10,6 +10,17 @@ public class BubbleSort extends Sortable
 {
 	int i;
 	int j;
+
+	public BubbleSort()
+	{
+		super("Bubble Sort");
+	}
+
+	public BubbleSort(int size)
+	{
+		super("Bubble Sort",size);
+	}
+	
 	public void reset()
 	{
 		super.reset();

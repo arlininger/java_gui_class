@@ -36,14 +36,18 @@ class MainFrame extends JFrame
  */
 public class Demo extends JApplet
 {
+	Application mainApp;
 	/**
 	 * Creates the top-level applet.
 	 * The layout of the top-level window is handled here.
 	 */
 	public Demo()
 	{
-		getContentPane().setLayout(new GridLayout(1, 1, 1, 1));
-		getContentPane().add(new Application(this));
+//		getContentPane().setLayout(new GridLayout(1, 1, 1, 1));
+		getContentPane().setLayout(new BorderLayout());
+		mainApp = new Application(this);
+		getContentPane().add(mainApp);
+		getContentPane().add(mainApp.getToolBar(),BorderLayout.NORTH);
 		setSize(600,600);
 		setVisible(true);
 	}

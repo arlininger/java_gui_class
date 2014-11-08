@@ -18,6 +18,17 @@ public class SelectionSort extends Sortable
 	 * Holds whether there is an element currently being sorted.
 	 */
 	boolean working;
+
+	public SelectionSort()
+	{
+		super("SelectionSort");
+	}
+
+	public SelectionSort(int size)
+	{
+		super("SelectionSort",size);
+	}
+	
 	public void reset()
 	{
 		super.reset();

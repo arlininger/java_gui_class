@@ -14,16 +14,28 @@ import javax.swing.*;
 public class Application extends JDesktopPane implements ActionListener
 {
 	JMenuItem bubbleMenuItem;
+	JCheckBoxMenuItem bubbleSelection;
 	BubbleSort bubble;
 	JMenuItem insertionMenuItem;
+	JCheckBoxMenuItem insertionSelection;
 	InsertionSort insertion;
 	JMenuItem selectionMenuItem;
+	JCheckBoxMenuItem selectionSelection;
 	SelectionSort selection;
 
 	//About menu items
 	JMenuItem authorMenuItem;
 	JMenuItem problemMenuItem;
 	JMenuItem referencesMenuItem;
+
+	//ToolBar
+	JToolBar myToolBar = new JToolBar("Controls");
+	JButton pause = new JButton("Pause");
+	JButton play = new JButton("Play");
+	JButton reset = new JButton("Reset");
+
+	//Size to be used for sorting algorithms
+	int globalSize = 100;
 
 	JApplet topLevel;
 	/**
@@ -35,8 +47,25 @@ public class Application extends JDesktopPane implements ActionListener
 		this.topLevel = topLevel;
 		bubble = null;
 		this.addMenus();
+		this.setupToolBar();
 	}
 	
+	public JToolBar getToolBar()
+	{
+		return myToolBar;
+	}
+	
+	private void setupToolBar()
+	{
+		//Setup toolbar
+		myToolBar.add(play);
+			play.addActionListener(this);
+		myToolBar.add(pause);
+			pause.addActionListener(this);
+		myToolBar.add(reset);
+			reset.addActionListener(this);
+	}
+
 	private void addMenus()
 	{
 		//Setup menubar
@@ -56,23 +85,34 @@ public class Application extends JDesktopPane implements ActionListener
 			aboutMenu.add(referencesMenuItem);
 		mb.add(aboutMenu);
 
-		JMenu algorithmsMenu = new JMenu("Algorithms");
-			JMenu bubbleMenu = new JMenu("Bubble");
-				this.bubbleMenuItem = new JMenuItem("Bubble");
-					bubbleMenuItem.addActionListener(this);
-				bubbleMenu.add(this.bubbleMenuItem);
-			algorithmsMenu.add(bubbleMenu);
-			JMenu insertionMenu = new JMenu("Insertion");
-				this.insertionMenuItem = new JMenuItem("Insertion");
-					insertionMenuItem.addActionListener(this);
-				insertionMenu.add(this.insertionMenuItem);
-			algorithmsMenu.add(insertionMenu);
-			JMenu selectionMenu = new JMenu("Selection");
-				this.selectionMenuItem = new JMenuItem("Selection");
-					selectionMenuItem.addActionListener(this);
-				selectionMenu.add(this.selectionMenuItem);
-			algorithmsMenu.add(selectionMenu);
-		mb.add(algorithmsMenu);
+		//Setup Demos menu
+		JMenu demosMenu = new JMenu("Demos");
+			JMenu algorithmsMenu = new JMenu("Algorithms");
+				JMenu bubbleMenu = new JMenu("Bubble");
+					this.bubbleMenuItem = new JMenuItem("Bubble");
+						bubbleMenuItem.addActionListener(this);
+					bubbleMenu.add(this.bubbleMenuItem);
+				algorithmsMenu.add(bubbleMenu);
+				JMenu insertionMenu = new JMenu("Insertion");
+					this.insertionMenuItem = new JMenuItem("Insertion");
+						insertionMenuItem.addActionListener(this);
+					insertionMenu.add(this.insertionMenuItem);
+				algorithmsMenu.add(insertionMenu);
+				JMenu selectionMenu = new JMenu("Selection");
+					this.selectionMenuItem = new JMenuItem("Selection");
+						selectionMenuItem.addActionListener(this);
+					selectionMenu.add(this.selectionMenuItem);
+				algorithmsMenu.add(selectionMenu);
+			demosMenu.add(algorithmsMenu);
+			JMenu selectAlgorithmsMenu = new JMenu("Select Algorithms");
+				this.bubbleSelection = new JCheckBoxMenuItem("Bubble",false);
+				selectAlgorithmsMenu.add(this.bubbleSelection);
+				this.insertionSelection = new JCheckBoxMenuItem("Insertion",false);
+				selectAlgorithmsMenu.add(this.insertionSelection);
+				this.selectionSelection = new JCheckBoxMenuItem("Selection",false);
+				selectAlgorithmsMenu.add(this.selectionSelection);
+			demosMenu.add(selectAlgorithmsMenu);
+		mb.add(demosMenu);
 	}
 
 
@@ -82,12 +122,56 @@ public class Application extends JDesktopPane implements ActionListener
 	 */
 	public void actionPerformed(ActionEvent e)
 	{
-		//TODO Consider putting this stuff in the Sort class
+		if (e.getSource() == play)
+		{
+			if (bubbleSelection.isSelected() && bubble != null)
+			{
+				bubble.play();
+			}
+			if (insertionSelection.isSelected() && insertion != null)
+			{
+				insertion.play();
+			}
+			if (selectionSelection.isSelected() && selection != null)
+			{
+				selection.play();
+			}
+		}
+		if (e.getSource() == pause)
+		{
+			if (bubbleSelection.isSelected() && bubble != null)
+			{
+				bubble.pause();
+			}
+			if (insertionSelection.isSelected() && insertion != null)
+			{
+				insertion.pause();
+			}
+			if (selectionSelection.isSelected() && selection != null)
+			{
+				selection.pause();
+			}
+		}
+		if (e.getSource() == reset)
+		{
+			if (bubbleSelection.isSelected() && bubble != null)
+			{
+				bubble.reset();
+			}
+			if (insertionSelection.isSelected() && insertion != null)
+			{
+				insertion.reset();
+			}
+			if (selectionSelection.isSelected() && selection != null)
+			{
+				selection.reset();
+			}
+		}
 		if (e.getSource() == bubbleMenuItem)
 		{
 			if (bubble == null)
 			{
-				bubble = new BubbleSort();
+				bubble = new BubbleSort(globalSize);
 				this.add(bubble);
 			}
 			if (bubble.isClosed())
@@ -101,7 +185,7 @@ public class Application extends JDesktopPane implements ActionListener
 		{
 			if (insertion == null)
 			{
-				insertion = new InsertionSort();
+				insertion = new InsertionSort(globalSize);
 				this.add(insertion);
 			}
 			if (insertion.isClosed())
@@ -115,7 +199,7 @@ public class Application extends JDesktopPane implements ActionListener
 		{
 			if (selection == null)
 			{
-				selection = new SelectionSort();
+				selection = new SelectionSort(globalSize);
 				this.add(selection);
 			}
 			if (selection.isClosed())
