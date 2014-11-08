@@ -15,13 +15,16 @@ public class Application extends JDesktopPane implements ActionListener
 {
 	JMenuItem bubbleMenuItem;
 	JCheckBoxMenuItem bubbleSelection;
-	BubbleSort bubble;
+	BubbleSort bubble = null;
 	JMenuItem insertionMenuItem;
 	JCheckBoxMenuItem insertionSelection;
-	InsertionSort insertion;
+	InsertionSort insertion = null;
 	JMenuItem selectionMenuItem;
 	JCheckBoxMenuItem selectionSelection;
-	SelectionSort selection;
+	SelectionSort selection = null;
+	JMenuItem quickMenuItem;
+	JCheckBoxMenuItem quickSelection;
+	QuickSort quick = null;
 
 	//About menu items
 	JMenuItem authorMenuItem;
@@ -45,7 +48,6 @@ public class Application extends JDesktopPane implements ActionListener
 	public Application(JApplet topLevel)
 	{
 		this.topLevel = topLevel;
-		bubble = null;
 		this.addMenus();
 		this.setupToolBar();
 	}
@@ -103,6 +105,11 @@ public class Application extends JDesktopPane implements ActionListener
 						selectionMenuItem.addActionListener(this);
 					selectionMenu.add(this.selectionMenuItem);
 				algorithmsMenu.add(selectionMenu);
+				JMenu quickMenu = new JMenu("Quick");
+					this.quickMenuItem = new JMenuItem("Quick");
+						quickMenuItem.addActionListener(this);
+					quickMenu.add(this.quickMenuItem);
+				algorithmsMenu.add(quickMenu);
 			demosMenu.add(algorithmsMenu);
 			JMenu selectAlgorithmsMenu = new JMenu("Select Algorithms");
 				this.bubbleSelection = new JCheckBoxMenuItem("Bubble",false);
@@ -111,6 +118,8 @@ public class Application extends JDesktopPane implements ActionListener
 				selectAlgorithmsMenu.add(this.insertionSelection);
 				this.selectionSelection = new JCheckBoxMenuItem("Selection",false);
 				selectAlgorithmsMenu.add(this.selectionSelection);
+				this.quickSelection = new JCheckBoxMenuItem("Quick",false);
+				selectAlgorithmsMenu.add(this.quickSelection);
 			demosMenu.add(selectAlgorithmsMenu);
 		mb.add(demosMenu);
 	}
@@ -136,6 +145,10 @@ public class Application extends JDesktopPane implements ActionListener
 			{
 				selection.play();
 			}
+			if (quickSelection.isSelected() && quick != null)
+			{
+				quick.play();
+			}
 		}
 		if (e.getSource() == pause)
 		{
@@ -151,6 +164,10 @@ public class Application extends JDesktopPane implements ActionListener
 			{
 				selection.pause();
 			}
+			if (quickSelection.isSelected() && quick != null)
+			{
+				quick.pause();
+			}
 		}
 		if (e.getSource() == reset)
 		{
@@ -165,6 +182,10 @@ public class Application extends JDesktopPane implements ActionListener
 			if (selectionSelection.isSelected() && selection != null)
 			{
 				selection.reset();
+			}
+			if (quickSelection.isSelected() && quick != null)
+			{
+				quick.reset();
 			}
 		}
 		if (e.getSource() == bubbleMenuItem)
@@ -208,6 +229,20 @@ public class Application extends JDesktopPane implements ActionListener
 			}
 			selection.toFront();
 			selection.setVisible(true);
+		}
+		if (e.getSource() == quickMenuItem)
+		{
+			if (quick == null)
+			{
+				quick = new QuickSort(globalSize);
+				this.add(quick);
+			}
+			if (quick.isClosed())
+			{
+				this.add(quick);
+			}
+			quick.toFront();
+			quick.setVisible(true);
 		}
 	}
 }

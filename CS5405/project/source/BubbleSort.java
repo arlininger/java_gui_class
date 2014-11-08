@@ -25,29 +25,29 @@ public class BubbleSort extends Sortable
 	{
 		super.reset();
 		System.out.println("Bubble Reset");
-		i = 0;
+		i = size;
 		j = 0;
 	}
 
 	public boolean sortStep()
 	{
-		if (i == size)
+		if (i == 0)
 		{
 			System.out.println("Complete");
 			return false;
 		}
 		if (array[j] > array[j+1])
 		{
-			//swap(array[i],array[i+1]);
-			array[j] ^= array[j+1];
-			array[j+1] ^= array[j];
-			array[j] ^= array[j+1];
+			this.swap(j,j+1);
+			//array[j] ^= array[j+1];
+			//array[j+1] ^= array[j];
+			//array[j] ^= array[j+1];
 		}
 		j++;
 		if (j == size-1)
 		{
 			j = 0;
-			i++;
+			i--;
 		}
 		return true;
 	}

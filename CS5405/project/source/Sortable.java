@@ -32,6 +32,15 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 		this.size = size;
 		setup();
 	}
+
+	void swap(int i, int j)
+	{
+		int t = array[i];
+		array[i] = array[j];
+		array[j] = t;
+		return;
+	}
+
 	private void setup()
 	{
 		setLayout(new FlowLayout());
@@ -71,18 +80,18 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 	public void play()
 	{
 		running = true;
-		System.out.println("play");
+		//System.out.println("play");
 	}
 
 	public void pause()
 	{
 		running = false;
-		System.out.println("pause");
+		//System.out.println("pause");
 	}
 
 	public void reset()
 	{
-		System.out.println("reset");
+		//System.out.println("reset");
 		running = false;
 		array = new int[this.size];
 		for (int i = 0; i < this.size; i++)
@@ -131,7 +140,7 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 		{
 			if (running)
 			{
-				System.out.println("running");
+				//System.out.println("running");
 				if (sortStep() == false)
 				{
 					running = false;
@@ -142,7 +151,7 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 			{
 				if (running) 
 				{
-					Thread.sleep(1); //Run quickly when running
+					Thread.sleep(10); //Run quickly when running
 				}
 				else {
 					Thread.sleep(100); //Don't waste time when not running
