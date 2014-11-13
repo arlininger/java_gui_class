@@ -43,13 +43,15 @@ public class SelectionSort extends Sortable
 		selector++;
 		if (current == size)
 		{
+			if (verify()) System.out.printf("Selection Verified\n");
 			return false;
 		}
 		if (selector == size)
 		{ //swap the elements
-			array[current] ^= array[current_min];
-			array[current_min] ^= array[current];
-			array[current] ^= array[current_min];
+			//array[current] ^= array[current_min];
+			//array[current_min] ^= array[current];
+			//array[current] ^= array[current_min];
+			swap(current,current_min);
 			current++;
 			current_min = current;
 			selector = current;
@@ -62,7 +64,7 @@ public class SelectionSort extends Sortable
 
 	public Color getColor(int index)
 	{
-		System.out.printf("Current %d\nMin: %d\nSelector: %d\n", current, current_min, selector);
+		//System.out.printf("Current %d\nMin: %d\nSelector: %d\n", current, current_min, selector);
 		if (index < current)
 		{
 			return Color.GREEN;

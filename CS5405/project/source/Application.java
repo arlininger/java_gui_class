@@ -30,6 +30,10 @@ public class Application extends JDesktopPane implements ActionListener
 	JMenuItem authorMenuItem;
 	JMenuItem problemMenuItem;
 	JMenuItem referencesMenuItem;
+	JMenuItem helpMenuItem;
+
+	//Help window
+	HelpWindow myHelpWindow = null;
 
 	//ToolBar
 	JToolBar myToolBar = new JToolBar("Controls");
@@ -85,6 +89,9 @@ public class Application extends JDesktopPane implements ActionListener
 			referencesMenuItem = new JMenuItem("References");
 				referencesMenuItem.addActionListener(this);
 			aboutMenu.add(referencesMenuItem);
+			helpMenuItem = new JMenuItem("Help");
+				helpMenuItem.addActionListener(this);
+			aboutMenu.add(helpMenuItem);
 		mb.add(aboutMenu);
 
 		//Setup Demos menu
@@ -243,6 +250,19 @@ public class Application extends JDesktopPane implements ActionListener
 			}
 			quick.toFront();
 			quick.setVisible(true);
+		}
+
+		if (e.getSource() == helpMenuItem)
+		{
+//			if (myHelpWindow == null)
+//			{
+//				myHelpWindow = new HelpWindow();
+//			}
+//			if (myHelpWindow.isClosed())
+//			{
+//			}
+//			myHelpWindow.toFront();
+//			myHelpWindow.setVisible(true);
 		}
 	}
 }
