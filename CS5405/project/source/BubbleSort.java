@@ -44,7 +44,7 @@ public class BubbleSort extends Sortable
 			//array[j] ^= array[j+1];
 		}
 		j++;
-		if (j == size-1)
+		if (j >= i-1)
 		{
 			j = 0;
 			i--;

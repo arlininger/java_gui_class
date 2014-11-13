@@ -16,6 +16,9 @@ public class Application extends JDesktopPane implements ActionListener
 	JMenuItem bubbleMenuItem;
 	JCheckBoxMenuItem bubbleSelection;
 	BubbleSort bubble = null;
+	JMenuItem shellMenuItem;
+	JCheckBoxMenuItem shellSelection;
+	ShellSort shell = null;
 	JMenuItem insertionMenuItem;
 	JCheckBoxMenuItem insertionSelection;
 	InsertionSort insertion = null;
@@ -102,6 +105,11 @@ public class Application extends JDesktopPane implements ActionListener
 						bubbleMenuItem.addActionListener(this);
 					bubbleMenu.add(this.bubbleMenuItem);
 				algorithmsMenu.add(bubbleMenu);
+				JMenu shellMenu = new JMenu("Shell");
+					this.shellMenuItem = new JMenuItem("Shell");
+						shellMenuItem.addActionListener(this);
+					shellMenu.add(this.shellMenuItem);
+				algorithmsMenu.add(shellMenu);
 				JMenu insertionMenu = new JMenu("Insertion");
 					this.insertionMenuItem = new JMenuItem("Insertion");
 						insertionMenuItem.addActionListener(this);
@@ -121,6 +129,8 @@ public class Application extends JDesktopPane implements ActionListener
 			JMenu selectAlgorithmsMenu = new JMenu("Select Algorithms");
 				this.bubbleSelection = new JCheckBoxMenuItem("Bubble",false);
 				selectAlgorithmsMenu.add(this.bubbleSelection);
+				this.shellSelection = new JCheckBoxMenuItem("Shell",false);
+				selectAlgorithmsMenu.add(this.shellSelection);
 				this.insertionSelection = new JCheckBoxMenuItem("Insertion",false);
 				selectAlgorithmsMenu.add(this.insertionSelection);
 				this.selectionSelection = new JCheckBoxMenuItem("Selection",false);
@@ -163,6 +173,10 @@ public class Application extends JDesktopPane implements ActionListener
 			{
 				bubble.pause();
 			}
+			if (shellSelection.isSelected() && shell != null)
+			{
+				shell.pause();
+			}
 			if (insertionSelection.isSelected() && insertion != null)
 			{
 				insertion.pause();
@@ -181,6 +195,10 @@ public class Application extends JDesktopPane implements ActionListener
 			if (bubbleSelection.isSelected() && bubble != null)
 			{
 				bubble.reset();
+			}
+			if (shellSelection.isSelected() && shell != null)
+			{
+				shell.reset();
 			}
 			if (insertionSelection.isSelected() && insertion != null)
 			{
@@ -208,6 +226,20 @@ public class Application extends JDesktopPane implements ActionListener
 			}
 			bubble.toFront();
 			bubble.setVisible(true);
+		}
+		if (e.getSource() == shellMenuItem)
+		{
+			if (shell == null)
+			{
+				shell = new ShellSort(globalSize);
+				this.add(shell);
+			}
+			if (shell.isClosed())
+			{
+				this.add(shell);
+			}
+			shell.toFront();
+			shell.setVisible(true);
 		}
 		if (e.getSource() == insertionMenuItem)
 		{
