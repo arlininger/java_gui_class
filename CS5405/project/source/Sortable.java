@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.concurrent.locks.*;
 import javax.swing.*;
 
 public abstract class Sortable extends JInternalFrame implements Runnable, ActionListener
@@ -19,6 +20,8 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 	JButton playButton;
 	JButton resetButton;
 	JButton pauseButton;
+
+//	Lock lock = new ReentrantLock();
 
 	public Sortable(String name)
 	{
@@ -107,6 +110,11 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 		}
 	}
 
+	public int getIndex(int i)
+	{
+		return array[i];
+	}
+
 	public void paint(Graphics g)
 	{
 		super.paint(g);
@@ -114,7 +122,7 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 		for (int i = 0; i < size; i++)
 		{
 			g.setColor(getColor(i));
-			g.drawLine(10+i,180-array[i],10+i,180);
+			g.drawLine(10+i,180-getIndex(i),10+i,180);
 		}
 	}
 
@@ -147,27 +155,26 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 	{
 		while (true)
 		{
-			if (running)
+			if (sortStep() == false)
 			{
-				//System.out.println("running");
-				if (sortStep() == false)
-				{
-					running = false;
-				}
+				running = false;
 			}
 			repaint();
-			try
+			sleep(); //See function below
+		}
+	}
+
+	void sleep()
+	{
+		try
+		{
+			while (running == false)
 			{
-				if (running) 
-				{
-					Thread.sleep(10); //Run quickly when running
-				}
-				else {
-					Thread.sleep(100); //Don't waste time when not running
-				}
-			} catch (InterruptedException ex)
-			{
+				Thread.sleep(100); //Sleep longer when not running
 			}
+			Thread.sleep(10); //Always sleep a little bit
+		} catch (InterruptedException ex)
+		{
 		}
 	}
 }

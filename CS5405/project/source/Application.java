@@ -13,21 +13,10 @@ import javax.swing.*;
  */
 public class Application extends JDesktopPane implements ActionListener
 {
-	JMenuItem bubbleMenuItem;
-	JCheckBoxMenuItem bubbleSelection;
-	BubbleSort bubble = null;
-	JMenuItem shellMenuItem;
-	JCheckBoxMenuItem shellSelection;
-	ShellSort shell = null;
-	JMenuItem insertionMenuItem;
-	JCheckBoxMenuItem insertionSelection;
-	InsertionSort insertion = null;
-	JMenuItem selectionMenuItem;
-	JCheckBoxMenuItem selectionSelection;
-	SelectionSort selection = null;
-	JMenuItem quickMenuItem;
-	JCheckBoxMenuItem quickSelection;
-	QuickSort quick = null;
+	JMenuItem menuItems[] = new JMenuItem[7];
+	JCheckBoxMenuItem checkBoxMenuItems[] = new JCheckBoxMenuItem[7];
+	Sortable sortableItems[] = new Sortable[7];
+	int algorithmCount = 7;
 
 	//About menu items
 	JMenuItem authorMenuItem;
@@ -55,6 +44,19 @@ public class Application extends JDesktopPane implements ActionListener
 	public Application(JApplet topLevel)
 	{
 		this.topLevel = topLevel;
+		this.sortableItems[0] = new BubbleSort();
+		this.sortableItems[1] = new InsertionSort();
+		this.sortableItems[2] = new MergeSort();
+		this.sortableItems[3] = new QuickSort();
+		this.sortableItems[4] = new SelectionSort();
+		this.sortableItems[5] = new ShellSort();
+		this.sortableItems[6] = new BubbleSort();
+		for (int i = 0; i < algorithmCount; i++)
+		{
+			this.add(sortableItems[i]);
+			sortableItems[i].setVisible(true);
+		}
+
 		this.addMenus();
 		this.setupToolBar();
 	}
@@ -100,43 +102,32 @@ public class Application extends JDesktopPane implements ActionListener
 		//Setup Demos menu
 		JMenu demosMenu = new JMenu("Demos");
 			JMenu algorithmsMenu = new JMenu("Algorithms");
-				JMenu bubbleMenu = new JMenu("Bubble");
-					this.bubbleMenuItem = new JMenuItem("Bubble");
-						bubbleMenuItem.addActionListener(this);
-					bubbleMenu.add(this.bubbleMenuItem);
-				algorithmsMenu.add(bubbleMenu);
-				JMenu shellMenu = new JMenu("Shell");
-					this.shellMenuItem = new JMenuItem("Shell");
-						shellMenuItem.addActionListener(this);
-					shellMenu.add(this.shellMenuItem);
-				algorithmsMenu.add(shellMenu);
-				JMenu insertionMenu = new JMenu("Insertion");
-					this.insertionMenuItem = new JMenuItem("Insertion");
-						insertionMenuItem.addActionListener(this);
-					insertionMenu.add(this.insertionMenuItem);
-				algorithmsMenu.add(insertionMenu);
-				JMenu selectionMenu = new JMenu("Selection");
-					this.selectionMenuItem = new JMenuItem("Selection");
-						selectionMenuItem.addActionListener(this);
-					selectionMenu.add(this.selectionMenuItem);
-				algorithmsMenu.add(selectionMenu);
-				JMenu quickMenu = new JMenu("Quick");
-					this.quickMenuItem = new JMenuItem("Quick");
-						quickMenuItem.addActionListener(this);
-					quickMenu.add(this.quickMenuItem);
-				algorithmsMenu.add(quickMenu);
+				this.menuItems[0] = new JMenuItem("Bubble");
+				this.menuItems[1] = new JMenuItem("Insertion");
+				this.menuItems[2] = new JMenuItem("Merge");
+				this.menuItems[3] = new JMenuItem("Quick");
+				this.menuItems[4] = new JMenuItem("Selection");
+				this.menuItems[5] = new JMenuItem("Shell");
+				this.menuItems[6] = new JMenuItem("Bubble");
+				for (int i = 0; i < algorithmCount; i++)
+				{
+					menuItems[i].addActionListener(this);
+					algorithmsMenu.add(menuItems[i]);
+					
+				}
 			demosMenu.add(algorithmsMenu);
 			JMenu selectAlgorithmsMenu = new JMenu("Select Algorithms");
-				this.bubbleSelection = new JCheckBoxMenuItem("Bubble",false);
-				selectAlgorithmsMenu.add(this.bubbleSelection);
-				this.shellSelection = new JCheckBoxMenuItem("Shell",false);
-				selectAlgorithmsMenu.add(this.shellSelection);
-				this.insertionSelection = new JCheckBoxMenuItem("Insertion",false);
-				selectAlgorithmsMenu.add(this.insertionSelection);
-				this.selectionSelection = new JCheckBoxMenuItem("Selection",false);
-				selectAlgorithmsMenu.add(this.selectionSelection);
-				this.quickSelection = new JCheckBoxMenuItem("Quick",false);
-				selectAlgorithmsMenu.add(this.quickSelection);
+				checkBoxMenuItems[0] = new JCheckBoxMenuItem("Bubble",true);
+				checkBoxMenuItems[1] = new JCheckBoxMenuItem("Insertion",true);
+				checkBoxMenuItems[2] = new JCheckBoxMenuItem("Merge",true);
+				checkBoxMenuItems[3] = new JCheckBoxMenuItem("Quick",true);
+				checkBoxMenuItems[4] = new JCheckBoxMenuItem("Selection",true);
+				checkBoxMenuItems[5] = new JCheckBoxMenuItem("Shell",true);
+				checkBoxMenuItems[6] = new JCheckBoxMenuItem("Bubble",true);
+				for (int i = 0; i < algorithmCount; i++)
+				{
+					selectAlgorithmsMenu.add(checkBoxMenuItems[i]);
+				}
 			demosMenu.add(selectAlgorithmsMenu);
 		mb.add(demosMenu);
 	}
@@ -150,142 +141,45 @@ public class Application extends JDesktopPane implements ActionListener
 	{
 		if (e.getSource() == play)
 		{
-			if (bubbleSelection.isSelected() && bubble != null)
+			for (int i = 0; i < algorithmCount; i++)
 			{
-				bubble.play();
-			}
-			if (shellSelection.isSelected() && shell != null)
-			{
-				shell.play();
-			}
-			if (insertionSelection.isSelected() && insertion != null)
-			{
-				insertion.play();
-			}
-			if (selectionSelection.isSelected() && selection != null)
-			{
-				selection.play();
-			}
-			if (quickSelection.isSelected() && quick != null)
-			{
-				quick.play();
+				if (checkBoxMenuItems[i].isSelected() && !sortableItems[i].isClosed())
+				{
+					sortableItems[i].play();
+				}
 			}
 		}
 		if (e.getSource() == pause)
 		{
-			if (bubbleSelection.isSelected() && bubble != null)
+			for (int i = 0; i < algorithmCount; i++)
 			{
-				bubble.pause();
-			}
-			if (shellSelection.isSelected() && shell != null)
-			{
-				shell.pause();
-			}
-			if (insertionSelection.isSelected() && insertion != null)
-			{
-				insertion.pause();
-			}
-			if (selectionSelection.isSelected() && selection != null)
-			{
-				selection.pause();
-			}
-			if (quickSelection.isSelected() && quick != null)
-			{
-				quick.pause();
+				if (checkBoxMenuItems[i].isSelected() && !sortableItems[i].isClosed())
+				{
+					sortableItems[i].pause();
+				}
 			}
 		}
 		if (e.getSource() == reset)
 		{
-			if (bubbleSelection.isSelected() && bubble != null)
+			for (int i = 0; i < algorithmCount; i++)
 			{
-				bubble.reset();
-			}
-			if (shellSelection.isSelected() && shell != null)
-			{
-				shell.reset();
-			}
-			if (insertionSelection.isSelected() && insertion != null)
-			{
-				insertion.reset();
-			}
-			if (selectionSelection.isSelected() && selection != null)
-			{
-				selection.reset();
-			}
-			if (quickSelection.isSelected() && quick != null)
-			{
-				quick.reset();
+				if (checkBoxMenuItems[i].isSelected() && sortableItems[i].isClosed())
+				{
+					sortableItems[i].reset();
+				}
 			}
 		}
-		if (e.getSource() == bubbleMenuItem)
+		for (int i = 0; i < algorithmCount; i++)
 		{
-			if (bubble == null)
+			if (e.getSource() == menuItems[i])
 			{
-				bubble = new BubbleSort(globalSize);
-				this.add(bubble);
+				if (sortableItems[i].isClosed())
+				{
+					this.add(sortableItems[i]);
+				}
+				sortableItems[i].toFront();
+				sortableItems[i].setVisible(true);
 			}
-			if (bubble.isClosed())
-			{
-				this.add(bubble);
-			}
-			bubble.toFront();
-			bubble.setVisible(true);
-		}
-		if (e.getSource() == shellMenuItem)
-		{
-			if (shell == null)
-			{
-				shell = new ShellSort(globalSize);
-				this.add(shell);
-			}
-			if (shell.isClosed())
-			{
-				this.add(shell);
-			}
-			shell.toFront();
-			shell.setVisible(true);
-		}
-		if (e.getSource() == insertionMenuItem)
-		{
-			if (insertion == null)
-			{
-				insertion = new InsertionSort(globalSize);
-				this.add(insertion);
-			}
-			if (insertion.isClosed())
-			{
-				this.add(insertion);
-			}
-			insertion.toFront();
-			insertion.setVisible(true);
-		}
-		if (e.getSource() == selectionMenuItem)
-		{
-			if (selection == null)
-			{
-				selection = new SelectionSort(globalSize);
-				this.add(selection);
-			}
-			if (selection.isClosed())
-			{
-				this.add(selection);
-			}
-			selection.toFront();
-			selection.setVisible(true);
-		}
-		if (e.getSource() == quickMenuItem)
-		{
-			if (quick == null)
-			{
-				quick = new QuickSort(globalSize);
-				this.add(quick);
-			}
-			if (quick.isClosed())
-			{
-				this.add(quick);
-			}
-			quick.toFront();
-			quick.setVisible(true);
 		}
 
 		if (e.getSource() == helpMenuItem)
