@@ -154,6 +154,10 @@ public class Application extends JDesktopPane implements ActionListener
 			{
 				bubble.play();
 			}
+			if (shellSelection.isSelected() && shell != null)
+			{
+				shell.play();
+			}
 			if (insertionSelection.isSelected() && insertion != null)
 			{
 				insertion.play();
