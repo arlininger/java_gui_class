@@ -6,21 +6,34 @@ package code;
 
 import java.awt.Color;
 
+/**
+ * Implements the Bubble Sort algorithm. 
+ */
 public class BubbleSort extends Sortable
 {
 	int i;
 	int j;
 
+	/**
+	 * Create a BubbleSort object. 
+	 */
 	public BubbleSort()
 	{
 		super("Bubble Sort");
 	}
 
+	/**
+	 * Create a BubbleSort object of the given size. 
+	 * @param size The number of elements in the array to be sorted.
+	 */
 	public BubbleSort(int size)
 	{
 		super("Bubble Sort",size);
 	}
 	
+	/**
+	 * Reset the object.
+	 */
 	public void reset()
 	{
 		super.reset();
@@ -29,6 +42,9 @@ public class BubbleSort extends Sortable
 		j = 0;
 	}
 
+	/**
+	 * Take one step in BubbleSort.
+	 */
 	public boolean sortStep()
 	{
 		if (i == 0)
@@ -52,6 +68,10 @@ public class BubbleSort extends Sortable
 		return true;
 	}
 
+	/**
+	 * Return the proper color for the item at a given index.
+	 * @param index The entry to be colored.
+	 */
 	public Color getColor(int index)
 	{
 		if (index == i)

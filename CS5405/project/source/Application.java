@@ -61,11 +61,17 @@ public class Application extends JDesktopPane implements ActionListener
 		this.setupToolBar();
 	}
 	
+	/**
+	 * Returns the JToolBar that controls the application.
+	 */
 	public JToolBar getToolBar()
 	{
 		return myToolBar;
 	}
 	
+	/**
+	 * Create the toolBar and add the buttons.
+	 */
 	private void setupToolBar()
 	{
 		//Setup toolbar
@@ -77,6 +83,9 @@ public class Application extends JDesktopPane implements ActionListener
 			reset.addActionListener(this);
 	}
 
+	/**
+	 * Create the menus.
+	 */
 	private void addMenus()
 	{
 		//Setup menubar
