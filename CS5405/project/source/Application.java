@@ -50,7 +50,7 @@ public class Application extends JDesktopPane implements ActionListener
 		this.sortableItems[3] = new QuickSort();
 		this.sortableItems[4] = new SelectionSort();
 		this.sortableItems[5] = new ShellSort();
-		this.sortableItems[6] = new BubbleSort();
+		this.sortableItems[6] = new HeapSort();
 		for (int i = 0; i < algorithmCount; i++)
 		{
 			this.add(sortableItems[i]);
@@ -108,7 +108,7 @@ public class Application extends JDesktopPane implements ActionListener
 				this.menuItems[3] = new JMenuItem("Quick");
 				this.menuItems[4] = new JMenuItem("Selection");
 				this.menuItems[5] = new JMenuItem("Shell");
-				this.menuItems[6] = new JMenuItem("Bubble");
+				this.menuItems[6] = new JMenuItem("Heap");
 				for (int i = 0; i < algorithmCount; i++)
 				{
 					menuItems[i].addActionListener(this);
@@ -123,7 +123,7 @@ public class Application extends JDesktopPane implements ActionListener
 				checkBoxMenuItems[3] = new JCheckBoxMenuItem("Quick",true);
 				checkBoxMenuItems[4] = new JCheckBoxMenuItem("Selection",true);
 				checkBoxMenuItems[5] = new JCheckBoxMenuItem("Shell",true);
-				checkBoxMenuItems[6] = new JCheckBoxMenuItem("Bubble",true);
+				checkBoxMenuItems[6] = new JCheckBoxMenuItem("Heap",true);
 				for (int i = 0; i < algorithmCount; i++)
 				{
 					selectAlgorithmsMenu.add(checkBoxMenuItems[i]);
