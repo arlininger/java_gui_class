@@ -5,6 +5,7 @@
 package code;
 
 import java.awt.Color;
+import java.awt.Point;
 
 /**
  * Implements the Insertion Sort algorithm. 
@@ -53,6 +54,15 @@ public class InsertionSort extends Sortable
 		next = 1; //technically we start at 0, but the first element is always sorted.
 		current = 0;
 		working = false;
+	}
+
+	/**
+	 * Get the prefered position of this algorithm.
+	 * Used to initially display all algorithms in a somewhat tiled position.
+	 */
+	public Point getPreferedPosition()
+	{
+		return new Point(500,200);
 	}
 
 	/**

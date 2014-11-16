@@ -71,8 +71,6 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 	private void setup()
 	{
 		setLayout(new FlowLayout());
-		//JPanel buttons = new JPanel(new GridLayout(1,3));
-		//buttons.setMaximumSize(new Dimension(30,1000000)); 
 		playButton = new JButton("Play");
 		resetButton = new JButton("Reset");
 		pauseButton = new JButton("Pause");
@@ -82,9 +80,8 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 		add(playButton);
 		add(resetButton);
 		add(pauseButton);
-		//add(buttons);
 		numberGenerator = new Random();
-		setSize(300,300);
+		setSize(250,200);
 		setVisible(true);
 		toFront();
 		reset();
@@ -104,6 +101,12 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 	 * @param index Index of the entry for which to get the color.
 	 */
 	public abstract Color getColor(int index);
+
+	/**
+	 * Get the prefered position of this algorithm.
+	 * Used to initially display all algorithms in a somewhat tiled position.
+	 */
+	public abstract Point getPreferedPosition();
 
 	/**
 	 * Handler for the play button. Sets the algorithm to a running state.

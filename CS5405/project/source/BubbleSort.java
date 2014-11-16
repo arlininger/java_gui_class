@@ -5,6 +5,7 @@
 package code;
 
 import java.awt.Color;
+import java.awt.Point;
 
 /**
  * Implements the Bubble Sort algorithm. 
@@ -39,6 +40,15 @@ public class BubbleSort extends Sortable
 		super.reset();
 		i = size;
 		j = 0;
+	}
+
+	/**
+	 * Get the prefered position of this algorithm.
+	 * Used to initially display all algorithms in a somewhat tiled position.
+	 */
+	public Point getPreferedPosition()
+	{
+		return new Point(0,400);
 	}
 
 	/**

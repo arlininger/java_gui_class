@@ -22,7 +22,7 @@ class MainFrame extends JFrame
 	public MainFrame(JApplet demo)
 	{
 		super ("MainFrame");
-		setSize(600,600);
+		setSize(760,700);
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		getContentPane().add(demo);

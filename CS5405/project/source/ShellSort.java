@@ -5,6 +5,7 @@
 package code;
 
 import java.awt.Color;
+import java.awt.Point;
 
 /**
  * Implements the Shell Sort algorithm. 
@@ -45,6 +46,15 @@ public class ShellSort extends Sortable
 		offset = 0;
 		i = size;
 		j = offset;
+	}
+
+	/**
+	 * Get the prefered position of this algorithm.
+	 * Used to initially display all algorithms in a somewhat tiled position.
+	 */
+	public Point getPreferedPosition()
+	{
+		return new Point(250,0);
 	}
 
 	/**

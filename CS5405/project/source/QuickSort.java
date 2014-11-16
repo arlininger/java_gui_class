@@ -5,6 +5,7 @@
 package code;
 
 import java.awt.Color;
+import java.awt.Point;
 import java.util.*;
 
 /**
@@ -53,6 +54,15 @@ public class QuickSort extends Sortable
 		right = size-1;
 		i = 0;
 		storeIndex = 0;
+	}
+
+	/**
+	 * Get the prefered position of this algorithm.
+	 * Used to initially display all algorithms in a somewhat tiled position.
+	 */
+	public Point getPreferedPosition()
+	{
+		return new Point(0,200);
 	}
 
 	/**

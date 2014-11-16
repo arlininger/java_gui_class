@@ -16,7 +16,6 @@ public class ReferencesWindow extends JInternalFrame
 {
 	/**
 	 * Create a Help Window.
-	 * @param parent The parent window of the help window.
 	 */
 	public ReferencesWindow()
 	{
@@ -25,11 +24,20 @@ public class ReferencesWindow extends JInternalFrame
 		setSize(300,300);
 		setVisible(true);
 		String helpContent = new StringBuilder()
-			.append("References stuff\n")
+			.append("References:\n")
+			.append("\tNo code was borrowed or taken from another source. Several \n")
+			.append("functions/classes that were not taught in class were used. \n")
+			.append("Documentation on these items were found at \n")
+			.append("https://docs.oracle.com/javase/8/docs/api and \n")
+			.append("https://docs.oracle.com/javase/tutorial/. Additionally, \n")
+			.append("pseudocode found in <Insert Algorithms book> and at wikipedia was \n")
+			.append("used as a reference for algorithm implementation.\n")
 			.toString();
 		toFront();
 		//JPanel panel = new JPanel();
 		JTextArea textArea = new JTextArea(helpContent,30,30);
+		textArea.setTabSize(3);
+		textArea.setWrapStyleWord(true);
 		JScrollPane scrollArea = new JScrollPane(textArea);
 		add(scrollArea);
 	}

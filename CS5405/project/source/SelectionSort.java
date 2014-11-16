@@ -5,6 +5,7 @@
 package code;
 
 import java.awt.Color;
+import java.awt.Point;
 
 /**
  * Implements the Selection Sort algorithm. 
@@ -48,6 +49,15 @@ public class SelectionSort extends Sortable
 		current = 0;
 		currentMinimum = 0;
 		selector = 0;
+	}
+
+	/**
+	 * Get the prefered position of this algorithm.
+	 * Used to initially display all algorithms in a somewhat tiled position.
+	 */
+	public Point getPreferedPosition()
+	{
+		return new Point(500,0);
 	}
 
 	/**

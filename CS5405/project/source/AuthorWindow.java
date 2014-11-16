@@ -16,7 +16,6 @@ public class AuthorWindow extends JInternalFrame
 {
 	/**
 	 * Create a Help Window.
-	 * @param parent The parent window of the help window.
 	 */
 	public AuthorWindow()
 	{
@@ -34,6 +33,8 @@ public class AuthorWindow extends JInternalFrame
 		toFront();
 		//JPanel panel = new JPanel();
 		JTextArea textArea = new JTextArea(helpContent,30,30);
+		textArea.setTabSize(3);
+		textArea.setWrapStyleWord(true);
 		JScrollPane scrollArea = new JScrollPane(textArea);
 		add(scrollArea);
 	}

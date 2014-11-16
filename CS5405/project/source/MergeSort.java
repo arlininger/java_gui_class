@@ -5,6 +5,7 @@
 package code;
 
 import java.awt.Color;
+import java.awt.Point;
 
 /**
  * Implements the Merge Sort algorithm. 
@@ -30,10 +31,14 @@ public class MergeSort extends Sortable
 		super("Merge Sort",size);
 	}
 	
-//	public void reset()
-//	{
-//		super.reset();
-//	}
+	/**
+	 * Get the prefered position of this algorithm.
+	 * Used to initially display all algorithms in a somewhat tiled position.
+	 */
+	public Point getPreferedPosition()
+	{
+		return new Point(250,200);
+	}
 
 	/**
 	 * Unused. This function exists only to satisfy the requirements to extend Sortable.

@@ -5,6 +5,7 @@
 package code;
 
 import java.awt.Color;
+import java.awt.Point;
 
 /**
  * Implements the Heap Sort algorithm. 
@@ -109,6 +110,15 @@ public class HeapSort extends Sortable
 			repaint();
 			sleep();
 		}
+	}
+
+	/**
+	 * Get the prefered position of this algorithm.
+	 * Used to initially display all algorithms in a somewhat tiled position.
+	 */
+	public Point getPreferedPosition()
+	{
+		return new Point(0,0);
 	}
 
 	/**

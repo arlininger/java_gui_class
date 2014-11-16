@@ -58,6 +58,8 @@ public class Application extends JDesktopPane implements ActionListener
 		{
 			this.add(sortableItems[i]);
 			sortableItems[i].setVisible(true);
+			sortableItems[i].setLocation(sortableItems[i].getPreferedPosition());
+			sortableItems[i].toFront();
 		}
 
 		this.addMenus();
@@ -175,7 +177,7 @@ public class Application extends JDesktopPane implements ActionListener
 		{
 			for (int i = 0; i < algorithmCount; i++)
 			{
-				if (checkBoxMenuItems[i].isSelected() && sortableItems[i].isClosed())
+				if (checkBoxMenuItems[i].isSelected() && !sortableItems[i].isClosed())
 				{
 					sortableItems[i].reset();
 				}
@@ -188,6 +190,7 @@ public class Application extends JDesktopPane implements ActionListener
 				if (sortableItems[i].isClosed())
 				{
 					this.add(sortableItems[i]);
+					sortableItems[i].setLocation(sortableItems[i].getPreferedPosition());
 				}
 				sortableItems[i].toFront();
 				sortableItems[i].setVisible(true);
