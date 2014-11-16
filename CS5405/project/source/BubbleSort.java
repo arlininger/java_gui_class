@@ -37,7 +37,6 @@ public class BubbleSort extends Sortable
 	public void reset()
 	{
 		super.reset();
-		System.out.println("Bubble Reset");
 		i = size;
 		j = 0;
 	}
@@ -49,7 +48,6 @@ public class BubbleSort extends Sortable
 	{
 		if (i == 0)
 		{
-			System.out.println("Complete");
 			return false;
 		}
 		if (array[j] > array[j+1])

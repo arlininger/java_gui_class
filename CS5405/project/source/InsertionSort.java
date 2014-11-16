@@ -6,6 +6,9 @@ package code;
 
 import java.awt.Color;
 
+/**
+ * Implements the Insertion Sort algorithm. 
+ */
 public class InsertionSort extends Sortable
 {
 	/**
@@ -23,16 +26,27 @@ public class InsertionSort extends Sortable
 	 */
 	boolean working;
 
+	
+	/**
+	 * Create a InsertionSort object. 
+	 */
 	public InsertionSort()
 	{
 		super("Insertion Sort");
 	}
 
+	/**
+	 * Create a InsertionSort object. 
+	 * @param size The number of elements in the array to be sorted.
+	 */
 	public InsertionSort(int size)
 	{
 		super("Insertion Sort",size);
 	}
 	
+	/**
+	 * Reset the internal data.
+	 */
 	public void reset()
 	{
 		super.reset();
@@ -41,6 +55,9 @@ public class InsertionSort extends Sortable
 		working = false;
 	}
 
+	/**
+	 * Take one more step in the Insertion sort algorithm.
+	 */
 	public boolean sortStep()
 	{
 		if (working == false && next == size)
@@ -68,6 +85,10 @@ public class InsertionSort extends Sortable
 		return true;
 	}
 
+	/**
+	 * Return the proper color for the item at a given index.
+	 * @param index The entry to be colored.
+	 */
 	public Color getColor(int index)
 	{
 		if (index == current)

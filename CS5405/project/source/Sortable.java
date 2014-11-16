@@ -11,6 +11,10 @@ import java.util.concurrent.*;
 import java.util.concurrent.locks.*;
 import javax.swing.*;
 
+/**
+ * Implements a sorting algorithm for visualization. This class should be extended
+ * to implement a particular algorithm.
+ */
 public abstract class Sortable extends JInternalFrame implements Runnable, ActionListener
 {
 	int[] array;
@@ -21,14 +25,24 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 	JButton resetButton;
 	JButton pauseButton;
 
-//	Lock lock = new ReentrantLock();
-
+	/**
+	 * Create an instance of the sortable object. This should always be called by the extending algorithm's constructor
+	 * to properly set up the object.
+	 * @param name The name of the window to be created.
+	 */
 	public Sortable(String name)
 	{
 		super(name,true,true,true,true);
 		this.size = 100;
 		setup();
 	}
+
+	/**
+	 * Create an instance of the sortable object. This should always be called by the extending algorithm's constructor
+	 * to properly set up the object.
+	 * @param name The name of the window to be created.
+	 * @param size The number of elements to be sorted.
+	 */
 	public Sortable(String name, int size)
 	{
 		super(name,true,true,true,true);
@@ -36,6 +50,12 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 		setup();
 	}
 
+	/**
+	 * A helper function. Since most sort algorithms depend on swapping the position of elements in an array,
+	 * this function is provided for implementing algorithms to maintain simplicity.
+	 * @param i Index of first element to be exchanged.
+	 * @param j Index of second element to be exchanged.
+	 */
 	void swap(int i, int j)
 	{
 		int t = array[i];
@@ -44,6 +64,10 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 		return;
 	}
 
+	/**
+	 * Set up the sortable object. This function should only be called by the constructor. It accomplishes
+	 * most tasks that would normally be done in the constructor.
+	 */
 	private void setup()
 	{
 		setLayout(new FlowLayout());
@@ -77,24 +101,33 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 
 	/**
 	 * Get the color of a line based on the algorithm in use.
+	 * @param index Index of the entry for which to get the color.
 	 */
 	public abstract Color getColor(int index);
 
+	/**
+	 * Handler for the play button. Sets the algorithm to a running state.
+	 */
 	public void play()
 	{
 		running = true;
-		//System.out.println("play");
 	}
 
+	/**
+	 * Handler for the pause button. Sets the algorithm to a paused state.
+	 */
 	public void pause()
 	{
 		running = false;
-		//System.out.println("pause");
 	}
 
+	/**
+	 * Handler for the reset button. Resets the algorithm to an un-sorted and non-running state. 
+	 * It is expected that implementing algorithms will overload this function to reset their own
+	 * internal data. They should always ensure this function is called.
+	 */
 	public void reset()
 	{
-		//System.out.println("reset");
 		running = false;
 		array = new int[this.size];
 		for (int i = 0; i < this.size; i++)
@@ -110,11 +143,21 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 		}
 	}
 
+	/**
+	 * Helper function for accessing the array. Intended to be overloaded in the event that an 
+	 * implementing algorithm needs to display items from an alternate array. MergeSort may be
+	 * an example of this need.
+	 * @param i Index of element to get.
+	 */
 	public int getIndex(int i)
 	{
 		return array[i];
 	}
 
+	/**
+	 * Draw the elements in the array.
+	 * @param g Graphics object to use for painting.
+	 */
 	public void paint(Graphics g)
 	{
 		super.paint(g);
@@ -126,6 +169,10 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 		}
 	}
 
+	/**
+	 * Handle all actions in this object.
+	 * @param e Event to be handled.
+	 */
 	public void actionPerformed(ActionEvent e)
 	{
 		if (e.getSource() == playButton)
@@ -142,15 +189,25 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 
 	}
 
+	/**
+	 * Verify the array is properly sorted.
+	 */
 	boolean verify()
 	{
 		for (int i = 1; i < size; i++)
 		{
-			if (array[i-1] > array[i]) return false;
+			if (array[i-1] > array[i]) 
+			{
+				return false;
+			}
 		}
 		return true;
 	}
 
+	/**
+	 * Main loop for the thread. In most instances, this main loop is used. It will run the sortStep function once on each pass.
+	 * If sortStep returns true (indicating another pass is needed), it performs a short sleep and runs another iteration.
+	 */
 	public void run()
 	{
 		while (true)
@@ -164,6 +221,12 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 		}
 	}
 
+	/**
+	 * Helper function to handle sleeping. This provides a consistant sleep for 
+	 * all algorithms.Depending on whether the algorithm identifies as actively running,
+	 * this function will sleep for a short or long period of time. The purpose of varrying the sleep time is
+	 * to avoid using more cpu than necessary when the algorithm is paused or completed.
+	 */
 	void sleep()
 	{
 		try

@@ -7,6 +7,9 @@ package code;
 import java.awt.Color;
 import java.util.*;
 
+/**
+ * Implements the Quick Sort algorithm. 
+ */
 public class QuickSort extends Sortable
 {
 	boolean sorting;
@@ -18,16 +21,26 @@ public class QuickSort extends Sortable
 	int storeIndex;
 	Stack<QuickSortStage> st;
 
+	/** 
+	 * Create a QuickSort object.
+	 */
 	public QuickSort()
 	{
 		super("Quick Sort");
 	}
 
+	/** 
+	 * Create a QuickSort object.
+	 * @param size Number of elements to sort.
+	 */
 	public QuickSort(int size)
 	{
 		super("Quick Sort",size);
 	}
 	
+	/**
+	 * Reset the internal data.
+	 */
 	public void reset()
 	{
 		super.reset();
@@ -40,23 +53,23 @@ public class QuickSort extends Sortable
 		right = size-1;
 		i = 0;
 		storeIndex = 0;
-		//System.out.println("Quick Reset");
 	}
 
+	/**
+	 * Take one step in QuickSort.
+	 */
 	public boolean sortStep()
 	{
 		if (st.empty() && sorting == false)
 		{
 //			for(int i = 0; i < size; i++)
 //			{
-//				System.out.printf("%d %d\n",i,array[i]);
 //			}
 //			while (true) ;
 			return false;
 		}
 		if (!sorting)
 		{
-			//System.out.println("Pivoting");
 			QuickSortStage temp = st.pop();
 			left = temp.lowerBound;
 			right = temp.upperBound;
@@ -66,10 +79,8 @@ public class QuickSort extends Sortable
 			i = left;
 			swap(pivot,right);
 			storeIndex = left;
-			System.out.printf("left %d, right %d, pivot %d pivotValue %d\n",left, right, pivot, pivotValue);
 		} else if (i < right)
 		{
-			//System.out.format("Sorting position %d %n", i);
 			if (array[i] < pivotValue)
 			{
 				swap(i,storeIndex);
@@ -78,24 +89,37 @@ public class QuickSort extends Sortable
 			i++;
 		} else { //array split in half now, shift pivot back to location
 			swap(storeIndex,right);
-			System.out.printf("%d %d\n",storeIndex,array[storeIndex]);
 			if (storeIndex == array[storeIndex])
 			{
-				if (storeIndex+1 <= right) st.push(new QuickSortStage(storeIndex+1,right));
-				if (storeIndex-1 >= left) st.push(new QuickSortStage(left,storeIndex-1));
+				if (storeIndex+1 <= right) 
+				{
+					st.push(new QuickSortStage(storeIndex+1,right));
+				}
+				if (storeIndex-1 >= left) 
+				{
+					st.push(new QuickSortStage(left,storeIndex-1));
+				}
 			} else {
-				System.out.printf("Got bad result\n");
 			}
 			sorting = false;
 		}
 		return true;
 	}
 
+	/**
+	 * Return the proper color for the item at a given index.
+	 * @param index The entry to be colored.
+	 */
 	public Color getColor(int index)
 	{
 		return Color.BLACK;
 	}
 
+	/**
+	 * Helper function to select a pivot point within the given range.
+	 * @param left Lower inclusive bound.
+	 * @param right Upper inclusive bound.
+	 */
 	private int choosePivot(int left, int right)
 	{
 		return right;

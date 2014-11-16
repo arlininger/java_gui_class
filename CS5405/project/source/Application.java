@@ -193,15 +193,17 @@ public class Application extends JDesktopPane implements ActionListener
 
 		if (e.getSource() == helpMenuItem)
 		{
-//			if (myHelpWindow == null)
-//			{
-//				myHelpWindow = new HelpWindow();
-//			}
-//			if (myHelpWindow.isClosed())
-//			{
-//			}
-//			myHelpWindow.toFront();
-//			myHelpWindow.setVisible(true);
+			if (myHelpWindow == null)
+			{
+				myHelpWindow = new HelpWindow();
+				this.add(myHelpWindow);
+			}
+			else if (myHelpWindow.isClosed())
+			{
+				this.add(myHelpWindow);
+			}
+			myHelpWindow.toFront();
+			myHelpWindow.setVisible(true);
 		}
 	}
 }

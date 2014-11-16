@@ -36,7 +36,6 @@ public class HeapSort extends Sortable
 	public void reset()
 	{
 		super.reset();
-		System.out.println("Heap Reset");
 		heapSize = size;
 
 	}
@@ -105,7 +104,6 @@ public class HeapSort extends Sortable
 			if (running)
 			{
 				sort();
-				System.out.printf("No Longer running\n");
 				running = false;
 			}
 			repaint();

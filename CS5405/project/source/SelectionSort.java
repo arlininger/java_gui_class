@@ -6,72 +6,89 @@ package code;
 
 import java.awt.Color;
 
+/**
+ * Implements the Selection Sort algorithm. 
+ */
 public class SelectionSort extends Sortable
 {
 	/**
 	 * Holds the offset of the element currently being sorted.
 	 */
 	int current;
-	int current_min;
+	int currentMinimum;
 	int selector;
 	/**
 	 * Holds whether there is an element currently being sorted.
 	 */
 	boolean working;
 
+	/** 
+	 * Create a SelectionSort object.
+	 */
 	public SelectionSort()
 	{
 		super("SelectionSort");
 	}
 
+	/** 
+	 * Create a SelectionSort object.
+	 * @param size Number of elements to sort.
+	 */
 	public SelectionSort(int size)
 	{
 		super("SelectionSort",size);
 	}
 	
+	/**
+	 * Reset the internal data.
+	 */
 	public void reset()
 	{
 		super.reset();
 		current = 0;
-		current_min = 0;
+		currentMinimum = 0;
 		selector = 0;
 	}
 
+	/**
+	 * Take one step in SelectionSort.
+	 */
 	public boolean sortStep()
 	{
-	//	System.out.printf("Current %d\nMin: %d\nSelector: %d\n", current, current_min, selector);
 		selector++;
 		if (current == size)
 		{
-			if (verify()) System.out.printf("Selection Verified\n");
 			return false;
 		}
 		if (selector == size)
 		{ //swap the elements
-			//array[current] ^= array[current_min];
-			//array[current_min] ^= array[current];
-			//array[current] ^= array[current_min];
-			swap(current,current_min);
+			//array[current] ^= array[currentMinimum];
+			//array[currentMinimum] ^= array[current];
+			//array[current] ^= array[currentMinimum];
+			swap(current,currentMinimum);
 			current++;
-			current_min = current;
+			currentMinimum = current;
 			selector = current;
-		} else if (array[current_min] > array[selector])
+		} else if (array[currentMinimum] > array[selector])
 		{
-			current_min = selector;
+			currentMinimum = selector;
 		}
 		return true;
 	}
 
+	/**
+	 * Return the proper color for the item at a given index.
+	 * @param index The entry to be colored.
+	 */
 	public Color getColor(int index)
 	{
-		//System.out.printf("Current %d\nMin: %d\nSelector: %d\n", current, current_min, selector);
 		if (index < current)
 		{
 			return Color.GREEN;
 		} else if (index == current)
 		{
 			return Color.BLUE;
-		} else if (index == current_min)
+		} else if (index == currentMinimum)
 		{
 			return Color.YELLOW;
 		} else if (index == selector)

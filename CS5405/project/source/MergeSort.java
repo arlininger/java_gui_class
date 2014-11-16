@@ -6,30 +6,50 @@ package code;
 
 import java.awt.Color;
 
+/**
+ * Implements the Merge Sort algorithm. 
+ */
 public class MergeSort extends Sortable
 {
 	int sortedIndex;
 
+	/** 
+	 * Create a MergeSort object.
+	 */
 	public MergeSort()
 	{
 		super("Merge Sort");
 	}
 
+	/** 
+	 * Create a MergeSort object.
+	 * @param size Number of elements to sort.
+	 */
 	public MergeSort(int size)
 	{
 		super("Merge Sort",size);
 	}
 	
-	public void reset()
-	{
-		super.reset();
-	}
+//	public void reset()
+//	{
+//		super.reset();
+//	}
 
+	/**
+	 * Unused. This function exists only to satisfy the requirements to extend Sortable.
+	 * Since MergeSort re-implements run(), this is not needed. 
+	 */
 	public boolean sortStep()
 	{
 		return true;
 	}
 
+	/**
+	 * The main function for MergeSort. This function will recursively sort the array between elements
+	 * lower and upper.
+	 * @param lower The lower bound (inclusive) of the range to sort.
+	 * @param upper The upper bound (inclusive) of the range to sort.
+	 */
 	private void sort(int lower, int upper)
 	{
 		if (upper - lower >= 1)
@@ -41,23 +61,25 @@ public class MergeSort extends Sortable
 		}
 	}
 
+	/**
+	 * Merge function for merge Sort. Since MergeSort does not use the normal
+	 * run() method of Sortable, this function must call sleep() and repaint()
+	 * after every element is merged.
+	 */
 	private void merge(int lower, int midpoint, int upper)
 	{
 		int newArray[] = new int[upper-lower+1];
 		int leftIndex = lower;
 		int rightIndex = midpoint + 1;
 		int nextSpot = 0;
-		//System.out.printf("Merge: %d %d %d\n",lower, midpoint, upper);
 		while (leftIndex <= midpoint && rightIndex <= upper)
 		{
 			if (array[leftIndex] < array[rightIndex])
 			{
 				newArray[nextSpot] = array[leftIndex];
-				//System.out.printf("Adding value %d in spot %d ovar %d\n",newArray[nextSpot],nextSpot,array[rightIndex]);
 				leftIndex++;
 			} else {
 				newArray[nextSpot] = array[rightIndex];
-				//System.out.printf("Adding value %d in spot %d over %d\n",newArray[nextSpot],nextSpot,array[leftIndex]);
 				rightIndex++;
 			}
 			nextSpot++;
@@ -67,7 +89,6 @@ public class MergeSort extends Sortable
 		while (leftIndex <= midpoint)
 		{
 			newArray[nextSpot] = array[leftIndex];
-				//System.out.printf("Adding value %d in spot %d\n",newArray[nextSpot],nextSpot);
 			nextSpot++;
 			leftIndex++;
 			repaint();
@@ -76,7 +97,6 @@ public class MergeSort extends Sortable
 		while (rightIndex <= upper)
 		{
 			newArray[nextSpot] = array[rightIndex];
-				//System.out.printf("Adding value %d in spot %d\n",newArray[nextSpot],nextSpot);
 			nextSpot++;
 			rightIndex++;
 			repaint();
@@ -85,12 +105,15 @@ public class MergeSort extends Sortable
 		for (int i = lower; i <= upper; i++)
 		{
 			array[i] = newArray[i-lower];
-			//System.out.printf("    %d\n",array[i]);
 			repaint();
 			sleep();
 		}
 	}
 
+	/**
+	 * Main thread loop for MergeSort. This overloads the run function in
+	 * Sortable. 
+	 */
 	public void run()
 	{
 		while (true)
@@ -104,6 +127,10 @@ public class MergeSort extends Sortable
 		}
 	}
 
+	/**
+	 * Return the proper color for the item at a given index.
+	 * @param index The entry to be colored.
+	 */
 	public Color getColor(int index)
 	{
 		return Color.BLACK;

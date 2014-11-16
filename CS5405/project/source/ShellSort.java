@@ -6,6 +6,9 @@ package code;
 
 import java.awt.Color;
 
+/**
+ * Implements the Shell Sort algorithm. 
+ */
 public class ShellSort extends Sortable
 {
 	boolean sorting;
@@ -14,16 +17,26 @@ public class ShellSort extends Sortable
 	int offset;
 	int i,j;
 
+	/** 
+	 * Create a ShellSort object.
+	 */
 	public ShellSort()
 	{
 		super("Shell Sort");
 	}
 
+	/** 
+	 * Create a ShellSort object.
+	 * @param size Number of elements to sort.
+	 */
 	public ShellSort(int size)
 	{
 		super("Shell Sort",size);
 	}
 	
+	/**
+	 * Reset the internal data.
+	 */
 	public void reset()
 	{
 		super.reset();
@@ -32,14 +45,15 @@ public class ShellSort extends Sortable
 		offset = 0;
 		i = size;
 		j = offset;
-		System.out.println("Shell Reset");
 	}
 
+	/**
+	 * Take one step in ShellSort.
+	 */
 	public boolean sortStep()
 	{
 		if (currentSpread <= 0)
 		{
-			System.out.println("Complete");
 			return false;
 		}
 		if (array[j] > array[j + currentSpread])
@@ -57,17 +71,19 @@ public class ShellSort extends Sortable
 			offset++;
 			j = offset;
 			i = size;
-			System.out.printf("Moving to offset %d\n",offset);
 		}
 		if (offset == currentSpread)
 		{ //Update current spread
 			currentSpread -= 2;
 			offset = 0;
-			System.out.printf("Moving to stepsize %d\n",currentSpread);
 		}
 		return true;
 	}
 
+	/**
+	 * Return the proper color for the item at a given index.
+	 * @param index The entry to be colored.
+	 */
 	public Color getColor(int index)
 	{
 		if (index == i)
