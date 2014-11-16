@@ -20,12 +20,15 @@ public class Application extends JDesktopPane implements ActionListener
 
 	//About menu items
 	JMenuItem authorMenuItem;
-	JMenuItem problemMenuItem;
+	JMenuItem descriptionMenuItem;
 	JMenuItem referencesMenuItem;
 	JMenuItem helpMenuItem;
 
 	//Help window
 	HelpWindow myHelpWindow = null;
+	DescriptionWindow myDescriptionWindow = null;
+	AuthorWindow myAuthorWindow = null;
+	ReferencesWindow myReferencesWindow = null;
 
 	//ToolBar
 	JToolBar myToolBar = new JToolBar("Controls");
@@ -97,9 +100,9 @@ public class Application extends JDesktopPane implements ActionListener
 			authorMenuItem = new JMenuItem("Author");
 				authorMenuItem.addActionListener(this);
 			aboutMenu.add(authorMenuItem);
-			problemMenuItem = new JMenuItem("Problem Description");
-				problemMenuItem.addActionListener(this);
-			aboutMenu.add(problemMenuItem);
+			descriptionMenuItem = new JMenuItem("Problem Description");
+				descriptionMenuItem.addActionListener(this);
+			aboutMenu.add(descriptionMenuItem);
 			referencesMenuItem = new JMenuItem("References");
 				referencesMenuItem.addActionListener(this);
 			aboutMenu.add(referencesMenuItem);
@@ -204,6 +207,48 @@ public class Application extends JDesktopPane implements ActionListener
 			}
 			myHelpWindow.toFront();
 			myHelpWindow.setVisible(true);
+		}
+		if (e.getSource() == descriptionMenuItem)
+		{
+			if (myDescriptionWindow == null)
+			{
+				myDescriptionWindow = new DescriptionWindow();
+				this.add(myDescriptionWindow);
+			}
+			else if (myDescriptionWindow.isClosed())
+			{
+				this.add(myDescriptionWindow);
+			}
+			myDescriptionWindow.toFront();
+			myDescriptionWindow.setVisible(true);
+		}
+		if (e.getSource() == authorMenuItem)
+		{
+			if (myAuthorWindow == null)
+			{
+				myAuthorWindow = new AuthorWindow();
+				this.add(myAuthorWindow);
+			}
+			else if (myAuthorWindow.isClosed())
+			{
+				this.add(myAuthorWindow);
+			}
+			myAuthorWindow.toFront();
+			myAuthorWindow.setVisible(true);
+		}
+		if (e.getSource() == referencesMenuItem)
+		{
+			if (myReferencesWindow == null)
+			{
+				myReferencesWindow = new ReferencesWindow();
+				this.add(myReferencesWindow);
+			}
+			else if (myReferencesWindow.isClosed())
+			{
+				this.add(myReferencesWindow);
+			}
+			myReferencesWindow.toFront();
+			myReferencesWindow.setVisible(true);
 		}
 	}
 }
