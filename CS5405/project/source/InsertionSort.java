@@ -107,6 +107,9 @@ public class InsertionSort extends Sortable
 		} else if (index == next)
 		{
 			return Color.RED;
+		} else if (index < next)
+		{
+			return Color.GREEN;
 		} else {
 			return Color.BLACK;
 		}

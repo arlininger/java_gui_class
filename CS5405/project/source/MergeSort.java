@@ -12,7 +12,13 @@ import java.awt.Point;
  */
 public class MergeSort extends Sortable
 {
-	int sortedIndex;
+
+	/**
+	 * Holds the lowest element guaranteed to be sorted.
+	 * All elements in the array less than or equal to
+	 * sortedIndex are sorted amongst themselves.
+	 */
+	int sortedIndex = 0;
 
 	/** 
 	 * Create a MergeSort object.
@@ -31,6 +37,11 @@ public class MergeSort extends Sortable
 		super("Merge Sort",size);
 	}
 	
+	public void reset()
+	{
+		super.reset();
+		sortedIndex = 0;
+	}
 	/**
 	 * Get the prefered position of this algorithm.
 	 * Used to initially display all algorithms in a somewhat tiled position.
@@ -63,6 +74,13 @@ public class MergeSort extends Sortable
 			sort(lower, midpoint);
 			sort(midpoint + 1, upper);
 			merge(lower, midpoint, upper);
+			if (lower == 0)
+			{ //sortedIndex indicates the top of the currently sorted array.
+			  //This is only true if we merged from zero to the current upper.
+				sortedIndex = upper;
+			}
+			repaint();
+			sleep();
 		}
 	}
 
@@ -138,7 +156,12 @@ public class MergeSort extends Sortable
 	 */
 	public Color getColor(int index)
 	{
-		return Color.BLACK;
+		if (index <= sortedIndex)
+		{
+			return Color.GREEN;
+		} else {
+			return Color.BLACK;
+		}
 	}
 
 }

@@ -85,6 +85,9 @@ public class BubbleSort extends Sortable
 		if (index == i)
 		{
 			return Color.BLUE;
+		} else if (index > i)
+		{
+			return Color.GREEN;
 		} else if (index == j)
 		{
 			return Color.RED;

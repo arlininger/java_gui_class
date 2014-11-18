@@ -13,6 +13,13 @@ import java.util.*;
  */
 public class QuickSort extends Sortable
 {
+	/**
+	 * Holds the lowest element guaranteed to be sorted.
+	 * All elements in the array less than or equal to
+	 * sortedIndex are sorted amongst themselves.
+	 */
+	int sortedIndex = 0;
+
 	boolean sorting;
 	int pivot;
 	int pivotValue;
@@ -71,11 +78,9 @@ public class QuickSort extends Sortable
 	public boolean sortStep()
 	{
 		if (st.empty() && sorting == false)
-		{
-//			for(int i = 0; i < size; i++)
-//			{
-//			}
-//			while (true) ;
+		{ //Quicksort doesn't lend itself to identifying the last round as sorted.
+		  //Identify that the entire array is sorted at this point.
+			sortedIndex = size;
 			return false;
 		}
 		if (!sorting)
@@ -89,6 +94,7 @@ public class QuickSort extends Sortable
 			i = left;
 			swap(pivot,right);
 			storeIndex = left;
+			sortedIndex = left-1;
 		} else if (i < right)
 		{
 			if (array[i] < pivotValue)
@@ -99,17 +105,13 @@ public class QuickSort extends Sortable
 			i++;
 		} else { //array split in half now, shift pivot back to location
 			swap(storeIndex,right);
-			if (storeIndex == array[storeIndex])
+			if (storeIndex+1 <= right) 
 			{
-				if (storeIndex+1 <= right) 
-				{
-					st.push(new QuickSortStage(storeIndex+1,right));
-				}
-				if (storeIndex-1 >= left) 
-				{
-					st.push(new QuickSortStage(left,storeIndex-1));
-				}
-			} else {
+				st.push(new QuickSortStage(storeIndex+1,right));
+			}
+			if (storeIndex-1 >= left) 
+			{
+				st.push(new QuickSortStage(left,storeIndex-1));
 			}
 			sorting = false;
 		}
@@ -122,7 +124,14 @@ public class QuickSort extends Sortable
 	 */
 	public Color getColor(int index)
 	{
-		return Color.BLACK;
+		if (index <= sortedIndex)
+		{
+			return Color.GREEN;
+		} else if (index == pivot) {
+			return Color.BLUE;
+		} else {
+			return Color.BLACK;
+		}
 	}
 
 	/**

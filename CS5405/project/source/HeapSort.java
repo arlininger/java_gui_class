@@ -159,7 +159,12 @@ public class HeapSort extends Sortable
 	 */
 	public Color getColor(int index)
 	{
+		if (index >= heapSize)
+		{
+			return Color.GREEN;
+		} else {
 			return Color.BLACK;
+		}
 	}
 
 }

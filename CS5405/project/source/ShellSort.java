@@ -102,6 +102,9 @@ public class ShellSort extends Sortable
 		} else if (index == j)
 		{
 			return Color.RED;
+		} else if ((currentSpread == 1 && index > i) || currentSpread <= 0) 
+		{//Only color green on last pass or completed state
+			return Color.GREEN;
 		} else {
 			return Color.BLACK;
 		}
