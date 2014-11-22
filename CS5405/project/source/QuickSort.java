@@ -61,6 +61,7 @@ public class QuickSort extends Sortable
 		right = size-1;
 		i = 0;
 		storeIndex = 0;
+		sortedIndex = 0;
 	}
 
 	/**

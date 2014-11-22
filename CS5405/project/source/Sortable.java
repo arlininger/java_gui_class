@@ -25,6 +25,10 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 	JButton resetButton;
 	JButton pauseButton;
 
+	boolean resetRequested;
+
+	ExecutorService executor = null;
+
 	/**
 	 * Create an instance of the sortable object. This should always be called by the extending algorithm's constructor
 	 * to properly set up the object.
@@ -86,8 +90,8 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 		toFront();
 		reset();
 		running = false;
-		Executor executor = Executors.newCachedThreadPool();
-		executor.execute(this);
+		//executor = Executors.newFixedThreadPool(1);
+		//executor.execute(this);
 	}
 
 	/**
@@ -114,6 +118,11 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 	public void play()
 	{
 		running = true;
+		if (executor == null)
+		{
+			executor = Executors.newFixedThreadPool(1);
+			executor.execute(this);
+		}
 	}
 
 	/**
@@ -131,6 +140,26 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 	 */
 	public void reset()
 	{
+		resetRequested = true;
+		if (executor != null)
+		{
+			executor.shutdown();
+			try {
+				if (!executor.awaitTermination(1,TimeUnit.SECONDS))
+				{
+					executor.shutdownNow();
+					if (!executor.awaitTermination(1,TimeUnit.SECONDS))
+					{
+						System.out.printf("Failed to kill threads\n");
+					}
+				}
+			} catch (InterruptedException ex)
+			{
+			}
+		}
+		executor = null;
+		resetRequested = false; //Thread reset is complete
+
 		running = false;
 		array = new int[this.size];
 		for (int i = 0; i < this.size; i++)
@@ -208,20 +237,19 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 	}
 
 	/**
-	 * Main loop for the thread. In most instances, this main loop is used. It will run the sortStep function once on each pass.
-	 * If sortStep returns true (indicating another pass is needed), it performs a short sleep and runs another iteration.
+	 * Main loop for the thread. In most instances, this main loop is used. 
+	 * It will run the sortStep function once on each pass.
+	 * If sortStep returns true (indicating another pass is needed), it 
+	 * performs a short sleep and runs another iteration.
 	 */
 	public void run()
 	{
-		while (true)
+		while (resetRequested == false && sortStep())
 		{
-			if (sortStep() == false)
-			{
-				running = false;
-			}
 			repaint();
 			sleep(); //See function below
 		}
+		running = false;
 	}
 
 	/**
