@@ -13,6 +13,11 @@ import java.awt.Point;
 public class HeapSort extends Sortable
 {
 	int heapSize;
+	boolean buildingHeap;
+	boolean sorting;
+	boolean heapifying;
+	int heapifyIndex;
+	int heapBuildIndex;
 
 	/**
 	 * Create a HeapSort object. 
@@ -38,78 +43,11 @@ public class HeapSort extends Sortable
 	{
 		super.reset();
 		heapSize = size;
-
-	}
-
-	/**
-	 * Re-insert the item at index start. Presumes the trees below start are
-	 * already properly in a max-heap.
-	 */
-	void maxHeapify(int start)
-	{
-		int l = leftChild(start);
-		int r = rightChild(start);
-		int largest = start;
-		if (l < heapSize && l > 0 && array[l] > array[start])
-		{
-			largest = l;
-		}
-		if (r < heapSize && r > 0 && array[r] > array[largest])
-		{
-			largest = r;
-		}
-		if (largest != start)
-		{
-			swap(largest,start);
-			repaint();
-			sleep();
-			maxHeapify(largest);
-		}
-	}
-
-	/**
-	 * Turns the entire array in to a heap.
-	 */
-	void buildMaxHeap()
-	{
-		for (int i = size-1; i >= 0; i--)
-		{
-			maxHeapify(i);
-		}
-	}
-
-	/**
-	 * Sorts the elements using the MaxHeap algorithm. This does include delays to allow
-	 * for proper visualization.
-	 */
-	void sort()
-	{
-		buildMaxHeap();
-		for (int i = size-1; i >= 0; i--)
-		{
-			swap(0,i);
-			repaint();
-			sleep();
-			heapSize--;
-			maxHeapify(0);
-		}
-	}
-
-	/**
-	 * The main loop in the thread. This overrides the normal main loop for most Sortable objects.
-	 */
-	public void run()
-	{
-		while (true)
-		{
-			if (running)
-			{
-				sort();
-				running = false;
-			}
-			repaint();
-			sleep();
-		}
+		buildingHeap = true;
+		sorting = true;
+		heapifying = false;
+		heapifyIndex = size-1;
+		heapBuildIndex = size-1;
 	}
 
 	/**
@@ -122,11 +60,63 @@ public class HeapSort extends Sortable
 	}
 
 	/**
-	 * Unused.
+	 * 
 	 */
 	public boolean sortStep()
 	{
-		return true;
+		if (heapifying)
+		{
+			System.out.printf("Heapifying at index %d\n",heapifyIndex);
+			//figure out heapifying
+			int l = leftChild(heapifyIndex);
+			int r = rightChild(heapifyIndex);
+			int largest = heapifyIndex;
+			if (l < heapSize && l > 0 && array[l] > array[heapifyIndex])
+			{
+				largest = l;
+			}
+			if (r < heapSize && r > 0 && array[r] > array[largest])
+			{
+				largest = r;
+			}
+			if (largest != heapifyIndex)
+			{
+				swap(largest,heapifyIndex);
+				heapifyIndex = largest;
+			} else {
+				heapifying = false;
+			}
+			return true;
+		} else if (buildingHeap)
+		{
+			System.out.printf("Building Heap at index %d\n",heapBuildIndex);
+			heapifyIndex = heapBuildIndex-1;
+			heapBuildIndex--;
+			heapifying = true;
+			if (heapifyIndex < 0)
+			{
+				heapifying = false;
+				buildingHeap = false;
+//				sorting = true;
+				heapSize = size;
+			}
+			return true;
+		} else if (sorting)
+		{
+			System.out.printf("Sorting at size %d\n",heapSize);
+			swap(0,heapSize-1);
+			heapSize--;
+//			sorting = false;
+			heapifying = true;
+			heapifyIndex = 0;
+			if (heapSize <= 0)
+			{
+				running = false;
+				return false;
+			}
+			return true;
+		}
+		return false;
 	}
 
 	/**
