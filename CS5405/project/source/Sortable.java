@@ -249,6 +249,11 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 			repaint();
 			sleep(); //See function below
 		}
+		if (!verify())
+		{
+			System.out.printf("Failed to verify\n");
+		}
+		repaint();
 		running = false;
 	}
 

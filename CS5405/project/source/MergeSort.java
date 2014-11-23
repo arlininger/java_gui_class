@@ -6,6 +6,7 @@ package code;
 
 import java.awt.Color;
 import java.awt.Point;
+import java.util.*;
 
 /**
  * Implements the Merge Sort algorithm. 
@@ -19,6 +20,13 @@ public class MergeSort extends Sortable
 	 * sortedIndex are sorted amongst themselves.
 	 */
 	int sortedIndex = 0;
+	int tempArray[];
+	int stepSize;
+	int leftIndex;
+	int rightIndex;
+	int leftLimit;
+	int rightLimit;
+	int tempIndex;
 
 	/** 
 	 * Create a MergeSort object.
@@ -40,7 +48,13 @@ public class MergeSort extends Sortable
 	public void reset()
 	{
 		super.reset();
-		sortedIndex = 0;
+		tempArray = new int[size];
+		stepSize = 1;
+		leftIndex = 0;
+		rightIndex = stepSize;
+		leftLimit = rightIndex-1;
+		rightLimit = leftLimit + stepSize;
+		tempIndex = 0;
 	}
 	/**
 	 * Get the prefered position of this algorithm.
@@ -52,102 +66,60 @@ public class MergeSort extends Sortable
 	}
 
 	/**
-	 * Unused. This function exists only to satisfy the requirements to extend Sortable.
-	 * Since MergeSort re-implements run(), this is not needed. 
+	 * 
 	 */
 	public boolean sortStep()
 	{
-		return true;
-	}
-
-	/**
-	 * The main function for MergeSort. This function will recursively sort the array between elements
-	 * lower and upper.
-	 * @param lower The lower bound (inclusive) of the range to sort.
-	 * @param upper The upper bound (inclusive) of the range to sort.
-	 */
-	private void sort(int lower, int upper)
-	{
-		if (upper - lower >= 1)
-		{
-			int midpoint = lower + (upper - lower) / 2; //Goes in the "left" half
-			sort(lower, midpoint);
-			sort(midpoint + 1, upper);
-			merge(lower, midpoint, upper);
-			if (lower == 0)
-			{ //sortedIndex indicates the top of the currently sorted array.
-			  //This is only true if we merged from zero to the current upper.
-				sortedIndex = upper;
-			}
-			repaint();
-			sleep();
-		}
-	}
-
-	/**
-	 * Merge function for merge Sort. Since MergeSort does not use the normal
-	 * run() method of Sortable, this function must call sleep() and repaint()
-	 * after every element is merged.
-	 */
-	private void merge(int lower, int midpoint, int upper)
-	{
-		int newArray[] = new int[upper-lower+1];
-		int leftIndex = lower;
-		int rightIndex = midpoint + 1;
-		int nextSpot = 0;
-		while (leftIndex <= midpoint && rightIndex <= upper)
+		if (leftIndex <= leftLimit && rightIndex <= rightLimit)
 		{
 			if (array[leftIndex] < array[rightIndex])
 			{
-				newArray[nextSpot] = array[leftIndex];
+				tempArray[tempIndex] = array[leftIndex];
 				leftIndex++;
 			} else {
-				newArray[nextSpot] = array[rightIndex];
+				tempArray[tempIndex] = array[rightIndex];
 				rightIndex++;
 			}
-			nextSpot++;
-			repaint();
-			sleep();
-		}
-		while (leftIndex <= midpoint)
+			tempIndex++;
+		} else if (leftIndex <= leftLimit)
 		{
-			newArray[nextSpot] = array[leftIndex];
-			nextSpot++;
+			tempArray[tempIndex] = array[leftIndex];
 			leftIndex++;
-			repaint();
-			sleep();
-		}
-		while (rightIndex <= upper)
+			tempIndex++;
+		} else if (rightIndex <= leftLimit)
 		{
-			newArray[nextSpot] = array[rightIndex];
-			nextSpot++;
+			tempArray[tempIndex] = array[rightIndex];
 			rightIndex++;
-			repaint();
-			sleep();
-		}
-		for (int i = lower; i <= upper; i++)
-		{
-			array[i] = newArray[i-lower];
-			repaint();
-			sleep();
-		}
-	}
-
-	/**
-	 * Main thread loop for MergeSort. This overloads the run function in
-	 * Sortable. 
-	 */
-	public void run()
-	{
-		while (true)
-		{
-			if (running)
+			tempIndex++;
+		} else { //this section merged
+			System.out.printf("Done merging %d elements\n",tempIndex);
+			for (int i = 0; i < tempIndex; i++)
 			{
-				sort(0,size-1);
-				running = false;
+				array[i+leftIndex-stepSize] = tempArray[i];
 			}
-			sleep();
+			leftIndex = rightLimit + 1;
+			rightIndex = leftIndex + stepSize;
+			leftLimit = rightIndex - 1;
+			rightLimit = leftLimit + stepSize;
+			tempIndex = 0;
+			if (leftLimit >= size)
+			{ //Occurs when we are done sorting at this stepsize
+				stepSize *= 2;
+				leftIndex = 0;
+				rightIndex = stepSize;
+				leftLimit = rightIndex-1;
+				rightLimit = leftLimit + stepSize;
+			}
+			if (rightLimit >= size)
+			{ //Occurs when we are sorting to the end
+				rightLimit = size-1;
+			}
+			if (stepSize >= size)
+			{ //we're done sorting
+				return false;
+			}
 		}
+		return true;
 	}
 
 	/**
