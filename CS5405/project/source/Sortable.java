@@ -19,6 +19,7 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 {
 	int[] array;
 	int size;
+	int delay;
 	boolean running;
 	Random numberGenerator;
 	JButton playButton;
@@ -70,7 +71,8 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 
 	/**
 	 * Set up the sortable object. This function should only be called by the constructor. It accomplishes
-	 * most tasks that would normally be done in the constructor.
+	 * most tasks that would normally be done in the constructor. This is used to avoid code 
+	 * duplication for tasks common to all constructors.
 	 */
 	private void setup()
 	{
@@ -90,6 +92,7 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 		toFront();
 		reset();
 		running = false;
+		delay = 10;
 		//executor = Executors.newFixedThreadPool(1);
 		//executor.execute(this);
 	}
@@ -258,6 +261,14 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 	}
 
 	/**
+	 * Set the delay value
+	 */
+	void setDelay(int delay)
+	{
+		this.delay = delay;
+	}
+
+	/**
 	 * Helper function to handle sleeping. This provides a consistant sleep for 
 	 * all algorithms.Depending on whether the algorithm identifies as actively running,
 	 * this function will sleep for a short or long period of time. The purpose of varrying the sleep time is
@@ -267,11 +278,11 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 	{
 		try
 		{
-			while (running == false)
-			{
-				Thread.sleep(100); //Sleep longer when not running
-			}
-			Thread.sleep(10); //Always sleep a little bit
+//			while (running == false)
+//			{
+//				Thread.sleep(100); //Sleep longer when not running
+//			}
+			Thread.sleep(delay); //Always sleep a little bit
 		} catch (InterruptedException ex)
 		{
 		}

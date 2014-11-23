@@ -45,6 +45,9 @@ public class MergeSort extends Sortable
 		super("Merge Sort",size);
 	}
 	
+	/**
+	 * Reset local parameters for MergeSort
+	 */
 	public void reset()
 	{
 		super.reset();

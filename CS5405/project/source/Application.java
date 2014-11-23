@@ -5,13 +5,14 @@ package code;
 
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.event.*;
 
 /**
  * The core of the actual application.
  * This class handles creating all of the higher-level objects and top-level
  * menus.
  */
-public class Application extends JDesktopPane implements ActionListener
+public class Application extends JDesktopPane implements ActionListener, ChangeListener
 {
 	JMenuItem menuItems[] = new JMenuItem[7];
 	JCheckBoxMenuItem checkBoxMenuItems[] = new JCheckBoxMenuItem[7];
@@ -35,6 +36,7 @@ public class Application extends JDesktopPane implements ActionListener
 	JButton pause = new JButton("Pause");
 	JButton play = new JButton("Play");
 	JButton reset = new JButton("Reset");
+	JSlider speedControl = new JSlider(0,49,39);
 
 	//Size to be used for sorting algorithms
 	int globalSize = 100;
@@ -86,6 +88,8 @@ public class Application extends JDesktopPane implements ActionListener
 			pause.addActionListener(this);
 		myToolBar.add(reset);
 			reset.addActionListener(this);
+		myToolBar.add(speedControl);
+			speedControl.addChangeListener(this);
 	}
 
 	/**
@@ -146,7 +150,17 @@ public class Application extends JDesktopPane implements ActionListener
 		mb.add(demosMenu);
 	}
 
-
+	public void stateChanged(ChangeEvent e)
+	{
+		if (e.getSource() == speedControl)
+		{
+			int speed = 50-speedControl.getValue();
+			for (int i = 0; i < algorithmCount; i++)
+			{
+				this.sortableItems[i].setDelay(speed);
+			}
+		}
+	}
 	/**
 	 * Handle actions performed at the top level of the application.
 	 * @param e Event to be handled.
@@ -160,6 +174,7 @@ public class Application extends JDesktopPane implements ActionListener
 				if (checkBoxMenuItems[i].isSelected() && !sortableItems[i].isClosed())
 				{
 					sortableItems[i].play();
+					sortableItems[i].repaint();
 				}
 			}
 		}
@@ -170,6 +185,7 @@ public class Application extends JDesktopPane implements ActionListener
 				if (checkBoxMenuItems[i].isSelected() && !sortableItems[i].isClosed())
 				{
 					sortableItems[i].pause();
+					sortableItems[i].repaint();
 				}
 			}
 		}
@@ -180,6 +196,7 @@ public class Application extends JDesktopPane implements ActionListener
 				if (checkBoxMenuItems[i].isSelected() && !sortableItems[i].isClosed())
 				{
 					sortableItems[i].reset();
+					sortableItems[i].repaint();
 				}
 			}
 		}
@@ -203,8 +220,7 @@ public class Application extends JDesktopPane implements ActionListener
 			{
 				myHelpWindow = new HelpWindow();
 				this.add(myHelpWindow);
-			}
-			else if (myHelpWindow.isClosed())
+			} else if (myHelpWindow.isClosed())
 			{
 				this.add(myHelpWindow);
 			}
@@ -217,8 +233,7 @@ public class Application extends JDesktopPane implements ActionListener
 			{
 				myDescriptionWindow = new DescriptionWindow();
 				this.add(myDescriptionWindow);
-			}
-			else if (myDescriptionWindow.isClosed())
+			} else if (myDescriptionWindow.isClosed())
 			{
 				this.add(myDescriptionWindow);
 			}
@@ -231,8 +246,7 @@ public class Application extends JDesktopPane implements ActionListener
 			{
 				myAuthorWindow = new AuthorWindow();
 				this.add(myAuthorWindow);
-			}
-			else if (myAuthorWindow.isClosed())
+			} else if (myAuthorWindow.isClosed())
 			{
 				this.add(myAuthorWindow);
 			}
@@ -245,8 +259,7 @@ public class Application extends JDesktopPane implements ActionListener
 			{
 				myReferencesWindow = new ReferencesWindow();
 				this.add(myReferencesWindow);
-			}
-			else if (myReferencesWindow.isClosed())
+			} else if (myReferencesWindow.isClosed())
 			{
 				this.add(myReferencesWindow);
 			}
