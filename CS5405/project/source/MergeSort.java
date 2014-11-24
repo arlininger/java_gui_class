@@ -9,7 +9,7 @@ import java.awt.Point;
 import java.util.*;
 
 /**
- * Implements the Merge Sort algorithm. 
+ * Implements the bottom-up Merge Sort algorithm. 
  */
 public class MergeSort extends Sortable
 {
@@ -20,12 +20,40 @@ public class MergeSort extends Sortable
 	 * sortedIndex are sorted amongst themselves.
 	 */
 	int sortedIndex = 0;
+
+	/**
+	 * Temporary array needed for merging.
+	 */
 	int tempArray[];
+
+	/**
+	 * Step size for bottom-up merge sort.
+	 */
 	int stepSize;
+
+	/**
+	 * Left index used during merging.
+	 */
 	int leftIndex;
+
+	/**
+	 * Right index used during merging.
+	 */
 	int rightIndex;
+
+	/**
+	 * Upper limit of left array when merging.
+	 */
 	int leftLimit;
+
+	/**
+	 * Upper limit of right array when merging.
+	 */
 	int rightLimit;
+
+	/**
+	 * Index in to temporary array during merging.
+	 */
 	int tempIndex;
 
 	/** 
@@ -46,7 +74,7 @@ public class MergeSort extends Sortable
 	}
 	
 	/**
-	 * Reset local parameters for MergeSort
+	 * Reset local parameters for MergeSort.
 	 */
 	public void reset()
 	{

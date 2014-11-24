@@ -17,17 +17,55 @@ import javax.swing.*;
  */
 public abstract class Sortable extends JInternalFrame implements Runnable, ActionListener
 {
+	/**
+	 * Array of items to be sorted.
+	 */
 	int[] array;
+
+	/**
+	 * Size of the array to be sorted.
+	 */
 	int size;
+
+	/**
+	 * Delay in microseconds for sleeping.
+	 */
 	int delay;
+
+	/**
+	 * True if this algorithm is currently running. Used to accomplish pause.
+	 */
 	boolean running;
+
+	/**
+	 * Random number generator.
+	 */
 	Random numberGenerator;
+
+	/**
+	 * Play button.
+	 */
 	JButton playButton;
+
+	/**
+	 * Reset button.
+	 */
 	JButton resetButton;
+
+	/**
+	 * Pause button.
+	 */
 	JButton pauseButton;
 
+	/**
+	 * True when a reset has been requested. This is a flag to the run() function
+	 * alerting it that it should exit early.
+	 */
 	boolean resetRequested;
 
+	/**
+	 * Thread executor for this algorithm.
+	 */
 	ExecutorService executor = null;
 
 	/**
@@ -117,6 +155,7 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 
 	/**
 	 * Set the count of lines to be sorted. This only takes effect on a reset.
+	 * @param x The size to set.
 	 */
 	public void setSize(int x)
 	{
@@ -265,7 +304,7 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 	}
 
 	/**
-	 * Set the delay value
+	 * Set the delay value.
 	 */
 	void setDelay(int delay)
 	{

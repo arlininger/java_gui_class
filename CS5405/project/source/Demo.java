@@ -36,6 +36,9 @@ class MainFrame extends JFrame
  */
 public class Demo extends JApplet
 {
+	/**
+	 * The core of the application.
+	 */
 	Application mainApp;
 	/**
 	 * Creates the top-level applet.

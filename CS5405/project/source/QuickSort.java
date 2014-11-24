@@ -20,13 +20,44 @@ public class QuickSort extends Sortable
 	 */
 	int sortedIndex = 0;
 
+	/**
+	 * Flag for when we are sorting. Only false when we need to split a sub-array.
+	 */
 	boolean sorting;
+
+	/**
+	 * Current pivot index.
+	 */
 	int pivot;
+
+	/**
+	 * Current pivot value.
+	 */
 	int pivotValue;
+
+	/**
+	 * Index in the left array. Current upper edge of the left side.
+	 */
 	int left;
+
+	/**
+	 * Index in the right array. Current upper edge of the right side.
+	 */
 	int right;
+
+	/**
+	 * Current index being sorted.
+	 */
 	int i;
+
+	/**
+	 * Next location to be stored.
+	 */
 	int storeIndex;
+
+	/**
+	 * Stack of sub-arrays that still need to be sorted.
+	 */
 	Stack<QuickSortStage> st;
 
 	/** 

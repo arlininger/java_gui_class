@@ -10,39 +10,113 @@ import javax.swing.event.*;
 /**
  * The core of the actual application.
  * This class handles creating all of the higher-level objects and top-level
- * menus.
+ * menus. 
  */
 public class Application extends JDesktopPane implements ActionListener, ChangeListener
 {
-	JMenuItem menuItems[] = new JMenuItem[7];
-	JCheckBoxMenuItem checkBoxMenuItems[] = new JCheckBoxMenuItem[7];
-	Sortable sortableItems[] = new Sortable[7];
-	int algorithmCount = 7;
+	/**
+	 * Total number of algorithms tested.
+	 */
+	final int algorithmCount = 7;
+
+	/**
+	 * Algorithm menu selection items.
+	 */
+	JMenuItem menuItems[] = new JMenuItem[algorithmCount];
+
+	/**
+	 * Global control selection for algorithms.
+	 */
+	JCheckBoxMenuItem checkBoxMenuItems[] = new JCheckBoxMenuItem[algorithmCount];
+
+	/**
+	 * Algorithms. These are all JInternalFrames.
+	 */
+	Sortable sortableItems[] = new Sortable[algorithmCount];
+
 
 	//About menu items
+	/**
+	 * Author Menu entry.
+	 */
 	JMenuItem authorMenuItem;
+
+	/**
+	 * Description Menu entry.
+	 */
 	JMenuItem descriptionMenuItem;
+
+	/**
+	 * References Menu entry.
+	 */
 	JMenuItem referencesMenuItem;
+
+	/**
+	 * Help Menu entry.
+	 */
 	JMenuItem helpMenuItem;
 
-	//Help window
+	/**
+	 * JInternalFrame for Help Window.
+	 */
 	HelpWindow myHelpWindow = null;
+
+	/**
+	 * JInternalFrame for Description Window.
+	 */
 	DescriptionWindow myDescriptionWindow = null;
+
+	/**
+	 * JInternalFrame for Author Window.
+	 */
 	AuthorWindow myAuthorWindow = null;
+
+	/**
+	 * JInternalFrame for References Window.
+	 */
 	ReferencesWindow myReferencesWindow = null;
 
-	//ToolBar
+
+	/**
+	 * Toolbar for main window controls.
+	 */
 	JToolBar myToolBar = new JToolBar("Controls");
+
+	/**
+	 * Main window pause control.
+	 */
 	JButton pause = new JButton("Pause");
+
+	/**
+	 * Main window play control.
+	 */
 	JButton play = new JButton("Play");
+
+	/**
+	 * Main window reset control.
+	 */
 	JButton reset = new JButton("Reset");
+
+	/**
+	 * Size control.
+	 */
 	JTextField sizeControl = new JTextField("100",4);
+
+	/**
+	 * Speed control.
+	 */
 	JSlider speedControl = new JSlider(0,49,39);
 
-	//Size to be used for sorting algorithms
+	/**
+	 * Number of items to sort.
+	 */
 	int globalSize = 100;
 
+	/**
+	 * Reference to the top-level applet.
+	 */
 	JApplet topLevel;
+
 	/**
 	 * Create the Application object.
 	 * @param topLevel Reference to the parent object for adding menus.
@@ -153,6 +227,10 @@ public class Application extends JDesktopPane implements ActionListener, ChangeL
 		mb.add(demosMenu);
 	}
 
+	/**
+	 * Listen for state changes on the speed slider.
+	 * @param e Event that occurred.
+	 */
 	public void stateChanged(ChangeEvent e)
 	{
 		if (e.getSource() == speedControl)

@@ -12,11 +12,34 @@ import java.awt.Point;
  */
 public class HeapSort extends Sortable
 {
+	/**
+	 * Current size of the heap.
+	 */
 	int heapSize;
+	
+	/**
+	 * Whether or not we are building the heap. Only true before the initial heap is complete.
+	 */
 	boolean buildingHeap;
+
+	/**
+	 * Whether or not we are currently sorting. Always true until sorting is finished.
+	 */
 	boolean sorting;
+
+	/**
+	 * Whether or not we are re-heapifying a portion of the heap.
+	 */
 	boolean heapifying;
+
+	/**
+	 * The next element to be re-heapified.
+	 */
 	int heapifyIndex;
+
+	/**
+	 * The current index when building the heap.
+	 */
 	int heapBuildIndex;
 
 	/**

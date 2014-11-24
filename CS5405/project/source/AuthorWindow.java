@@ -26,9 +26,10 @@ public class AuthorWindow extends JInternalFrame
 		String helpContent = new StringBuilder()
 			.append("Adam Lininger\n")
 			.append("(573)466-0044\n\n")
-			.append("\tThis application is self-contained with in the Demo.jar file. It")
-			.append("may be run by executing the line \"java -jar Demo.jar\" in any ")
-			.append("commandline on a system that has Java installed.")
+			.append("\tThis application is self-contained with in the Demo.jar \n")
+			.append("file. It may be run by executing the line \n")
+			.append("\"java -jar Demo.jar\" \n")
+			.append("in any commandline on a system that has Java installed.")
 			.toString();
 		toFront();
 		//JPanel panel = new JPanel();
