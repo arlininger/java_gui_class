@@ -36,6 +36,7 @@ public class Application extends JDesktopPane implements ActionListener, ChangeL
 	JButton pause = new JButton("Pause");
 	JButton play = new JButton("Play");
 	JButton reset = new JButton("Reset");
+	JTextField sizeControl = new JTextField("100",4);
 	JSlider speedControl = new JSlider(0,49,39);
 
 	//Size to be used for sorting algorithms
@@ -88,6 +89,8 @@ public class Application extends JDesktopPane implements ActionListener, ChangeL
 			pause.addActionListener(this);
 		myToolBar.add(reset);
 			reset.addActionListener(this);
+		myToolBar.add(sizeControl);
+			sizeControl.addActionListener(this);
 		myToolBar.add(speedControl);
 			speedControl.addChangeListener(this);
 	}
@@ -265,6 +268,14 @@ public class Application extends JDesktopPane implements ActionListener, ChangeL
 			}
 			myReferencesWindow.toFront();
 			myReferencesWindow.setVisible(true);
+		}
+		if (e.getSource() == sizeControl)
+		{
+			int size = Integer.parseInt(sizeControl.getText());
+			for (int i = 0; i < algorithmCount; i++)
+			{
+				this.sortableItems[i].setSize(size);
+			}
 		}
 	}
 }

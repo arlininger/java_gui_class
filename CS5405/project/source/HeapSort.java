@@ -66,8 +66,6 @@ public class HeapSort extends Sortable
 	{
 		if (heapifying)
 		{
-			System.out.printf("Heapifying at index %d\n",heapifyIndex);
-			//figure out heapifying
 			int l = leftChild(heapifyIndex);
 			int r = rightChild(heapifyIndex);
 			int largest = heapifyIndex;
@@ -89,7 +87,6 @@ public class HeapSort extends Sortable
 			return true;
 		} else if (buildingHeap)
 		{
-			System.out.printf("Building Heap at index %d\n",heapBuildIndex);
 			heapifyIndex = heapBuildIndex-1;
 			heapBuildIndex--;
 			heapifying = true;
@@ -103,7 +100,6 @@ public class HeapSort extends Sortable
 			return true;
 		} else if (sorting)
 		{
-			System.out.printf("Sorting at size %d\n",heapSize);
 			swap(0,heapSize-1);
 			heapSize--;
 //			sorting = false;

@@ -95,7 +95,10 @@ public class MergeSort extends Sortable
 			rightIndex++;
 			tempIndex++;
 		} else { //this section merged
-			System.out.printf("Done merging %d elements\n",tempIndex);
+			if (leftIndex-stepSize <= 0)
+			{ //If this is the farthest left, we are sorted all the way to the right.
+				sortedIndex = rightLimit;
+			}
 			for (int i = 0; i < tempIndex; i++)
 			{
 				array[i+leftIndex-stepSize] = tempArray[i];

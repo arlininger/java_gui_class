@@ -116,6 +116,14 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 	public abstract Point getPreferedPosition();
 
 	/**
+	 * Set the count of lines to be sorted. This only takes effect on a reset.
+	 */
+	public void setSize(int x)
+	{
+		size = x;
+	}
+
+	/**
 	 * Handler for the play button. Sets the algorithm to a running state.
 	 */
 	public void play()
@@ -196,11 +204,11 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 	public void paint(Graphics g)
 	{
 		super.paint(g);
-
+		int height = getBounds().height;
 		for (int i = 0; i < size; i++)
 		{
 			g.setColor(getColor(i));
-			g.drawLine(10+i,180-getIndex(i),10+i,180);
+			g.drawLine(10+i,height-10-getIndex(i),10+i,height-10);
 		}
 	}
 
@@ -251,10 +259,6 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 		{
 			repaint();
 			sleep(); //See function below
-		}
-		if (!verify())
-		{
-			System.out.printf("Failed to verify\n");
 		}
 		repaint();
 		running = false;

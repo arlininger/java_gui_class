@@ -24,7 +24,7 @@ class MainFrame extends JFrame
 		super ("MainFrame");
 		setSize(760,700);
 		setVisible(true);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().add(demo);
 		demo.init();
 	}
