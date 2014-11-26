@@ -145,6 +145,7 @@ public class Application extends JDesktopPane implements ActionListener, ChangeL
 	
 	/**
 	 * Returns the JToolBar that controls the application.
+	 * @return The toolbar attached to this application.
 	 */
 	public JToolBar getToolBar()
 	{

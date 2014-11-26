@@ -170,6 +170,7 @@ public class QuickSort extends Sortable
 	 * Helper function to select a pivot point within the given range.
 	 * @param left Lower inclusive bound.
 	 * @param right Upper inclusive bound.
+	 * @return The index of the pivot point to use.
 	 */
 	private int choosePivot(int left, int right)
 	{

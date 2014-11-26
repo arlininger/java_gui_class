@@ -79,6 +79,7 @@ public class BubbleSort extends Sortable
 	/**
 	 * Return the proper color for the item at a given index.
 	 * @param index The entry to be colored.
+	 * @return The color if the requested index.
 	 */
 	public Color getColor(int index)
 	{

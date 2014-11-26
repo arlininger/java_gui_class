@@ -140,14 +140,17 @@ public class HeapSort extends Sortable
 
 	/**
 	 * Return the parent of the current object. Might be unused.
+	 * @param x The index for which to return the parent.
 	 */
-	int parent(int x)
-	{
-		return (x-1)/2;
-	}
+//	int parent(int x)
+//	{
+//		return (x-1)/2;
+//	}
 
 	/**
 	 * Returns the index of the left child of index x.
+	 * @param x The index for which to return a child.
+	 * @return The child of index x.
 	 */
 	int leftChild(int x)
 	{
@@ -156,6 +159,8 @@ public class HeapSort extends Sortable
 
 	/**
 	 * Returns the index of the right child of index x.
+	 * @param x The index for which to return a child.
+	 * @return The child of index x.
 	 */
 	int rightChild(int x)
 	{
@@ -165,6 +170,7 @@ public class HeapSort extends Sortable
 	/**
 	 * Return the proper color for the item at a given index.
 	 * @param index The entry to be colored.
+	 * @return The color of the element at index.
 	 */
 	public Color getColor(int index)
 	{

@@ -144,12 +144,14 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 	/**
 	 * Get the color of a line based on the algorithm in use.
 	 * @param index Index of the entry for which to get the color.
+	 * @return The color if the requested index.
 	 */
 	public abstract Color getColor(int index);
 
 	/**
 	 * Get the prefered position of this algorithm.
 	 * Used to initially display all algorithms in a somewhat tiled position.
+	 * @return The point relative to the top-level window where this window will re-open.
 	 */
 	public abstract Point getPreferedPosition();
 
@@ -230,6 +232,7 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 	 * implementing algorithm needs to display items from an alternate array. MergeSort may be
 	 * an example of this need.
 	 * @param i Index of element to get.
+	 * @return The value of the element at position i.
 	 */
 	public int getIndex(int i)
 	{
@@ -273,6 +276,7 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 
 	/**
 	 * Verify the array is properly sorted.
+	 * @return Whether or not the array is sorted.
 	 */
 	boolean verify()
 	{
@@ -294,10 +298,13 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 	 */
 	public void run()
 	{
-		while (resetRequested == false && sortStep())
+		while (resetRequested == false)
 		{
-			repaint();
-			sleep(); //See function below
+			if (running && sortStep())
+			{
+				repaint();
+				sleep(); //See function below
+			}
 		}
 		repaint();
 		running = false;
@@ -305,6 +312,7 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 
 	/**
 	 * Set the delay value.
+	 * @param delay The sleep delay in milliseconds.
 	 */
 	void setDelay(int delay)
 	{
@@ -313,18 +321,20 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 
 	/**
 	 * Helper function to handle sleeping. This provides a consistant sleep for 
-	 * all algorithms.Depending on whether the algorithm identifies as actively running,
-	 * this function will sleep for a short or long period of time. The purpose of varrying the sleep time is
-	 * to avoid using more cpu than necessary when the algorithm is paused or completed.
+	 * all algorithms. Depending on whether the algorithm identifies as actively running,
+	 * this function will sleep for a short or long period of time. The purpose 
+	 * of varrying the sleep time is to avoid using more cpu than necessary 
+	 * when the algorithm is paused or completed.
 	 */
 	void sleep()
 	{
 		try
 		{
-//			while (running == false)
-//			{
-//				Thread.sleep(100); //Sleep longer when not running
-//			}
+			while (running == false)
+			{
+				Thread.sleep(100); //Sleep longer when paused
+				                   //This allows other threads to use the CPU
+			}
 			Thread.sleep(delay); //Always sleep a little bit
 		} catch (InterruptedException ex)
 		{
