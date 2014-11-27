@@ -300,13 +300,17 @@ public abstract class Sortable extends JInternalFrame implements Runnable, Actio
 	{
 		while (resetRequested == false)
 		{
-			if (running && sortStep())
+			if (running)
 			{
-				repaint();
-				sleep(); //See function below
+				if (!sortStep())
+				{
+					break;
+				}
 			}
+			repaint();
+			sleep();
 		}
-		repaint();
+		repaint(); // Always repaint once after algorithm is done
 		running = false;
 	}
 

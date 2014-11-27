@@ -86,6 +86,7 @@ public class MergeSort extends Sortable
 		leftLimit = rightIndex-1;
 		rightLimit = leftLimit + stepSize;
 		tempIndex = 0;
+		sortedIndex = 0;
 	}
 	/**
 	 * Get the prefered position of this algorithm.
@@ -101,6 +102,10 @@ public class MergeSort extends Sortable
 	 */
 	public boolean sortStep()
 	{
+		if (stepSize >= size)
+		{ //we're done sorting
+			return false;
+		}
 		if (leftIndex <= leftLimit && rightIndex <= rightLimit)
 		{
 			if (array[leftIndex] < array[rightIndex])
@@ -117,7 +122,7 @@ public class MergeSort extends Sortable
 			tempArray[tempIndex] = array[leftIndex];
 			leftIndex++;
 			tempIndex++;
-		} else if (rightIndex <= leftLimit)
+		} else if (rightIndex <= rightLimit)
 		{
 			tempArray[tempIndex] = array[rightIndex];
 			rightIndex++;
