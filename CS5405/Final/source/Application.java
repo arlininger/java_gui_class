@@ -14,27 +14,6 @@ import javax.swing.event.*;
  */
 public class Application extends JDesktopPane implements ActionListener, ChangeListener
 {
-	/**
-	 * Total number of algorithms tested.
-	 */
-	final int algorithmCount = 7;
-
-	/**
-	 * Algorithm menu selection items.
-	 */
-	JMenuItem menuItems[] = new JMenuItem[algorithmCount];
-
-	/**
-	 * Global control selection for algorithms.
-	 */
-	JCheckBoxMenuItem checkBoxMenuItems[] = new JCheckBoxMenuItem[algorithmCount];
-
-	/**
-	 * Algorithms. These are all JInternalFrames.
-	 */
-	Sortable sortableItems[] = new Sortable[algorithmCount];
-
-
 	//About menu items
 	/**
 	 * Author Menu entry.
@@ -76,7 +55,10 @@ public class Application extends JDesktopPane implements ActionListener, ChangeL
 	 */
 	ReferencesWindow myReferencesWindow = null;
 
-
+	/**
+	 * Window for displaying Sequential images.
+	 */
+	ZoomShow zoomShow = null;
 	/**
 	 * Toolbar for main window controls.
 	 */
@@ -124,21 +106,8 @@ public class Application extends JDesktopPane implements ActionListener, ChangeL
 	public Application(JApplet topLevel)
 	{
 		this.topLevel = topLevel;
-		this.sortableItems[0] = new BubbleSort();
-		this.sortableItems[1] = new InsertionSort();
-		this.sortableItems[2] = new MergeSort();
-		this.sortableItems[3] = new QuickSort();
-		this.sortableItems[4] = new SelectionSort();
-		this.sortableItems[5] = new ShellSort();
-		this.sortableItems[6] = new HeapSort();
-		for (int i = 0; i < algorithmCount; i++)
-		{
-			this.add(sortableItems[i]);
-			sortableItems[i].setVisible(true);
-			sortableItems[i].setLocation(sortableItems[i].getPreferedPosition());
-			sortableItems[i].toFront();
-		}
-
+		zoomShow = new ZoomShow();
+		this.add(zoomShow);
 		this.addMenus();
 		this.setupToolBar();
 	}
@@ -195,37 +164,6 @@ public class Application extends JDesktopPane implements ActionListener, ChangeL
 			aboutMenu.add(helpMenuItem);
 		mb.add(aboutMenu);
 
-		//Setup Demos menu
-		JMenu demosMenu = new JMenu("Demos");
-			JMenu algorithmsMenu = new JMenu("Algorithms");
-				this.menuItems[0] = new JMenuItem("Bubble");
-				this.menuItems[1] = new JMenuItem("Insertion");
-				this.menuItems[2] = new JMenuItem("Merge");
-				this.menuItems[3] = new JMenuItem("Quick");
-				this.menuItems[4] = new JMenuItem("Selection");
-				this.menuItems[5] = new JMenuItem("Shell");
-				this.menuItems[6] = new JMenuItem("Heap");
-				for (int i = 0; i < algorithmCount; i++)
-				{
-					menuItems[i].addActionListener(this);
-					algorithmsMenu.add(menuItems[i]);
-					
-				}
-			demosMenu.add(algorithmsMenu);
-			JMenu selectAlgorithmsMenu = new JMenu("Select Algorithms");
-				checkBoxMenuItems[0] = new JCheckBoxMenuItem("Bubble",true);
-				checkBoxMenuItems[1] = new JCheckBoxMenuItem("Insertion",true);
-				checkBoxMenuItems[2] = new JCheckBoxMenuItem("Merge",true);
-				checkBoxMenuItems[3] = new JCheckBoxMenuItem("Quick",true);
-				checkBoxMenuItems[4] = new JCheckBoxMenuItem("Selection",true);
-				checkBoxMenuItems[5] = new JCheckBoxMenuItem("Shell",true);
-				checkBoxMenuItems[6] = new JCheckBoxMenuItem("Heap",true);
-				for (int i = 0; i < algorithmCount; i++)
-				{
-					selectAlgorithmsMenu.add(checkBoxMenuItems[i]);
-				}
-			demosMenu.add(selectAlgorithmsMenu);
-		mb.add(demosMenu);
 	}
 
 	/**
@@ -237,10 +175,6 @@ public class Application extends JDesktopPane implements ActionListener, ChangeL
 		if (e.getSource() == speedControl)
 		{
 			int speed = 50-speedControl.getValue();
-			for (int i = 0; i < algorithmCount; i++)
-			{
-				this.sortableItems[i].setDelay(speed);
-			}
 		}
 	}
 	/**
@@ -251,51 +185,13 @@ public class Application extends JDesktopPane implements ActionListener, ChangeL
 	{
 		if (e.getSource() == play)
 		{
-			for (int i = 0; i < algorithmCount; i++)
-			{
-				if (checkBoxMenuItems[i].isSelected() && !sortableItems[i].isClosed())
-				{
-					sortableItems[i].play();
-					sortableItems[i].repaint();
-				}
-			}
 		}
 		if (e.getSource() == pause)
 		{
-			for (int i = 0; i < algorithmCount; i++)
-			{
-				if (checkBoxMenuItems[i].isSelected() && !sortableItems[i].isClosed())
-				{
-					sortableItems[i].pause();
-					sortableItems[i].repaint();
-				}
-			}
 		}
 		if (e.getSource() == reset)
 		{
-			for (int i = 0; i < algorithmCount; i++)
-			{
-				if (checkBoxMenuItems[i].isSelected() && !sortableItems[i].isClosed())
-				{
-					sortableItems[i].reset();
-					sortableItems[i].repaint();
-				}
-			}
 		}
-		for (int i = 0; i < algorithmCount; i++)
-		{
-			if (e.getSource() == menuItems[i])
-			{
-				if (sortableItems[i].isClosed())
-				{
-					this.add(sortableItems[i]);
-					sortableItems[i].setLocation(sortableItems[i].getPreferedPosition());
-				}
-				sortableItems[i].toFront();
-				sortableItems[i].setVisible(true);
-			}
-		}
-
 		if (e.getSource() == helpMenuItem)
 		{
 			if (myHelpWindow == null)
@@ -350,11 +246,6 @@ public class Application extends JDesktopPane implements ActionListener, ChangeL
 		}
 		if (e.getSource() == sizeControl)
 		{
-			int size = Integer.parseInt(sizeControl.getText());
-			for (int i = 0; i < algorithmCount; i++)
-			{
-				this.sortableItems[i].setSize(size);
-			}
 		}
 	}
 }

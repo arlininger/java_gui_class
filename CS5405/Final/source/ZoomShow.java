@@ -1,0 +1,83 @@
+/**
+ * @author Adam Lininger
+ */
+package code;
+
+import java.awt.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.concurrent.locks.*;
+import java.net.*;
+import javax.swing.*;
+
+public class ZoomShow extends JInternalFrame implements Runnable //, ActionListener
+{
+	/**
+	 * Thread executor for this window.
+	 */
+	ExecutorService executor = null;
+
+	int imageCount = 10;
+	int maxSize = 200;
+	Image images[] = new Image[imageCount];
+	int offset = 0;
+	int index = 0;
+
+	public ZoomShow()
+	{
+		super("ZoomShow",true,true,true,true);
+		setLayout(new GridLayout(1,1));
+		setSize(300,300);
+		setVisible(true);
+		toFront();
+		URL image0 = null;
+//		image0 = getClass().getResource("/images/1.jpg");
+		images[0] = new ImageIcon(getClass().getResource("/images/0.jpg")).getImage();
+		images[1] = new ImageIcon(getClass().getResource("/images/1.jpg")).getImage();
+		images[2] = new ImageIcon(getClass().getResource("/images/2.jpg")).getImage();
+		images[3] = new ImageIcon(getClass().getResource("/images/3.jpg")).getImage();
+		images[4] = new ImageIcon(getClass().getResource("/images/4.jpg")).getImage();
+		images[5] = new ImageIcon(getClass().getResource("/images/5.jpg")).getImage();
+		images[6] = new ImageIcon(getClass().getResource("/images/6.jpg")).getImage();
+		images[7] = new ImageIcon(getClass().getResource("/images/7.jpg")).getImage();
+		images[8] = new ImageIcon(getClass().getResource("/images/8.jpg")).getImage();
+		images[9] = new ImageIcon(getClass().getResource("/images/9.jpg")).getImage();
+		executor = Executors.newFixedThreadPool(1);
+		executor.execute(this);
+	}
+
+	public void paint(Graphics g)
+	{
+		super.paint(g);
+		g.drawImage(images[index],5 + (maxSize/2) - offset,30 + (maxSize/2) - offset,offset*2,offset*2,this);
+	}
+	
+	void updateImage()
+	{
+		offset++;
+		if (offset >= (maxSize/2))
+		{
+			index++;
+			offset = 0;
+		}
+		if (index >= imageCount)
+		{
+			index = 0;
+		}
+	}
+
+	public void run()
+	{
+		while (true)
+		{
+			updateImage();
+			repaint();
+			try
+			{
+				Thread.sleep(50); //Always sleep a little bit
+			} catch (InterruptedException ex)
+			{
+			}
+		}
+	}
+}
