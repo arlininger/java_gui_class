@@ -7,6 +7,18 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
 
+enum MenuItems
+{
+	AUTHOR,
+	DESCRIPTION,
+	REFERENCES,
+	HELP,
+	INTERACTIVE,
+	SEQUENTIAL,
+	SLIDESHOW,
+	ZOOMSHOW
+}
+
 /**
  * The core of the actual application.
  * This class handles creating all of the higher-level objects and top-level
@@ -14,27 +26,12 @@ import javax.swing.event.*;
  */
 public class Application extends JDesktopPane implements ActionListener, ChangeListener
 {
-	//About menu items
 	/**
-	 * Author Menu entry.
+	 * Array of menu items for this application.
 	 */
-	JMenuItem authorMenuItem;
+	JMenuItem[] menuItemArray;
 
-	/**
-	 * Description Menu entry.
-	 */
-	JMenuItem descriptionMenuItem;
-
-	/**
-	 * References Menu entry.
-	 */
-	JMenuItem referencesMenuItem;
-
-	/**
-	 * Help Menu entry.
-	 */
-	JMenuItem helpMenuItem;
-
+	JInternalFrame[] windowArray;
 	/**
 	 * JInternalFrame for Help Window.
 	 */
@@ -108,6 +105,17 @@ public class Application extends JDesktopPane implements ActionListener, ChangeL
 		this.topLevel = topLevel;
 		zoomShow = new ZoomShow();
 		this.add(zoomShow);
+		menuItemArray = new JMenuItem[MenuItems.values().length];
+		windowArray = new JInternalFrame[MenuItems.values().length];
+		windowArray[MenuItems.AUTHOR.ordinal()] = new AuthorWindow();
+		windowArray[MenuItems.DESCRIPTION.ordinal()] = new DescriptionWindow();
+		windowArray[MenuItems.REFERENCES.ordinal()] = new ReferencesWindow();
+		windowArray[MenuItems.HELP.ordinal()] = new HelpWindow();
+//		windowArray[MenuItems.INTERACTIVE.ordinal()] = new InteractiveWindow();
+//		windowArray[MenuItems.SEQUENTIAL.ordinal()] = new SequentialWindow();
+//		windowArray[MenuItems.SLIDESHOW.ordinal()] = new SlideShowWindow();
+		windowArray[MenuItems.ZOOMSHOW.ordinal()] = new ZoomShow();
+
 		this.addMenus();
 		this.setupToolBar();
 	}
@@ -150,19 +158,34 @@ public class Application extends JDesktopPane implements ActionListener, ChangeL
 
 		//Setup About menu
 		JMenu aboutMenu = new JMenu("About");
-			authorMenuItem = new JMenuItem("Author");
-				authorMenuItem.addActionListener(this);
-			aboutMenu.add(authorMenuItem);
-			descriptionMenuItem = new JMenuItem("Problem Description");
-				descriptionMenuItem.addActionListener(this);
-			aboutMenu.add(descriptionMenuItem);
-			referencesMenuItem = new JMenuItem("References");
-				referencesMenuItem.addActionListener(this);
-			aboutMenu.add(referencesMenuItem);
-			helpMenuItem = new JMenuItem("Help");
-				helpMenuItem.addActionListener(this);
-			aboutMenu.add(helpMenuItem);
+			menuItemArray[MenuItems.AUTHOR.ordinal()] = new JMenuItem("Author");
+			aboutMenu.add(menuItemArray[MenuItems.AUTHOR.ordinal()]);
+			menuItemArray[MenuItems.DESCRIPTION.ordinal()] = new JMenuItem("Problem Description");
+			aboutMenu.add(menuItemArray[MenuItems.DESCRIPTION.ordinal()]);
+			menuItemArray[MenuItems.REFERENCES.ordinal()] = new JMenuItem("References");
+			aboutMenu.add(menuItemArray[MenuItems.REFERENCES.ordinal()]);
+			menuItemArray[MenuItems.HELP.ordinal()] = new JMenuItem("Help");
+			aboutMenu.add(menuItemArray[MenuItems.HELP.ordinal()]);
 		mb.add(aboutMenu);
+
+		JMenu demosMenu = new JMenu("Demos");
+			JMenu audioMenu = new JMenu("Audio");
+				menuItemArray[MenuItems.INTERACTIVE.ordinal()] = new JMenuItem("Interactive");
+				audioMenu.add(menuItemArray[MenuItems.INTERACTIVE.ordinal()]);
+				menuItemArray[MenuItems.SEQUENTIAL.ordinal()] = new JMenuItem("Sequential");
+				audioMenu.add(menuItemArray[MenuItems.SEQUENTIAL.ordinal()]);
+			demosMenu.add(audioMenu);
+			JMenu imagesMenu = new JMenu("Images");
+				menuItemArray[MenuItems.SLIDESHOW.ordinal()] = new JMenuItem("Slide Show");
+				imagesMenu.add(menuItemArray[MenuItems.SLIDESHOW.ordinal()]);
+				menuItemArray[MenuItems.ZOOMSHOW.ordinal()] = new JMenuItem("Zoom Show");
+				imagesMenu.add(menuItemArray[MenuItems.ZOOMSHOW.ordinal()]);
+			demosMenu.add(imagesMenu);
+		mb.add(demosMenu);
+		
+		for (MenuItems item : MenuItems.values()) {
+			menuItemArray[item.ordinal()].addActionListener(this);
+		}
 
 	}
 
@@ -192,58 +215,18 @@ public class Application extends JDesktopPane implements ActionListener, ChangeL
 		if (e.getSource() == reset)
 		{
 		}
-		if (e.getSource() == helpMenuItem)
-		{
-			if (myHelpWindow == null)
+		for (MenuItems item : MenuItems.values()) {
+			if (e.getSource() == windowArray[item.ordinal()])
 			{
-				myHelpWindow = new HelpWindow();
-				this.add(myHelpWindow);
-			} else if (myHelpWindow.isClosed())
-			{
-				this.add(myHelpWindow);
+				if (windowArray[item.ordinal()].isClosed())
+				{
+					this.add(windowArray[item.ordinal()]);
+				}
+				windowArray[item.ordinal()].toFront();
+				windowArray[item.ordinal()].setVisible(true);
 			}
-			myHelpWindow.toFront();
-			myHelpWindow.setVisible(true);
 		}
-		if (e.getSource() == descriptionMenuItem)
-		{
-			if (myDescriptionWindow == null)
-			{
-				myDescriptionWindow = new DescriptionWindow();
-				this.add(myDescriptionWindow);
-			} else if (myDescriptionWindow.isClosed())
-			{
-				this.add(myDescriptionWindow);
-			}
-			myDescriptionWindow.toFront();
-			myDescriptionWindow.setVisible(true);
-		}
-		if (e.getSource() == authorMenuItem)
-		{
-			if (myAuthorWindow == null)
-			{
-				myAuthorWindow = new AuthorWindow();
-				this.add(myAuthorWindow);
-			} else if (myAuthorWindow.isClosed())
-			{
-				this.add(myAuthorWindow);
-			}
-			myAuthorWindow.toFront();
-			myAuthorWindow.setVisible(true);
-		}
-		if (e.getSource() == referencesMenuItem)
-		{
-			if (myReferencesWindow == null)
-			{
-				myReferencesWindow = new ReferencesWindow();
-				this.add(myReferencesWindow);
-			} else if (myReferencesWindow.isClosed())
-			{
-				this.add(myReferencesWindow);
-			}
-			myReferencesWindow.toFront();
-			myReferencesWindow.setVisible(true);
-		}
+
 		if (e.getSource() == sizeControl)
 		{
 		}
