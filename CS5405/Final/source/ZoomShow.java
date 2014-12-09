@@ -28,7 +28,7 @@ public class ZoomShow extends JInternalFrame implements Runnable //, ActionListe
 		super("ZoomShow",true,true,true,true);
 		setLayout(new GridLayout(1,1));
 		setSize(300,300);
-		setVisible(true);
+//		setVisible(true);
 		toFront();
 		URL image0 = null;
 //		image0 = getClass().getResource("/images/1.jpg");
