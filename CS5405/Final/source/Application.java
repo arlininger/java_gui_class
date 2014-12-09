@@ -24,7 +24,7 @@ enum MenuItems
  * This class handles creating all of the higher-level objects and top-level
  * menus. 
  */
-public class Application extends JDesktopPane implements ActionListener, ChangeListener
+public class Application extends JDesktopPane implements ActionListener//, ChangeListener
 {
 	/**
 	 * Array of menu items for this application.
@@ -35,61 +35,61 @@ public class Application extends JDesktopPane implements ActionListener, ChangeL
 	/**
 	 * JInternalFrame for Help Window.
 	 */
-	HelpWindow myHelpWindow = null;
+//	HelpWindow myHelpWindow = null;
 
 	/**
 	 * JInternalFrame for Description Window.
 	 */
-	DescriptionWindow myDescriptionWindow = null;
+//	DescriptionWindow myDescriptionWindow = null;
 
 	/**
 	 * JInternalFrame for Author Window.
 	 */
-	AuthorWindow myAuthorWindow = null;
+//	AuthorWindow myAuthorWindow = null;
 
 	/**
 	 * JInternalFrame for References Window.
 	 */
-	ReferencesWindow myReferencesWindow = null;
+//	ReferencesWindow myReferencesWindow = null;
 
 	/**
 	 * Window for displaying Sequential images.
 	 */
-	ZoomShow zoomShow = null;
+//	ZoomShow zoomShow = null;
 	/**
 	 * Toolbar for main window controls.
 	 */
-	JToolBar myToolBar = new JToolBar("Controls");
+//	JToolBar myToolBar = new JToolBar("Controls");
 
 	/**
 	 * Main window pause control.
 	 */
-	JButton pause = new JButton("Pause");
+//	JButton pause = new JButton("Pause");
 
 	/**
 	 * Main window play control.
 	 */
-	JButton play = new JButton("Play");
+//	JButton play = new JButton("Play");
 
 	/**
 	 * Main window reset control.
 	 */
-	JButton reset = new JButton("Reset");
+//	JButton reset = new JButton("Reset");
 
 	/**
 	 * Size control.
 	 */
-	JTextField sizeControl = new JTextField("100",4);
+//	JTextField sizeControl = new JTextField("100",4);
 
 	/**
 	 * Speed control.
 	 */
-	JSlider speedControl = new JSlider(0,49,39);
+//	JSlider speedControl = new JSlider(0,49,39);
 
 	/**
 	 * Number of items to sort.
 	 */
-	int globalSize = 100;
+//	int globalSize = 100;
 
 	/**
 	 * Reference to the top-level applet.
@@ -103,49 +103,52 @@ public class Application extends JDesktopPane implements ActionListener, ChangeL
 	public Application(JApplet topLevel)
 	{
 		this.topLevel = topLevel;
-		zoomShow = new ZoomShow();
-		this.add(zoomShow);
+//		zoomShow = new ZoomShow();
+//		this.add(zoomShow);
 		menuItemArray = new JMenuItem[MenuItems.values().length];
 		windowArray = new JInternalFrame[MenuItems.values().length];
 		windowArray[MenuItems.AUTHOR.ordinal()] = new AuthorWindow();
 		windowArray[MenuItems.DESCRIPTION.ordinal()] = new DescriptionWindow();
 		windowArray[MenuItems.REFERENCES.ordinal()] = new ReferencesWindow();
 		windowArray[MenuItems.HELP.ordinal()] = new HelpWindow();
-//		windowArray[MenuItems.INTERACTIVE.ordinal()] = new InteractiveWindow();
-//		windowArray[MenuItems.SEQUENTIAL.ordinal()] = new SequentialWindow();
-//		windowArray[MenuItems.SLIDESHOW.ordinal()] = new SlideShowWindow();
+		windowArray[MenuItems.INTERACTIVE.ordinal()] = new Interactive();
+		windowArray[MenuItems.SEQUENTIAL.ordinal()] = new Sequential();
+		windowArray[MenuItems.SLIDESHOW.ordinal()] = new SlideShow();
 		windowArray[MenuItems.ZOOMSHOW.ordinal()] = new ZoomShow();
+		for (MenuItems item : MenuItems.values()) {
+			this.add(windowArray[item.ordinal()]);
+		}
 
 		this.addMenus();
-		this.setupToolBar();
+//		this.setupToolBar();
 	}
 	
 	/**
 	 * Returns the JToolBar that controls the application.
 	 * @return The toolbar attached to this application.
 	 */
-	public JToolBar getToolBar()
-	{
-		return myToolBar;
-	}
+//	public JToolBar getToolBar()
+//	{
+//		return myToolBar;
+//	}
 	
 	/**
 	 * Create the toolBar and add the buttons.
 	 */
-	private void setupToolBar()
-	{
-		//Setup toolbar
-		myToolBar.add(play);
-			play.addActionListener(this);
-		myToolBar.add(pause);
-			pause.addActionListener(this);
-		myToolBar.add(reset);
-			reset.addActionListener(this);
-		myToolBar.add(sizeControl);
-			sizeControl.addActionListener(this);
-		myToolBar.add(speedControl);
-			speedControl.addChangeListener(this);
-	}
+//	private void setupToolBar()
+//	{
+//		//Setup toolbar
+//		myToolBar.add(play);
+//			play.addActionListener(this);
+//		myToolBar.add(pause);
+//			pause.addActionListener(this);
+//		myToolBar.add(reset);
+//			reset.addActionListener(this);
+//		myToolBar.add(sizeControl);
+//			sizeControl.addActionListener(this);
+//		myToolBar.add(speedControl);
+//			speedControl.addChangeListener(this);
+//	}
 
 	/**
 	 * Create the menus.
@@ -193,42 +196,45 @@ public class Application extends JDesktopPane implements ActionListener, ChangeL
 	 * Listen for state changes on the speed slider.
 	 * @param e Event that occurred.
 	 */
-	public void stateChanged(ChangeEvent e)
-	{
-		if (e.getSource() == speedControl)
-		{
-			int speed = 50-speedControl.getValue();
-		}
-	}
+//	public void stateChanged(ChangeEvent e)
+//	{
+//		if (e.getSource() == speedControl)
+//		{
+//			int speed = 50-speedControl.getValue();
+//		}
+//	}
 	/**
 	 * Handle actions performed at the top level of the application.
 	 * @param e Event to be handled.
 	 */
 	public void actionPerformed(ActionEvent e)
 	{
-		if (e.getSource() == play)
-		{
-		}
-		if (e.getSource() == pause)
-		{
-		}
-		if (e.getSource() == reset)
-		{
-		}
+//		if (e.getSource() == play)
+//		{
+//		}
+//		if (e.getSource() == pause)
+//		{
+//		}
+//		if (e.getSource() == reset)
+//		{
+//		}
 		for (MenuItems item : MenuItems.values()) {
-			if (e.getSource() == windowArray[item.ordinal()])
+			if (e.getSource() == menuItemArray[item.ordinal()])
 			{
+				System.out.printf("Got command for %s\n",item.toString());
 				if (windowArray[item.ordinal()].isClosed())
 				{
 					this.add(windowArray[item.ordinal()]);
 				}
 				windowArray[item.ordinal()].toFront();
 				windowArray[item.ordinal()].setVisible(true);
+			} else {
+				System.out.printf("No command for %s\n",item.toString());
 			}
 		}
 
-		if (e.getSource() == sizeControl)
-		{
-		}
+//		if (e.getSource() == sizeControl)
+//		{
+//		}
 	}
 }

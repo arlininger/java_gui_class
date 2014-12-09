@@ -22,7 +22,7 @@ public class ReferencesWindow extends JInternalFrame
 		super("Help", true, true, true, true);
 		setLayout(new GridLayout(1,1));
 		setSize(300,300);
-		setVisible(true);
+//		setVisible(true);
 		String helpContent = new StringBuilder()
 			.append("References:\n")
 			.append("\tNo code was borrowed or taken from another source. Several \n")
@@ -34,7 +34,7 @@ public class ReferencesWindow extends JInternalFrame
 			.append("by Cormen, Leiserson, Rivest, and Stein and at wikipedia was \n")
 			.append("used as a reference for algorithm implementation.\n")
 			.toString();
-		toFront();
+//		toFront();
 		//JPanel panel = new JPanel();
 		JTextArea textArea = new JTextArea(helpContent,30,30);
 		textArea.setTabSize(3);

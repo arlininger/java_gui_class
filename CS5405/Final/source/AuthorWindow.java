@@ -19,10 +19,10 @@ public class AuthorWindow extends JInternalFrame
 	 */
 	public AuthorWindow()
 	{
-		super("Help", true, true, true, true);
+		super("Author", true, true, true, true);
 		setLayout(new GridLayout(1,1));
 		setSize(300,300);
-		setVisible(true);
+//		setVisible(true);
 		String helpContent = new StringBuilder()
 			.append("Adam Lininger\n")
 			.append("(573)466-0044\n\n")
@@ -31,7 +31,7 @@ public class AuthorWindow extends JInternalFrame
 			.append("\"java -jar Demo.jar\" \n")
 			.append("in any commandline on a system that has Java installed.")
 			.toString();
-		toFront();
+//		toFront();
 		//JPanel panel = new JPanel();
 		JTextArea textArea = new JTextArea(helpContent,30,30);
 		textArea.setTabSize(3);

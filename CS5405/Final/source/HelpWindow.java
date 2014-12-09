@@ -22,7 +22,7 @@ public class HelpWindow extends JInternalFrame
 		super("Help", true, true, true, true);
 		setLayout(new GridLayout(1,1));
 		setSize(300,300);
-		setVisible(true);
+//		setVisible(true);
 		String helpContent = new StringBuilder()
 			.append("Program Operation:\n")
 			.append("\tBy default, all algorithms are displayed and selected. Algorithms \n")
@@ -50,7 +50,7 @@ public class HelpWindow extends JInternalFrame
 			.append("a description of the assignment, and a set of references can be found\n")
 			.append("in the About menu.")
 			.toString();
-		toFront();
+//		toFront();
 		//JPanel panel = new JPanel();
 		JTextArea textArea = new JTextArea(helpContent,30,15);
 		textArea.setTabSize(3);

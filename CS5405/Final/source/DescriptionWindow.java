@@ -22,7 +22,7 @@ public class DescriptionWindow extends JInternalFrame
 		super("Help", true, true, true, true);
 		setLayout(new GridLayout(1,1));
 		setSize(300,300);
-		setVisible(true);
+//		setVisible(true);
 		String helpContent = new StringBuilder()
 			.append("Description stuff\n")
 			.append("Write a program to solve the following ")
@@ -67,7 +67,7 @@ public class DescriptionWindow extends JInternalFrame
 			.append("Tell what they learnt in this project, what is his/her contribution.\n")
 			.append("Grading will be based on Implementation and Documentation, Presentation and Demonstration.\n")
 			.toString();
-		toFront();
+//		toFront();
 		JTextArea textArea = new JTextArea(helpContent,30,30);
 		textArea.setTabSize(3);
 		textArea.setWrapStyleWord(true);
