@@ -35,18 +35,24 @@ public class Sequential extends JInternalFrame implements ActionListener
 		add(playButton);
 		add(stopButton);
 		add(loopButton);
+		playButton.addActionListener(this);
+		stopButton.addActionListener(this);
+		loopButton.addActionListener(this);
 	}
 
 	public void actionPerformed(ActionEvent e)
 	{
 		if (e.getSource() == playButton)
 		{
+			System.out.printf("Playing\n");
 			clip.play();
 		} else if (e.getSource() == stopButton)
 		{
+			System.out.printf("Stoping\n");
 			clip.stop();
 		} else if (e.getSource() == loopButton)
 		{
+			System.out.printf("Looping\n");
 			clip.loop();
 		}
 	}
