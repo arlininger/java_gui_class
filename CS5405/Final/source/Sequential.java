@@ -3,6 +3,7 @@
  */
 package code;
 
+import java.applet.*;
 import java.awt.*;
 import java.util.*;
 import java.util.concurrent.*;
@@ -17,37 +18,22 @@ public class Sequential extends JInternalFrame implements Runnable //, ActionLis
 	 */
 	ExecutorService executor = null;
 
+	AudioClip clip = null;
+
 	public Sequential()
 	{
 		super("Sequential",true,true,true,true);
 		setLayout(new GridLayout(1,1));
 		setSize(300,300);
-//		setVisible(true);
 		toFront();
 		URL sound0 = getClass().getResource("/audio/GrumpyCat.wav");
+		clip = Applet.newAudioClip(sound0);
+		clip.play();
 		executor = Executors.newFixedThreadPool(1);
 		executor.execute(this);
 	}
 
-//	public void paint(Graphics g)
-//	{
-//		super.paint(g);
-//		g.drawImage(images[index],5 - offset,30 ,105 - offset,130,this);
-//		g.drawImage(images[(index + 1) % imageCount],105 - offset,30 ,205 - offset,130,this);
-//	}
-	
 	public void run()
 	{
-//		while (true)
-//		{
-//			updateImage();
-//			repaint();
-//			try
-//			{
-//				Thread.sleep(50); //Always sleep a little bit
-//			} catch (InterruptedException ex)
-//			{
-//			}
-//		}
 	}
 }
