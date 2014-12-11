@@ -10,7 +10,19 @@ import java.util.concurrent.locks.*;
 import java.net.*;
 import javax.swing.*;
 
-public class SlideShow extends JInternalFrame implements Runnable //, ActionListener
+public class SlideShow extends JInternalFrame
+{
+	public SlideShow()
+	{
+		super("SlideShow",true,true,true,true);
+		setLayout(new GridLayout(1,1));
+		setSize(300,300);
+		toFront();
+		add(new SlideShowInternal());
+	}
+}
+
+class SlideShowInternal extends JPanel implements Runnable //, ActionListener
 {
 	/**
 	 * Thread executor for this window.
@@ -23,15 +35,11 @@ public class SlideShow extends JInternalFrame implements Runnable //, ActionList
 	int offset = 0;
 	int index = 0;
 
-	public SlideShow()
+	public SlideShowInternal()
 	{
-		super("SlideShow",true,true,true,true);
 		setLayout(new GridLayout(1,1));
-		setSize(300,300);
-//		setVisible(true);
-		toFront();
+		setSize(100,100);
 		URL image0 = null;
-//		image0 = getClass().getResource("/images/1.jpg");
 		images[0] = new ImageIcon(getClass().getResource("/images/0.jpg")).getImage();
 		images[1] = new ImageIcon(getClass().getResource("/images/1.jpg")).getImage();
 		images[2] = new ImageIcon(getClass().getResource("/images/2.jpg")).getImage();
@@ -49,8 +57,20 @@ public class SlideShow extends JInternalFrame implements Runnable //, ActionList
 	public void paint(Graphics g)
 	{
 		super.paint(g);
-		g.drawImage(images[index],                      5 - offset,30 , 100, 100,this);
-		g.drawImage(images[(index + 1) % imageCount], 105 - offset,30 , 100, 100,this);
+		Dimension currentSize = getSize();
+		int offsetPosition = (int)Math.round((currentSize.width * offset) / 100.0);
+		g.drawImage( images[index],
+		             -offsetPosition ,
+		             5 , 
+		             currentSize.width -5, 
+		             currentSize.height -10,
+		             this);
+		g.drawImage( images[(index + 1) % imageCount], 
+		             currentSize.width - offsetPosition,
+		             5, 
+		             currentSize.width -5, 
+		             currentSize.height -10,
+		             this);
 	}
 	
 	void updateImage()
