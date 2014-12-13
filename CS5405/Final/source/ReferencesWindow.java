@@ -29,10 +29,7 @@ public class ReferencesWindow extends JInternalFrame
 			.append("functions/classes that were not taught in class were used. \n")
 			.append("Documentation on these items were found at \n")
 			.append("https://docs.oracle.com/javase/8/docs/api and \n")
-			.append("https://docs.oracle.com/javase/tutorial/. Additionally, \n")
-			.append("pseudocode found in Introduction to Algorithms (Second Edition)\n")
-			.append("by Cormen, Leiserson, Rivest, and Stein and at wikipedia was \n")
-			.append("used as a reference for algorithm implementation.\n")
+			.append("https://docs.oracle.com/javase/tutorial/.\n")
 			.toString();
 //		toFront();
 		//JPanel panel = new JPanel();
