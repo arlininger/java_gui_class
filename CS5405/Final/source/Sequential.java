@@ -36,8 +36,10 @@ public class Sequential extends JInternalFrame implements ActionListener,ListSel
 	public Sequential()
 	{
 		super("Sequential",true,true,true,true);
-		setLayout(new FlowLayout());
-		setSize(300,300);
+		FlowLayout layout = new FlowLayout();
+		layout.setAlignOnBaseline(true);
+		setLayout(layout);
+		setSize(300,400);
 		toFront();
 		images[0] = new ImageIcon(getClass().getResource("/images/1.jpg")).getImage();
 		images[1] = new ImageIcon(getClass().getResource("/images/2.jpg")).getImage();
@@ -89,11 +91,12 @@ public class Sequential extends JInternalFrame implements ActionListener,ListSel
 		super.paint(g);
 		Dimension currentSize = getSize();
 		g.drawImage( images[currentIndex],
-		             5,
-		             40, 
-		             currentSize.width -10, 
-		             currentSize.height -45,
+		             10,
+		             70, 
+		             150, 
+		             150,
 		             this);
+		System.out.printf("Painting image %d\n",currentIndex);
 	}
 	
 	public void update(LineEvent e)
@@ -123,6 +126,8 @@ public class Sequential extends JInternalFrame implements ActionListener,ListSel
 			catch (LineUnavailableException ex) {}
 			catch (IOException ex) {}
 			catch (UnsupportedAudioFileException ex) {}
+			System.out.printf("looping to to %d\n",currentIndex);
+			repaint();
 		}
 	}
 
@@ -132,6 +137,7 @@ public class Sequential extends JInternalFrame implements ActionListener,ListSel
 		currentIndex = temp.getSelectedIndex();
 		URL sound = getClass().getResource("/audio/" + temp.getSelectedValue());
 		try{
+			clip.close();
 			audioInput = AudioSystem.getAudioInputStream(sound);
 			clip = AudioSystem.getClip();
 			clip.open(audioInput);
@@ -140,7 +146,8 @@ public class Sequential extends JInternalFrame implements ActionListener,ListSel
 		catch (UnsupportedAudioFileException ex) {}
 		catch (IOException ex) {}
 		catch (LineUnavailableException ex) {}
-		System.out.printf("Value changed\n");
+		System.out.printf("Value changed to %d\n",currentIndex);
+		repaint();
 	}
 
 	public void actionPerformed(ActionEvent e)
