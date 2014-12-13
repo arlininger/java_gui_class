@@ -9,13 +9,13 @@ import java.awt.event.*;
 import javax.swing.*;
 
 /**
- * The Help class displays a dialog box with a helpful description of the basic functionality
- * of this program.
+ * The References class displays a window listing any references
+ * needed by this application.
  */
 public class ReferencesWindow extends JInternalFrame
 {
 	/**
-	 * Create a Help Window.
+	 * Create a References Window.
 	 */
 	public ReferencesWindow()
 	{

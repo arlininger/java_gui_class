@@ -7,14 +7,17 @@ import java.applet.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.net.*;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.locks.*;
-import java.net.*;
 import javax.sound.sampled.*;
 import javax.swing.*;
 import javax.swing.event.*;
 
+/**
+ * Main window for the Sequential demo.
+ */
 public class Sequential extends JInternalFrame implements ActionListener,ListSelectionListener,LineListener
 {
 	/**
@@ -22,17 +25,59 @@ public class Sequential extends JInternalFrame implements ActionListener,ListSel
 	 */
 	ExecutorService executor = null;
 
+	/**
+	 * Audio clip currently being played.
+	 */
 	Clip clip = null;
+
+	/**
+	 * Current audio input source.
+	 */
 	AudioInputStream audioInput = null;
+
+	/**
+	 * Play button.
+	 */
 	JButton playButton = new JButton("Play");
+
+	/**
+	 * Stop button.
+	 */
 	JButton stopButton = new JButton("Stop");
+
+	/**
+	 * Loop button.
+	 */
 	JButton loopButton = new JButton("Loop");
+
+	/**
+	 * List box for list of songs.
+	 */
 	JList listOfSongs;
+
+	/**
+	 * Index of currently selected audio clip.
+	 */
 	int currentIndex = 0;
+
+	/**
+	 * Number of audio clips.
+	 */
 	final int itemCount = 10;
+
+	/**
+	 * Whether we expect the audio clip to be playing.
+	 */
 	boolean shouldBePlaying = false;
+
+	/**
+	 * Array of images to be displayed.
+	 */
 	Image images[] = new Image[itemCount];
 
+	/**
+	 * Create the main window for the Sequential demo.
+	 */
 	public Sequential()
 	{
 		super("Sequential",true,true,true,true);
@@ -79,13 +124,17 @@ public class Sequential extends JInternalFrame implements ActionListener,ListSel
 			clip = AudioSystem.getClip();
 			clip.open(audioInput);
 			clip.addLineListener(this);
-		}
+		} 
 		catch (UnsupportedAudioFileException ex) {}
 		catch (IOException ex) {}
 		catch (LineUnavailableException ex) {}
 		pack();
 	}
 
+	/**
+	 * Re-draw the window.
+	 * @param g Graphics object used for drawing.
+	 */
 	public void paint(Graphics g)
 	{
 		super.paint(g);
@@ -96,9 +145,12 @@ public class Sequential extends JInternalFrame implements ActionListener,ListSel
 		             150, 
 		             150,
 		             this);
-		System.out.printf("Painting image %d\n",currentIndex);
 	}
 	
+	/**
+	 * Handle line updates.
+	 * @param e Line Event to be handled.
+	 */
 	public void update(LineEvent e)
 	{
 		if (!shouldBePlaying)
@@ -126,11 +178,14 @@ public class Sequential extends JInternalFrame implements ActionListener,ListSel
 			catch (LineUnavailableException ex) {}
 			catch (IOException ex) {}
 			catch (UnsupportedAudioFileException ex) {}
-			System.out.printf("looping to to %d\n",currentIndex);
 			repaint();
 		}
 	}
 
+	/**
+	 * Handle List value changes.
+	 * @param e Event to be handled.
+	 */
 	public void valueChanged(ListSelectionEvent e)
 	{
 		JList temp = (JList)e.getSource();
@@ -146,10 +201,13 @@ public class Sequential extends JInternalFrame implements ActionListener,ListSel
 		catch (UnsupportedAudioFileException ex) {}
 		catch (IOException ex) {}
 		catch (LineUnavailableException ex) {}
-		System.out.printf("Value changed to %d\n",currentIndex);
 		repaint();
 	}
 
+	/**
+	 * Handle the actions from the buttons.
+	 * @param e The event to be handled.
+	 */
 	public void actionPerformed(ActionEvent e)
 	{
 		if (e.getSource() == playButton)

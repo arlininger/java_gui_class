@@ -6,33 +6,51 @@ package code;
 import java.applet.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.net.*;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.locks.*;
-import java.net.*;
-import javax.swing.*;
-
-import java.awt.*;
-import java.util.*;
-import java.util.concurrent.*;
-import java.util.concurrent.locks.*;
-import java.net.*;
 import javax.swing.*;
 import javax.swing.filechooser.*;
 
+/**
+ * Main window for the Interactive demo.
+ */
 public class Interactive extends JInternalFrame implements ActionListener
 {
 	/**
 	 * Thread executor for this window.
 	 */
 	ExecutorService executor = null;
-
+	
+	/**
+	 * Currently selected audio clip.
+	 */
 	AudioClip clip = null;
+
+	/**
+	 * Play button.
+	 */
 	JButton playButton = new JButton("Play");
+
+	/**
+	 * Stop button.
+	 */
 	JButton stopButton = new JButton("Stop");
+
+	/**
+	 * Loop button.
+	 */
 	JButton loopButton = new JButton("Loop");
+
+	/**
+	 * Select button.
+	 */
 	JButton selectButton = new JButton("Select");
 
+	/**
+	 * Create the main window for the Interactive demo.
+	 */
 	public Interactive()
 	{
 		super("Interactive",true,true,true,true);
@@ -56,6 +74,10 @@ public class Interactive extends JInternalFrame implements ActionListener
 		clip = Applet.newAudioClip(sound0);
 	}
 
+	/**
+	 * Handle the actions from the buttons.
+	 * @param e The event to be handled.
+	 */
 	public void actionPerformed(ActionEvent e)
 	{
 		if (e.getSource() == playButton)
@@ -77,7 +99,6 @@ public class Interactive extends JInternalFrame implements ActionListener
 					JFileChooser.APPROVE_OPTION)
 			{
 				try{
-					System.out.printf("%s\n",chooser.getSelectedFile().toURI().toURL().toString());
 					URL sound = chooser.getSelectedFile().toURI().toURL();
 					clip = Applet.newAudioClip(sound);
 				} catch (MalformedURLException ex) {

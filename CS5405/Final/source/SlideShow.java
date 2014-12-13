@@ -10,8 +10,14 @@ import java.util.concurrent.locks.*;
 import java.net.*;
 import javax.swing.*;
 
+/**
+ * Main window for SlideShow.
+ */
 public class SlideShow extends JInternalFrame
 {
+	/**
+	 * Creates the SlideShow main window.
+	 */
 	public SlideShow()
 	{
 		super("SlideShow",true,true,true,true);
@@ -22,6 +28,10 @@ public class SlideShow extends JInternalFrame
 	}
 }
 
+/**
+ * The guts of the SlideShow window. This keeps displayed items from
+ * overlapping the border of the window itself.
+ */
 class SlideShowInternal extends JPanel implements Runnable //, ActionListener
 {
 	/**
@@ -29,12 +39,34 @@ class SlideShowInternal extends JPanel implements Runnable //, ActionListener
 	 */
 	ExecutorService executor = null;
 
+	/**
+	 * Maximum number of images.
+	 */
 	int imageCount = 10;
+
+	/**
+	 * Maximum size of image.
+	 */
 	int maxSize = 100;
+
+	/**
+	 * Array of images to be displayed.
+	 */
 	Image images[] = new Image[imageCount];
+
+	/**
+	 * Horizontal offset of image to be displayed. Used for scrolling.
+	 */
 	int offset = 0;
+
+	/**
+	 * Index of image to be displayed.
+	 */
 	int index = 0;
 
+	/**
+	 * Creates the SlideShowInternal object.
+	 */
 	public SlideShowInternal()
 	{
 		setLayout(new GridLayout(1,1));
@@ -54,6 +86,10 @@ class SlideShowInternal extends JPanel implements Runnable //, ActionListener
 		executor.execute(this);
 	}
 
+	/**
+	 * Re-draw the window.
+	 * @param g Graphics object used for re-drawing.
+	 */
 	public void paint(Graphics g)
 	{
 		super.paint(g);
@@ -73,6 +109,9 @@ class SlideShowInternal extends JPanel implements Runnable //, ActionListener
 		             this);
 	}
 	
+	/**
+	 * Update the position of the image.
+	 */
 	void updateImage()
 	{
 		offset++;
@@ -87,6 +126,9 @@ class SlideShowInternal extends JPanel implements Runnable //, ActionListener
 		}
 	}
 
+	/**
+	 * Main loop for image animation.
+	 */
 	public void run()
 	{
 		while (true)

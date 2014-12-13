@@ -46,11 +46,9 @@ public class Demo extends JApplet
 	 */
 	public Demo()
 	{
-//		getContentPane().setLayout(new GridLayout(1, 1, 1, 1));
 		getContentPane().setLayout(new BorderLayout());
 		mainApp = new Application(this);
 		getContentPane().add(mainApp);
-//		getContentPane().add(mainApp.getToolBar(),BorderLayout.NORTH);
 		setSize(760,700);
 		setVisible(true);
 	}

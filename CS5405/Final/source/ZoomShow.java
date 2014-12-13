@@ -10,8 +10,14 @@ import java.util.concurrent.locks.*;
 import java.net.*;
 import javax.swing.*;
 
+/**
+ * Main window for the Zoom demo.
+ */
 public class ZoomShow extends JInternalFrame
 {
+	/**
+	 * Create the Zoom demo.
+	 */
 	public ZoomShow()
 	{
 		super("ZoomShow",true,true,true,true);
@@ -22,6 +28,9 @@ public class ZoomShow extends JInternalFrame
 	}
 }
 
+/**
+ * The guts of the Zoom demo.
+ */
 class ZoomShowInternal extends JPanel implements Runnable //, ActionListener
 {
 	/**
@@ -29,13 +38,39 @@ class ZoomShowInternal extends JPanel implements Runnable //, ActionListener
 	 */
 	ExecutorService executor = null;
 
-	int imageCount = 10;
+	/**
+	 * Total number of images.
+	 */
+	final int imageCount = 10;
+
+	/**
+	 * Maximum size of the images to be displayed.
+	 */
 	int maxSize = 200;
+
+	/**
+	 * Array of images to be displayed.
+	 */
 	Image images[] = new Image[imageCount];
+
+	/**
+	 * The current scale.
+	 */
 	int scale = 0;
+
+	/**
+	 * The current image being displayed.
+	 */
 	int index = 0;
+
+	/**
+	 * Whether or not the image is currently increasing.
+	 */
 	boolean increasing = true;
 
+	/**
+	 * Create the guts of the Zoom demo.
+	 */
 	public ZoomShowInternal()
 	{
 		setLayout(new GridLayout(1,1));
@@ -53,6 +88,10 @@ class ZoomShowInternal extends JPanel implements Runnable //, ActionListener
 		executor.execute(this);
 	}
 
+	/**
+	 * Re-draw the window.
+	 * @param g Graphics object used for drawing.
+	 */
 	public void paint(Graphics g)
 	{
 		super.paint(g);
@@ -70,6 +109,9 @@ class ZoomShowInternal extends JPanel implements Runnable //, ActionListener
 			     this);
 	}
 	
+	/**
+	 * Update the image location.
+	 */
 	void updateImage()
 	{
 		if (increasing)
@@ -93,6 +135,9 @@ class ZoomShowInternal extends JPanel implements Runnable //, ActionListener
 		}
 	}
 
+	/**
+	 * Main loop for animation.
+	 */
 	public void run()
 	{
 		while (true)

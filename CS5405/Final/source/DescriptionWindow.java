@@ -9,13 +9,12 @@ import java.awt.event.*;
 import javax.swing.*;
 
 /**
- * The Help class displays a dialog box with a helpful description of the basic functionality
- * of this program.
+ * The Description class displays a window with the description of the project..
  */
 public class DescriptionWindow extends JInternalFrame
 {
 	/**
-	 * Create a Help Window.
+	 * Create a Description Window.
 	 */
 	public DescriptionWindow()
 	{
@@ -61,7 +60,7 @@ public class DescriptionWindow extends JInternalFrame
 			.append("\t\t\tone after the other from right to left.\n")
 			.append("\t\t\tZoomShow: Display images all scaled from min ( say 10x10) to \n")
 			.append("\t\t\tmaximum (windowsize) dimension, then back to min before starting\n")
-			.append("\t\t\tthe next image.\n")\n")
+			.append("\t\t\tthe next image.\n")
 			.toString();
 		JTextArea textArea = new JTextArea(helpContent,30,30);
 		textArea.setTabSize(3);
