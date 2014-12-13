@@ -29,8 +29,9 @@ public class Sequential extends JInternalFrame implements ActionListener,ListSel
 	JButton loopButton = new JButton("Loop");
 	JList listOfSongs;
 	int currentIndex = 0;
-	final int itemCount = 2;
+	final int itemCount = 10;
 	boolean shouldBePlaying = false;
+	Image images[] = new Image[itemCount];
 
 	public Sequential()
 	{
@@ -38,7 +39,28 @@ public class Sequential extends JInternalFrame implements ActionListener,ListSel
 		setLayout(new FlowLayout());
 		setSize(300,300);
 		toFront();
-		String songs[] = {"GrumpyCat.aiff","GrumpyCat.wav"};
+		images[0] = new ImageIcon(getClass().getResource("/images/1.jpg")).getImage();
+		images[1] = new ImageIcon(getClass().getResource("/images/2.jpg")).getImage();
+		images[2] = new ImageIcon(getClass().getResource("/images/3.jpg")).getImage();
+		images[3] = new ImageIcon(getClass().getResource("/images/4.jpg")).getImage();
+		images[4] = new ImageIcon(getClass().getResource("/images/5.jpg")).getImage();
+		images[5] = new ImageIcon(getClass().getResource("/images/6.jpg")).getImage();
+		images[6] = new ImageIcon(getClass().getResource("/images/7.jpg")).getImage();
+		images[7] = new ImageIcon(getClass().getResource("/images/8.jpg")).getImage();
+		images[8] = new ImageIcon(getClass().getResource("/images/9.jpg")).getImage();
+		images[9] = new ImageIcon(getClass().getResource("/images/10.jpg")).getImage();
+		String songs[] = {
+				"1.wav",
+				"2.wav",
+				"3.wav",
+				"4.wav",
+				"5.wav",
+				"6.wav",
+				"7.wav",
+				"8.wav",
+				"9.wav",
+				"10.wav"
+		};
 		listOfSongs = new JList<String>(songs);
 		listOfSongs.setSelectedIndex(currentIndex);
 		listOfSongs.addListSelectionListener(this);
@@ -49,7 +71,7 @@ public class Sequential extends JInternalFrame implements ActionListener,ListSel
 		playButton.addActionListener(this);
 		stopButton.addActionListener(this);
 		loopButton.addActionListener(this);
-		URL sound = getClass().getResource("/audio/GrumpyCat.wav");
+		URL sound = getClass().getResource("/audio/1.wav");
 		try{
 			audioInput = AudioSystem.getAudioInputStream(sound);
 			clip = AudioSystem.getClip();
@@ -62,6 +84,18 @@ public class Sequential extends JInternalFrame implements ActionListener,ListSel
 		pack();
 	}
 
+	public void paint(Graphics g)
+	{
+		super.paint(g);
+		Dimension currentSize = getSize();
+		g.drawImage( images[currentIndex],
+		             5,
+		             40, 
+		             currentSize.width -10, 
+		             currentSize.height -45,
+		             this);
+	}
+	
 	public void update(LineEvent e)
 	{
 		if (!shouldBePlaying)
@@ -108,6 +142,7 @@ public class Sequential extends JInternalFrame implements ActionListener,ListSel
 		catch (LineUnavailableException ex) {}
 		System.out.printf("Value changed\n");
 	}
+
 	public void actionPerformed(ActionEvent e)
 	{
 		if (e.getSource() == playButton)
